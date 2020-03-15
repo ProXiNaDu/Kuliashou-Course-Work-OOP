@@ -74,5 +74,22 @@ namespace GameEngineLibrary
 
             return new Texture2D(id, bitmap.Width, bitmap.Height);
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Texture2D texture &&
+                   ID == texture.ID &&
+                   Width == texture.Width &&
+                   Height == texture.Height;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 1463928665;
+            hashCode = hashCode * -1521134295 + ID.GetHashCode();
+            hashCode = hashCode * -1521134295 + Width.GetHashCode();
+            hashCode = hashCode * -1521134295 + Height.GetHashCode();
+            return hashCode;
+        }
     }
 }
