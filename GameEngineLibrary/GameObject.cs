@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using System;
+using OpenTK;
 using System.Collections.Generic;
 
 namespace GameEngineLibrary
@@ -6,8 +7,10 @@ namespace GameEngineLibrary
     /// <summary>
     /// Класс, который описывает объект на сцене.
     /// </summary>
-    public class GameObject
+    public class GameObject : IDisposable
     {
+        private bool disposed = false;
+
         /// <summary>
         /// Текстура объекта.
         /// </summary>
@@ -86,6 +89,30 @@ namespace GameEngineLibrary
             hashCode = hashCode * -1521134295 + EqualityComparer<Vector2>.Default.GetHashCode(Scale);
             hashCode = hashCode * -1521134295 + Rotation.GetHashCode();
             return hashCode;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    Texture.Dispose();
+                }
+
+                disposed = true;
+            }
+        }
+
+        ~GameObject()
+        {
+            Dispose(false);
         }
     }
 }

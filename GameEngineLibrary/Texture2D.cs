@@ -1,4 +1,5 @@
 ﻿using OpenTK.Graphics.OpenGL;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 
@@ -7,8 +8,10 @@ namespace GameEngineLibrary
     /// <summary>
     /// Класс, который описывает двухмерную текстуру.
     /// </summary>
-    public class Texture2D
+    public class Texture2D : IDisposable
     {
+        private bool disposed = false;
+
         /// <summary>
         /// Идентификатор текстуры.
         /// </summary>
@@ -90,6 +93,20 @@ namespace GameEngineLibrary
             hashCode = hashCode * -1521134295 + Width.GetHashCode();
             hashCode = hashCode * -1521134295 + Height.GetHashCode();
             return hashCode;
+        }
+
+        public void Dispose()
+        {
+            if (disposed)
+                return;
+
+            GL.DeleteTexture(ID);
+            disposed = true;
+        }
+
+        ~Texture2D()
+        {
+            Dispose();
         }
     }
 }
