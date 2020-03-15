@@ -24,5 +24,20 @@ namespace GameUserInterface
         {
             InitializeComponent();
         }
+
+        private void OpenTKControl_Render(TimeSpan obj)
+        {
+
+        }
+
+        private void OpenTKControl_Ready()
+        {
+
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
     }
 }
