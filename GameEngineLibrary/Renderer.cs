@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using GameEngineLibrary;
 
-namespace GameUserInterface
+namespace GameEngineLibrary
 {
     /// <summary>
     /// Класс, отвечающий за отрисовку объектов на сцене.
@@ -12,24 +11,25 @@ namespace GameUserInterface
     public class Renderer
     {
         /// <summary>
-        /// Список объектов для отрисовки.
+        /// Сцена для отрисовки.
         /// </summary>
-        private List<GameObject> objectsToRender;
+        private IScene scene;
 
         /// <summary>
         /// Создание нового объекта для отрисовки объектов на сцене.
         /// </summary>
-        public Renderer()
+        /// <param name="scene">Сцена, которую будет рендерить объект.</param>
+        public Renderer(IScene scene)
         {
-            objectsToRender = new List<GameObject>();
+            this.scene = scene;
         }
 
         /// <summary>
-        /// Отрисовать все объекты.
+        /// Отрисовать объекты на сцене.
         /// </summary>
         public void Render()
         {
-            Render(objectsToRender);
+            Render(scene.GetGameObjects());
         }
 
         /// <summary>
@@ -40,8 +40,8 @@ namespace GameUserInterface
         {
             foreach (GameObject gameObject in objectsToRender)
             {
-                RenderObject(gameObject);
                 Render(gameObject.InnerObjects);
+                RenderObject(gameObject);
             }
         }
 
@@ -53,6 +53,7 @@ namespace GameUserInterface
         {
             Texture2D texture = gameObject.Texture;
             Vector2 rotationPoint = gameObject.RotationPoint;
+            Vector2 position = gameObject.Position;
             double rotation = gameObject.Rotation;
             Vector2[] vertices = new Vector2[4]
             {
@@ -62,8 +63,14 @@ namespace GameUserInterface
                 new Vector2(0, 1)
             };
 
+            if (gameObject.Parent != null)
+            {
+                position += gameObject.Parent.Position;
+            }
+
             GL.BindTexture(TextureTarget.Texture2D, texture.ID);
             GL.Begin(PrimitiveType.Quads);
+            GL.Color3(texture.Color);
 
             for (int i = 0; i < 4; i++)
             {
@@ -81,7 +88,7 @@ namespace GameUserInterface
                 vertices[i].X += rotationPoint.X;
                 vertices[i].Y += rotationPoint.Y;
                 vertices[i] *= gameObject.Scale;
-                vertices[i] += gameObject.Position;
+                vertices[i] += position;
 
                 GL.Vertex2(vertices[i]);
             }
@@ -90,21 +97,12 @@ namespace GameUserInterface
         }
 
         /// <summary>
-        /// Добавить объект для отрисовки.
+        /// Устанавливает сцену для отрисовки.
         /// </summary>
-        /// <param name="gameObject">Объект для отрисовки.</param>
-        public void AddObjectToRender(GameObject gameObject)
+        /// <param name="scene">Новая сцена для отрисовки.</param>
+        public void SetSceneToRender(IScene scene)
         {
-            objectsToRender.Add(gameObject);
-        }
-
-        /// <summary>
-        /// Удалить объект для отрисовки.
-        /// </summary>
-        /// <param name="gameObject">Объект для отрисовки.</param>
-        public void RemoveObjectToRender(GameObject gameObject)
-        {
-            objectsToRender.Remove(gameObject);
+            this.scene = scene;
         }
     }
 }

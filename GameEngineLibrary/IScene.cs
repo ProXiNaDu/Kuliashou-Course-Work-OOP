@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace GameEngineLibrary
 {
@@ -16,6 +17,13 @@ namespace GameEngineLibrary
         /// Метод, который вызывается перед отрисовкой кадра.
         /// В этом методе параметры сцены должны обновляться.
         /// </summary>
-        void Update();
+        /// <param name="delta">Время, прошедшее между кадрами.</param>
+        void Update(TimeSpan delta);
+
+        /// <summary>
+        /// Получение списка с объектами на сцене.
+        /// </summary>
+        /// <returns>Список объектов на сцене.</returns>
+        List<GameObject> GetGameObjects();
     }
 }

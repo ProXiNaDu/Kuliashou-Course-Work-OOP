@@ -24,6 +24,10 @@ namespace GameEngineLibrary
         /// Высота текстуры.
         /// </summary>
         public int Height { get; private set; }
+        /// <summary>
+        /// Цвет, который будет наложен на текстуру.
+        /// </summary>
+        public Color Color { get; set; }
 
         /// <summary>
         /// Создание новой текстуры.
@@ -36,6 +40,7 @@ namespace GameEngineLibrary
             ID = id;
             Width = width;
             Height = height;
+            Color = Color.Transparent;
         }
 
         /// <summary>
@@ -102,11 +107,6 @@ namespace GameEngineLibrary
 
             GL.DeleteTexture(ID);
             disposed = true;
-        }
-
-        ~Texture2D()
-        {
-            Dispose();
         }
     }
 }

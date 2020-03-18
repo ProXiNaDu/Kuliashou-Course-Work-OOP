@@ -1,4 +1,6 @@
-﻿namespace GameEngineLibrary
+﻿using System;
+
+namespace GameEngineLibrary
 {
     /// <summary>
     /// Интерфейс, описывающий скрипт, который определяет поведение игрового объекта.

@@ -31,7 +31,7 @@ namespace GameEngineLibrary
         /// <summary>
         /// Точка, вокруг которой будет поворачиваться объект.
         /// </summary>
-        public Vector2 RotationPoint { get; private set; }
+        public Vector2 RotationPoint { get; set; }
         /// <summary>
         /// Позиция объекта.
         /// </summary>
