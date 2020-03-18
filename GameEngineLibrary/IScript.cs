@@ -5,19 +5,27 @@ namespace GameEngineLibrary
     /// <summary>
     /// Интерфейс, описывающий скрипт, который определяет поведение игрового объекта.
     /// </summary>
-    public interface IScript
+    public abstract class Script
     {
         /// <summary>
-        /// Метод, который вызывается 1 раз 
-        /// при привязывании скрипта к объекту.
+        /// Объект, которым управляет скрипт.
         /// </summary>
-        /// <param name="gameObject">Объект, к которому привязан скрипт.</param>
-        void Start(GameObject gameObject);
+        protected GameObject controlledObject;
 
         /// <summary>
         /// Метод, который содержит основную логику программы.
         /// Данный метод вызывается в каждом кадре игры.
         /// </summary>
-        void Update();
+        /// <param name="delta">Время, прошедшее между кадрами.</param>
+        public abstract void Update(TimeSpan delta);
+
+        /// <summary>
+        /// Устанавливает объект, который будет контролировать скрипт.
+        /// </summary>
+        /// <param name="controlledObject">Объект, контролируемый скриптом.</param>
+        public void SetControlledObject(GameObject controlledObject)
+        {
+            this.controlledObject = controlledObject;
+        }
     }
 }

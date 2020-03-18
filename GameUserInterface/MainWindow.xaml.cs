@@ -1,35 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Wpf;
 using GameEngineLibrary;
-using System.Drawing;
+using GameLibrary;
 
 namespace GameUserInterface
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для главного окна игры.
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Сцена, которая будет отрисовываться на экране.
+        /// </summary>
         private IScene scene;
+
+        /// <summary>
+        /// Отрисовщик сцены.
+        /// </summary>
         private Renderer renderer;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            scene = new BattleScene();
 
             var settings = new GLWpfControlSettings();
             settings.MajorVersion = 3;

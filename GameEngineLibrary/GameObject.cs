@@ -22,7 +22,7 @@ namespace GameEngineLibrary
         /// <summary>
         /// Список добавленных скриптов.
         /// </summary>
-        public List<IScript> Scripts { get; private set; }
+        public List<Script> Scripts { get; private set; }
 
         /// <summary>
         /// Текстура объекта.
@@ -55,7 +55,7 @@ namespace GameEngineLibrary
             Scale = Vector2.One;
             Rotation = 0;
             InnerObjects = new List<GameObject>();
-            Scripts = new List<IScript>();
+            Scripts = new List<Script>();
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace GameEngineLibrary
             Scale = scale;
             Rotation = rotation;
             InnerObjects = new List<GameObject>();
-            Scripts = new List<IScript>();
+            Scripts = new List<Script>();
         }
 
         /// <summary>
@@ -116,10 +116,10 @@ namespace GameEngineLibrary
         /// Скрипт определяет основное поведение объекта.
         /// </summary>
         /// <param name="script">Скрипт для добавления.</param>
-        public void AddScript(IScript script)
+        public void AddScript(Script script)
         {
             Scripts.Add(script);
-            script.Start(this);
+            script.SetControlledObject(this);
         }
 
         /// <summary>
@@ -127,9 +127,10 @@ namespace GameEngineLibrary
         /// Скрипт определяет основное поведение объекта.
         /// </summary>
         /// <param name="script">Скрипт для удаления.</param>
-        public void RemoveScript(IScript script)
+        public void RemoveScript(Script script)
         {
             Scripts.Remove(script);
+            script.SetControlledObject(null);
         }
 
         public override bool Equals(object obj)
