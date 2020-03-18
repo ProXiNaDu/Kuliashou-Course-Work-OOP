@@ -12,6 +12,10 @@ namespace GameEngineLibrary
         private bool disposed = false;
 
         /// <summary>
+        /// Объект-родитель для данного объекта.
+        /// </summary>
+        public GameObject Parent { get; protected set; }
+        /// <summary>
         /// Список внутренних объектов.
         /// </summary>
         public List<GameObject> InnerObjects { get; private set; }
@@ -92,6 +96,7 @@ namespace GameEngineLibrary
         public void AddInnerObject(GameObject gameObject)
         {
             InnerObjects.Add(gameObject);
+            gameObject.Parent = this;
         }
 
         /// <summary>
@@ -103,6 +108,7 @@ namespace GameEngineLibrary
         public void RemoveInnerObject(GameObject gameObject)
         {
             InnerObjects.Remove(gameObject);
+            gameObject.Parent = null;
         }
 
         /// <summary>
