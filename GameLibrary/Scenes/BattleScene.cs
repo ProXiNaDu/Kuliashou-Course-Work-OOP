@@ -14,6 +14,10 @@ namespace GameLibrary
     {
         private const string TRACK_TEXTURE_PATH = @"../../../GameLibrary/Resources/Track.bmp";
         private const string TURRET_TEXTURE_PATH = @"../../../GameLibrary/Resources/Turret.bmp";
+        private const string BACKGROUND_TEXTURE_PATH = @"../../../GameLibrary/Resources/BG.bmp";
+
+        private readonly double windowWidth;  
+        private readonly double windowHeight;
 
         /// <summary>
         /// Список созданных текстур.
@@ -30,11 +34,28 @@ namespace GameLibrary
         /// </summary>
         private List<GameObject> objectsToRender;
 
+        /// <summary>
+        /// Создание сцены.
+        /// </summary>
+        /// <param name="windowWidth">Ширина окна, в котором будет отображаться сцена.</param>
+        /// <param name="windowHeight">Высота окна, в котором будет отображаться сцена.</param>
+        public BattleScene(double windowWidth, double windowHeight)
+        {
+            this.windowWidth = windowWidth;
+            this.windowHeight = windowHeight;
+        }
+
         public void Init()
         {
             textures = new List<Texture2D>();
             objects = new List<GameObject>();
             objectsToRender = new List<GameObject>();
+
+            Texture2D backgroundTex = Texture2D.LoadTexture(BACKGROUND_TEXTURE_PATH);
+            GameObject background = new GameObject(backgroundTex);
+            background.Scale = new Vector2(5, 5);
+            background.Position = new Vector2((float)-windowWidth, (float)-windowHeight);
+            objectsToRender.Add(background);
 
             TrackKeyboardControlScript firstPanzerControl = new TrackKeyboardControlScript(300f);
             firstPanzerControl.SetKeyToMoveLeft(OpenTK.Input.Key.A);
@@ -49,8 +70,16 @@ namespace GameLibrary
             secondTurretControl.SetKeyToTurnUp(OpenTK.Input.Key.Up);
             secondTurretControl.SetKeyToTurnDown(OpenTK.Input.Key.Down);
 
-            GameObject firstPanzer = BuildPanzer(Color.Green, new Vector2(-5, 5), firstPanzerControl, firstTurretControl);
-            GameObject secondPanzer = BuildPanzer(Color.Red, new Vector2(5, 5), secondPanzerControl, secondTurretControl);
+            GameObject firstPanzer = BuildPanzer(Color.FromArgb(200, 120, 60),
+                new Vector2(-5, 5), firstPanzerControl, firstTurretControl);
+            GameObject secondPanzer = BuildPanzer(Color.FromArgb(20, 140, 120),
+                new Vector2(5, 5), secondPanzerControl, secondTurretControl);
+
+            firstPanzer.Position = new Vector2((float) -windowWidth * 3 / 4,
+                (float)windowHeight - firstPanzer.Texture.Height * 14);
+            secondPanzer.Position = new Vector2((float) windowWidth * 3 / 4,
+                (float)windowHeight - secondPanzer.Texture.Height * 14);
+
             objectsToRender.Add(firstPanzer);
             objectsToRender.Add(secondPanzer);
         }

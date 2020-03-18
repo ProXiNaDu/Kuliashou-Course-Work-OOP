@@ -27,7 +27,7 @@ namespace GameUserInterface
         {
             InitializeComponent();
 
-            scene = new BattleScene();
+            scene = new BattleScene(Width, Height);
 
             var settings = new GLWpfControlSettings();
             settings.MajorVersion = 3;
@@ -38,7 +38,6 @@ namespace GameUserInterface
         private void OpenTKControl_Render(TimeSpan delta)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            GL.ClearColor(Color4.SkyBlue);
 
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
