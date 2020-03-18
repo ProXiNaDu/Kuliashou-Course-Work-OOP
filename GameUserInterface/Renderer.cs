@@ -29,9 +29,19 @@ namespace GameUserInterface
         /// </summary>
         public void Render()
         {
+            Render(objectsToRender);
+        }
+
+        /// <summary>
+        /// Отрисовать объекты из переданного массива.
+        /// </summary>
+        /// <param name="objectsToRender">Массив объектов для отрисовки.</param>
+        private void Render(List<GameObject> objectsToRender)
+        {
             foreach (GameObject gameObject in objectsToRender)
             {
                 RenderObject(gameObject);
+                Render(gameObject.InnerObjects);
             }
         }
 

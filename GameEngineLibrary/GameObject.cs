@@ -11,7 +11,13 @@ namespace GameEngineLibrary
     {
         private bool disposed = false;
 
+        /// <summary>
+        /// Список внутренних объектов.
+        /// </summary>
         public List<GameObject> InnerObjects { get; private set; }
+        /// <summary>
+        /// Список добавленных скриптов.
+        /// </summary>
         public List<IScript> Scripts { get; private set; }
 
         /// <summary>
@@ -107,6 +113,7 @@ namespace GameEngineLibrary
         public void AddScript(IScript script)
         {
             Scripts.Add(script);
+            script.Start(this);
         }
 
         /// <summary>
