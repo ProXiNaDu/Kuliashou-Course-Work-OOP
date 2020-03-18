@@ -11,6 +11,9 @@ namespace GameEngineLibrary
     {
         private bool disposed = false;
 
+        public List<GameObject> InnerObjects { get; private set; }
+        public List<IScript> Scripts { get; private set; }
+
         /// <summary>
         /// Текстура объекта.
         /// </summary>
@@ -41,6 +44,8 @@ namespace GameEngineLibrary
             RotationPoint = Vector2.Zero;
             Scale = Vector2.One;
             Rotation = 0;
+            InnerObjects = new List<GameObject>();
+            Scripts = new List<IScript>();
         }
 
         /// <summary>
@@ -68,6 +73,50 @@ namespace GameEngineLibrary
             RotationPoint = rotationPoint;
             Scale = scale;
             Rotation = rotation;
+            InnerObjects = new List<GameObject>();
+            Scripts = new List<IScript>();
+        }
+
+        /// <summary>
+        /// Добавление объекта внутрь другого объекта.
+        /// Объекты внутри других объектов должны отрисовываться
+        /// относительно позиции родительского объекта.
+        /// </summary>
+        /// <param name="gameObject">Объект для вставки.</param>
+        public void AddInnerObject(GameObject gameObject)
+        {
+            InnerObjects.Add(gameObject);
+        }
+
+        /// <summary>
+        /// Удаление объекта из другого объекта.
+        /// Объекты внутри других объектов должны отрисовываться
+        /// относительно позиции родительского объекта.
+        /// </summary>
+        /// <param name="gameObject">Объект для удаления.</param>
+        public void RemoveInnerObject(GameObject gameObject)
+        {
+            InnerObjects.Remove(gameObject);
+        }
+
+        /// <summary>
+        /// Добавление скрипта для объекта.
+        /// Скрипт определяет основное поведение объекта.
+        /// </summary>
+        /// <param name="script">Скрипт для добавления.</param>
+        public void AddScript(IScript script)
+        {
+            Scripts.Add(script);
+        }
+
+        /// <summary>
+        /// Удаление скрипта объекта.
+        /// Скрипт определяет основное поведение объекта.
+        /// </summary>
+        /// <param name="script">Скрипт для удаления.</param>
+        public void RemoveScript(IScript script)
+        {
+            Scripts.Remove(script);
         }
 
         public override bool Equals(object obj)
