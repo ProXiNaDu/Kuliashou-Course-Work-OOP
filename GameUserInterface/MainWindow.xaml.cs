@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Wpf;
 using GameEngineLibrary;
@@ -38,7 +37,6 @@ namespace GameUserInterface
         private void OpenTKControl_Render(TimeSpan delta)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
             GL.Ortho(-Width, Width, Height, -Height, 0d, 1d);

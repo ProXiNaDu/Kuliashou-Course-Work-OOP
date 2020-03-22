@@ -63,11 +63,6 @@ namespace GameEngineLibrary
                 new Vector2(0, 1)
             };
 
-            if (gameObject.Parent != null)
-            {
-                position += gameObject.Parent.Position;
-            }
-
             GL.BindTexture(TextureTarget.Texture2D, texture.ID);
             GL.Begin(PrimitiveType.Quads);
             GL.Color3(texture.Color);

@@ -15,10 +15,12 @@ namespace GameEngineLibrary
         /// Объект-родитель для данного объекта.
         /// </summary>
         public GameObject Parent { get; protected set; }
+
         /// <summary>
         /// Список внутренних объектов.
         /// </summary>
         public List<GameObject> InnerObjects { get; private set; }
+
         /// <summary>
         /// Список добавленных скриптов.
         /// </summary>
@@ -28,18 +30,35 @@ namespace GameEngineLibrary
         /// Текстура объекта.
         /// </summary>
         public Texture2D Texture { get; private set; }
+
         /// <summary>
         /// Точка, вокруг которой будет поворачиваться объект.
         /// </summary>
         public Vector2 RotationPoint { get; set; }
+
+        private Vector2 localPosition;
         /// <summary>
         /// Позиция объекта.
         /// </summary>
-        public Vector2 Position { get; set; }
+        public Vector2 Position
+        {
+            get
+            {
+                return (Parent == null) ? 
+                    localPosition :
+                    Parent.Position + localPosition;
+            }
+            set
+            {
+                localPosition = value;
+            }
+        }
+
         /// <summary>
         /// Масштабирование объект.
         /// </summary>
         public Vector2 Scale { get; set; }
+
         /// <summary>
         /// Угол поворота объекта.
         /// </summary>

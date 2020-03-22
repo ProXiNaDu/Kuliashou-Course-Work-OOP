@@ -25,5 +25,17 @@ namespace GameEngineLibrary
         /// </summary>
         /// <returns>Список объектов на сцене.</returns>
         List<GameObject> GetGameObjects();
+
+        /// <summary>
+        /// Метод добавления объекта на сцену.
+        /// </summary>
+        /// <param name="gameObject">Объект для добавления.</param>
+        void AddGameObject(GameObject gameObject);
+
+        /// <summary>
+        /// Метод удаления объекта со сцены.
+        /// </summary>
+        /// <param name="gameObject">Объект для удаления.</param>
+        void RemoveGameObject(GameObject gameObject);
     }
 }
