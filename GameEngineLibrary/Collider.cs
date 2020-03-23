@@ -14,11 +14,20 @@ namespace GameEngineLibrary
         /// </summary>
         private Vector2[] verteces;
 
+        /// <summary>
+        /// Создание коллайдера.
+        /// </summary>
+        /// <param name="verteces">Вершины выпуклой фигуры, расположенные против часовой стрелки.</param>
         public Collider(params Vector2[] verteces)
         {
             this.verteces = verteces;
         }
 
+        /// <summary>
+        /// Проверка пересечения между двумя коллайдерами.
+        /// </summary>
+        /// <param name="collider">Коллайдер, с которым будет осуществляться проверка.</param>
+        /// <returns>True, если есть пересечение, иначе false.</returns>
         public bool CheckCollision(Collider collider)
         {
             int count = verteces.Length + collider.verteces.Length;
@@ -27,20 +36,15 @@ namespace GameEngineLibrary
             verteces.CopyTo(allVertices, 0);
             collider.verteces.CopyTo(allVertices, verteces.Length);
 
-            Vector2 normal = new Vector2();
+            Vector2 normal;
 
             for (int i = 0; i < count; i++)
             {
                 normal = GetNormal(allVertices, i);
 
-                // Находим проекции фигур на нормали сторон.
-                // X - максимальная координата Y - минимальная.
                 Vector2 firstProjection = GetProjection(normal);
                 Vector2 secondProjection = collider.GetProjection(normal);
 
-                // Если хотя бы на одной проекции фигуры не пересекаются, 
-                // значит существует разделяющая ось, и фигуры вообще не 
-                // пересекаются.
                 if (firstProjection.X < secondProjection.Y ||
                     secondProjection.X < firstProjection.Y)
                 {
@@ -51,6 +55,12 @@ namespace GameEngineLibrary
             return true;
         }
 
+        /// <summary>
+        /// Получение нормального вектора к заданной стороне фигуры.
+        /// </summary>
+        /// <param name="verteces">Вершины фигуры.</param>
+        /// <param name="num">Номер стороны.</param>
+        /// <returns></returns>
         private Vector2 GetNormal(Vector2[] verteces, int num)
         {
             int next = num + 1;
@@ -66,6 +76,11 @@ namespace GameEngineLibrary
             return new Vector2(-edge.Y, edge.X);
         }
 
+        /// <summary>
+        /// Получение вектора проекции фигуры на плоскость.
+        /// </summary>
+        /// <param name="vector">Вектор плоскости.</param>
+        /// <returns>Вектор проекции.</returns>
         private Vector2 GetProjection(Vector2 vector)
         {
             Vector2 result = new Vector2();

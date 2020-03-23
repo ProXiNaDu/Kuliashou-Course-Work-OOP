@@ -49,7 +49,7 @@ namespace GameEngineLibrary
         {
             get
             {
-                return (Parent == null) ? 
+                return (Parent == null) ?
                     localPosition :
                     Parent.Position + localPosition;
             }
@@ -157,9 +157,30 @@ namespace GameEngineLibrary
             script.SetControlledObject(null);
         }
 
+        /// <summary>
+        /// Установить коллайдер объекту.
+        /// </summary>
+        /// <param name="collider">Новый коллайдер.</param>
         public void SetCollider(Collider collider)
         {
             Collider = collider;
+        }
+
+        /// <summary>
+        /// Привязать коллайдер к текстуре.
+        /// </summary>
+        public void UpdateColliderToTexture()
+        {
+            float x = Position.X;
+            float y = Position.Y;
+            float width = Texture.Width * Scale.X;
+            float height = Texture.Height * Scale.Y;
+            Collider = new Collider(new Vector2[] {
+                new Vector2(x, y),
+                new Vector2(x, y + height),
+                new Vector2(x + width, y + height),
+                new Vector2(x + width, y),
+            });
         }
 
         public override bool Equals(object obj)
