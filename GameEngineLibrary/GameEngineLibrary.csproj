@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collider.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="IScene.cs" />
     <Compile Include="IScript.cs" />

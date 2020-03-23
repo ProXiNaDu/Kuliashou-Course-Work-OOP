@@ -32,6 +32,11 @@ namespace GameEngineLibrary
         public Texture2D Texture { get; private set; }
 
         /// <summary>
+        /// Коллайдер объекта.
+        /// </summary>
+        public Collider Collider { get; private set; }
+
+        /// <summary>
         /// Точка, вокруг которой будет поворачиваться объект.
         /// </summary>
         public Vector2 RotationPoint { get; set; }
@@ -150,6 +155,11 @@ namespace GameEngineLibrary
         {
             Scripts.Remove(script);
             script.SetControlledObject(null);
+        }
+
+        public void SetCollider(Collider collider)
+        {
+            Collider = collider;
         }
 
         public override bool Equals(object obj)
