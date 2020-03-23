@@ -1,0 +1,46 @@
+﻿using GameEngineLibrary;
+using OpenTK;
+using System;
+
+namespace GameLibrary.Scripts
+{
+    /// <summary>
+    /// Класс, описывающий физику объекта,
+    /// на который действуют различные силы.
+    /// </summary>
+    public class PhysicScript : Script
+    {
+        /// <summary>
+        /// Импульс объекта.
+        /// </summary>
+        private Vector2 impulse;
+
+        /// <summary>
+        /// Силы, действующие на объект.
+        /// </summary>
+        private Vector2[] forces;
+
+        /// <summary>
+        /// Создание нового объекта, на которого действуют силы.
+        /// </summary>
+        /// <param name="impulse">Начальный импульс объекта.</param>
+        /// <param name="forces">Силы, действующие на объект.</param>
+        public PhysicScript(Vector2 impulse, params Vector2[] forces)
+        {
+            this.impulse = impulse;
+            this.forces = (Vector2[])forces.Clone();
+        }
+
+        public override void Update(TimeSpan delta)
+        {
+            controlledObject.Position += impulse * (float)delta.TotalSeconds;
+            controlledObject.Rotation = Math.Sign(controlledObject.Scale.X) *
+                                        Math.Atan(impulse.Y / impulse.X);
+
+            foreach (Vector2 force in forces)
+            {
+                impulse += force;
+            }
+        }
+    }
+}

@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Scenes\BattleScene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\PhysicScript.cs" />
     <Compile Include="Scripts\ShootKeyboardControlScript.cs" />
     <Compile Include="Scripts\TrackKeyboardControlScript.cs" />
     <Compile Include="Scripts\TurretKeyboardControlScript.cs" />

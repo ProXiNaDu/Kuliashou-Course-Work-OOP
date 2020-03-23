@@ -88,6 +88,10 @@ namespace GameLibrary.Scripts
             rocket.Scale = controlledObject.Scale;
             rocket.Position = position;
             rocket.Rotation = rotation;
+            rocket.AddScript(new PhysicScript(
+                new Vector2((float) (-Math.Sign(controlledObject.Scale.X) * 3000 * Math.Cos(rotation)),
+                            (float) (-3000 * Math.Sin(rotation))),
+                new Vector2(0, 40)));
 
             return rocket;
         }
