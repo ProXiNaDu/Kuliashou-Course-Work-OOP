@@ -8,7 +8,7 @@ namespace GameEngineLibrary
     /// <summary>
     /// Класс, который описывает двухмерную текстуру.
     /// </summary>
-    public class Texture2D : IDisposable
+    public class Texture2D : IComponent, IDisposable
     {
         private bool disposed = false;
 

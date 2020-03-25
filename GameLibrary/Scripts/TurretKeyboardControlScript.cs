@@ -28,14 +28,15 @@ namespace GameLibrary.Scripts
         public override void Update(TimeSpan delta)
         {
             KeyboardState keyboard = Keyboard.GetState();
+            Transform transform = controlledObject.GetComponent("transform") as Transform;
 
-            if (keyboard[up] && controlledObject.Rotation < MAX_ANGLE)
+            if (keyboard[up] && transform.Rotation < MAX_ANGLE)
             {
-                controlledObject.Rotation += speed * delta.TotalSeconds;
+                transform.Rotation += speed * delta.TotalSeconds;
             }
-            if (keyboard[down] && controlledObject.Rotation > MIN_ANGLE)
+            if (keyboard[down] && transform.Rotation > MIN_ANGLE)
             {
-                controlledObject.Rotation -= speed * delta.TotalSeconds;
+                transform.Rotation -= speed * delta.TotalSeconds;
             }
         }
 

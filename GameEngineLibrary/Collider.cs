@@ -7,7 +7,7 @@ namespace GameEngineLibrary
     /// которая способна совершать проверки на
     /// пересечение с другими выпуклыми фигурами.
     /// </summary>
-    public class Collider
+    public class Collider : IComponent
     {
         /// <summary>
         /// Массив вершин выпуклой фигры.

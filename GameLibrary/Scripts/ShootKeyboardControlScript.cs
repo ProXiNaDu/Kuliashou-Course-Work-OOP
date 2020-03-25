@@ -41,40 +41,43 @@ namespace GameLibrary.Scripts
             }
             else if (keyboard[shoot])
             {
-                float x = rocketTex.Width * controlledObject.Scale.X;
-                float y = rocketTex.Height * controlledObject.Scale.Y;
+                Transform transform = controlledObject.GetComponent("transform") as Transform;
+                Texture2D texture = controlledObject.GetComponent("texture") as Texture2D;
+
+                float x = rocketTex.Width * transform.Scale.X;
+                float y = rocketTex.Height * transform.Scale.Y;
 
                 Vector2 spawnPoint = new Vector2(
-                    -controlledObject.Texture.Width * controlledObject.Scale.X,
-                    -controlledObject.Texture.Height * controlledObject.Scale.Y);
+                    -texture.Width * transform.Scale.X,
+                    -texture.Height * transform.Scale.Y);
 
                 spawnPoint = new Vector2(
-                    (float)(Math.Cos(controlledObject.Rotation *
-                            Math.Sign(controlledObject.Scale.X)) * spawnPoint.X -
-                            Math.Sin(controlledObject.Rotation *
-                            Math.Sign(controlledObject.Scale.X)) * spawnPoint.Y),
-                    (float)(Math.Sin(controlledObject.Rotation * 
-                            Math.Sign(controlledObject.Scale.X)) * spawnPoint.X +
-                            Math.Cos(controlledObject.Rotation *
-                            Math.Sign(controlledObject.Scale.X)) * spawnPoint.Y));
+                    (float)(Math.Cos(transform.Rotation *
+                            Math.Sign(transform.Scale.X)) * spawnPoint.X -
+                            Math.Sin(transform.Rotation *
+                            Math.Sign(transform.Scale.X)) * spawnPoint.Y),
+                    (float)(Math.Sin(transform.Rotation * 
+                            Math.Sign(transform.Scale.X)) * spawnPoint.X +
+                            Math.Cos(transform.Rotation *
+                            Math.Sign(transform.Scale.X)) * spawnPoint.Y));
 
                 Vector2 rocketPoint = new Vector2(
-                    (float)(Math.Cos(controlledObject.Rotation *
-                            -Math.Sign(controlledObject.Scale.X)) * -x -
-                            Math.Sin(controlledObject.Rotation *
-                            -Math.Sign(controlledObject.Scale.X)) * -y),
-                    (float)(Math.Sin(controlledObject.Rotation *
-                            -Math.Sign(controlledObject.Scale.X)) * -x +
-                            Math.Cos(controlledObject.Rotation *
-                            -Math.Sign(controlledObject.Scale.X)) * -y));
+                    (float)(Math.Cos(transform.Rotation *
+                            -Math.Sign(transform.Scale.X)) * -x -
+                            Math.Sin(transform.Rotation *
+                            -Math.Sign(transform.Scale.X)) * -y),
+                    (float)(Math.Sin(transform.Rotation *
+                            -Math.Sign(transform.Scale.X)) * -x +
+                            Math.Cos(transform.Rotation *
+                            -Math.Sign(transform.Scale.X)) * -y));
 
-                spawnPoint.Y += controlledObject.Texture.Height * controlledObject.Scale.Y / 2;
+                spawnPoint.Y += texture.Height * transform.Scale.Y / 2;
                 spawnPoint.X -= rocketPoint.X / 2;
                 spawnPoint.Y -= rocketPoint.Y / 2;
 
                 scene.AddGameObject(CreateRocket(
-                    controlledObject.Position + spawnPoint,
-                    controlledObject.Rotation));
+                    transform.Position + spawnPoint,
+                    transform.Rotation));
 
                 lastShoot = 0;
                 isCooldown = true;
@@ -83,16 +86,16 @@ namespace GameLibrary.Scripts
 
         private GameObject CreateRocket(Vector2 position, double rotation)
         {
-            GameObject rocket = new GameObject(rocketTex);
-            rocket.RotationPoint = new Vector2(rocketTex.Width / 2, rocketTex.Height / 2);
-            rocket.Scale = controlledObject.Scale;
-            rocket.Position = position;
-            rocket.Rotation = rotation;
+            Transform transform = controlledObject.GetComponent("transform") as Transform;
+            GameObject rocket = new GameObject(rocketTex, position,
+                new Vector2(rocketTex.Width / 2, rocketTex.Height / 2),
+                transform.Scale, rotation);
+            rocket.AddScript(new RocketHitScript(scene));
             rocket.AddScript(new PhysicScript(
-                new Vector2((float) (-Math.Sign(controlledObject.Scale.X) * 3000 * Math.Cos(rotation)),
+                new Vector2((float) (-Math.Sign(transform.Scale.X) * 3000 * Math.Cos(rotation)),
                             (float) (-3000 * Math.Sin(rotation))),
                 new Vector2(0, 40)));
-
+            
             return rocket;
         }
 

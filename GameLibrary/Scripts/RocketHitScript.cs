@@ -9,6 +9,9 @@ namespace GameLibrary.Scripts
     /// </summary>
     public class RocketHitScript : Script
     {
+        /// <summary>
+        /// Сцена, на которой обрабатываются попадания.
+        /// </summary>
         private Scene scene;
 
         /// <summary>
@@ -25,13 +28,16 @@ namespace GameLibrary.Scripts
             controlledObject.UpdateColliderToTexture();
 
             GameObject[] objects = scene.GetGameObjects().ToArray();
+            Collider thisCollider = controlledObject.GetComponent("collider") as Collider;
             foreach (GameObject gameObject in objects)
             {
+                Collider collider = gameObject.GetComponent("collider") as Collider;
                 if (gameObject != controlledObject &&
-                    gameObject.Collider != null &&
-                    gameObject.Collider.CheckCollision(controlledObject.Collider))
+                    collider != null &&
+                    collider.CheckCollision(thisCollider))
                 {
-                    //
+                    scene.RemoveGameObject(controlledObject);
+                    scene.RemoveGameObject(gameObject);
                 }
             }
         }

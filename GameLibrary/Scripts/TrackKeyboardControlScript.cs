@@ -26,15 +26,18 @@ namespace GameLibrary.Scripts
         public override void Update(TimeSpan delta)
         {
             KeyboardState keyboard = Keyboard.GetState();
+            Transform transform = controlledObject.GetComponent("transform") as Transform;
 
             if (keyboard[left])
             {
-                controlledObject.Position -= speed * (float)delta.TotalSeconds;
+                transform.Position -= speed * (float)delta.TotalSeconds;
             }
             if (keyboard[right])
             {
-                controlledObject.Position += speed * (float)delta.TotalSeconds;
+                transform.Position += speed * (float)delta.TotalSeconds;
             }
+
+            controlledObject.UpdateColliderToTexture();
         }
 
         /// <summary>

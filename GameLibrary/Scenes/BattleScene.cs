@@ -32,9 +32,9 @@ namespace GameLibrary
 
             Texture2D backgroundTex = Texture2D.LoadTexture(BACKGROUND_TEXTURE_PATH);
             AddTexture(backgroundTex);
-            GameObject background = new GameObject(backgroundTex);
-            background.Scale = new Vector2(5, 5);
-            background.Position = new Vector2((float)-windowWidth, (float)-windowHeight);
+            GameObject background = new GameObject(backgroundTex, 
+                new Vector2((float)-windowWidth, (float)-windowHeight),
+                Vector2.Zero, new Vector2(5, 5), 0);
             AddGameObject(background);
 
             TrackKeyboardControlScript firstPanzerControl = new TrackKeyboardControlScript(300f);
@@ -59,10 +59,17 @@ namespace GameLibrary
             GameObject secondPanzer = BuildPanzer(Color.FromArgb(20, 140, 120),
                 new Vector2(5, 5), secondPanzerControl, secondTurretControl, secondShootControl);
 
-            firstPanzer.Position = new Vector2((float) -windowWidth * 3 / 4,
-                (float)windowHeight - firstPanzer.Texture.Height * 14);
-            secondPanzer.Position = new Vector2((float) windowWidth * 3 / 4,
-                (float)windowHeight - secondPanzer.Texture.Height * 14);
+            Transform transform;
+            Texture2D texture;
+            transform = firstPanzer.GetComponent("transform") as Transform;
+            texture = firstPanzer.GetComponent("texture") as Texture2D;
+            transform.Position = new Vector2((float) -windowWidth * 3 / 4,
+                (float)windowHeight - texture.Height * 14);
+
+            transform = secondPanzer.GetComponent("transform") as Transform;
+            texture = secondPanzer.GetComponent("texture") as Texture2D;
+            transform.Position = new Vector2((float) windowWidth * 3 / 4,
+                (float)windowHeight - texture.Height * 14);
 
             AddGameObject(firstPanzer);
             AddGameObject(secondPanzer);
@@ -78,13 +85,9 @@ namespace GameLibrary
             AddTexture(trackTex);
             AddTexture(turretTex);
 
-            GameObject panzer = new GameObject(trackTex);
-            GameObject turret = new GameObject(turretTex);
+            GameObject panzer = new GameObject(trackTex, Vector2.Zero, Vector2.Zero, scale, 0);
+            GameObject turret = new GameObject(turretTex, new Vector2(5 * scale.X, -4 * scale.Y), new Vector2(16, 4), scale, 0);
             panzer.AddInnerObject(turret);
-            panzer.Scale = scale;
-            turret.Scale = scale;
-            turret.Position = new Vector2(5 * scale.X, -4 * scale.Y);
-            turret.RotationPoint = new Vector2(16, 4);
 
             panzer.AddScript(trackController);
             turret.AddScript(turretController);

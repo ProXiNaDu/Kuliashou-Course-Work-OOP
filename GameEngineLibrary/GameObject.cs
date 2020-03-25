@@ -11,85 +11,17 @@ namespace GameEngineLibrary
     {
         private bool disposed = false;
 
+        private Dictionary<string, IComponent> components;
+
         /// <summary>
         /// Список добавленных скриптов.
         /// </summary>
         private List<Script> scripts;
 
         /// <summary>
-        /// Объект-родитель для данного объекта.
-        /// </summary>
-        public GameObject Parent { get; protected set; }
-
-        /// <summary>
         /// Список внутренних объектов.
         /// </summary>
         public List<GameObject> InnerObjects { get; private set; }
-
-        /// <summary>
-        /// Текстура объекта.
-        /// </summary>
-        public Texture2D Texture { get; private set; }
-
-        /// <summary>
-        /// Коллайдер объекта.
-        /// </summary>
-        public Collider Collider { get; private set; }
-
-        /// <summary>
-        /// Точка, вокруг которой будет поворачиваться объект.
-        /// </summary>
-        public Vector2 RotationPoint { get; set; }
-
-        private Vector2 localPosition;
-        /// <summary>
-        /// Позиция объекта.
-        /// </summary>
-        public Vector2 Position
-        {
-            get
-            {
-                return (Parent == null) ?
-                    localPosition :
-                    Parent.Position + localPosition;
-            }
-            set
-            {
-                localPosition = value;
-            }
-        }
-
-        /// <summary>
-        /// Масштабирование объект.
-        /// </summary>
-        public Vector2 Scale { get; set; }
-
-        /// <summary>
-        /// Угол поворота объекта.
-        /// </summary>
-        public double Rotation { get; set; }
-
-        /// <summary>
-        /// Создание нового игрового объекта.
-        /// </summary>
-        public GameObject()
-        {
-            Position = Vector2.Zero;
-            RotationPoint = Vector2.Zero;
-            Scale = Vector2.One;
-            Rotation = 0;
-            InnerObjects = new List<GameObject>();
-            scripts = new List<Script>();
-        }
-
-        /// <summary>
-        /// Создание нового игрового объекта с текстурой.
-        /// </summary>
-        /// <param name="texture">Текстура объекта.</param>
-        public GameObject(Texture2D texture) : this()
-        {
-            Texture = texture;
-        }
 
         /// <summary>
         /// Создание нового игрового объекта.
@@ -102,13 +34,38 @@ namespace GameEngineLibrary
         public GameObject(Texture2D texture, Vector2 position,
             Vector2 rotationPoint, Vector2 scale, double rotation)
         {
-            Texture = texture;
-            Position = position;
-            RotationPoint = rotationPoint;
-            Scale = scale;
-            Rotation = rotation;
             InnerObjects = new List<GameObject>();
             scripts = new List<Script>();
+            components = new Dictionary<string, IComponent>();
+
+            Transform transform = new Transform();
+            transform.Position = position;
+            transform.RotationPoint = rotationPoint;
+            transform.Scale = scale;
+            transform.Rotation = rotation;
+
+            components["transform"] = transform;
+
+            if (texture != null)
+            {
+                components["texture"] = texture;
+            }
+        }
+
+        /// <summary>
+        /// Создание нового игрового объекта.
+        /// </summary>
+        public GameObject() : this(null, Vector2.Zero, Vector2.Zero, Vector2.One, 0)
+        {
+        }
+
+        /// <summary>
+        /// Создание нового игрового объекта с текстурой.
+        /// </summary>
+        /// <param name="texture">Текстура объекта.</param>
+        public GameObject(Texture2D texture) : this()
+        {
+            components["texture"] = texture;
         }
 
         /// <summary>
@@ -120,7 +77,11 @@ namespace GameEngineLibrary
         public void AddInnerObject(GameObject gameObject)
         {
             InnerObjects.Add(gameObject);
-            gameObject.Parent = this;
+            Transform transform = gameObject.GetComponent("transform") as Transform;
+            if (transform != null)
+            {
+                transform.Parent = this;
+            }
         }
 
         /// <summary>
@@ -132,7 +93,11 @@ namespace GameEngineLibrary
         public void RemoveInnerObject(GameObject gameObject)
         {
             InnerObjects.Remove(gameObject);
-            gameObject.Parent = null;
+            Transform transform = gameObject.GetComponent("transform") as Transform;
+            if (transform != null)
+            {
+                transform.Parent = null;
+            }
         }
 
         /// <summary>
@@ -163,7 +128,7 @@ namespace GameEngineLibrary
         /// <param name="collider">Новый коллайдер.</param>
         public void SetCollider(Collider collider)
         {
-            Collider = collider;
+            components["collider"] = collider;
         }
 
         /// <summary>
@@ -171,13 +136,16 @@ namespace GameEngineLibrary
         /// </summary>
         public void UpdateColliderToTexture()
         {
-            float x = Position.X;
-            float y = Position.Y;
-            float width = Texture.Width * Scale.X;
-            float height = Texture.Height * Scale.Y;
-            float rotationX = RotationPoint.X * Scale.X;
-            float rotationY = RotationPoint.Y * Scale.Y;
-            double angle = Rotation * Math.Sign(Scale.X);
+            Transform transform = GetComponent("transform") as Transform;
+            Texture2D texture = GetComponent("texture") as Texture2D;
+
+            float x = transform.Position.X;
+            float y = transform.Position.Y;
+            float width = texture.Width * transform.Scale.X;
+            float height = texture.Height * transform.Scale.Y;
+            float rotationX = transform.RotationPoint.X * transform.Scale.X;
+            float rotationY = transform.RotationPoint.Y * transform.Scale.Y;
+            double angle = transform.Rotation * Math.Sign(transform.Scale.X);
 
             Vector2[] vertices = new Vector2[]
             {
@@ -203,7 +171,7 @@ namespace GameEngineLibrary
                 vertices[i].Y += y;
             }
 
-            Collider = new Collider(vertices);
+            SetCollider(new Collider(vertices));
         }
 
         /// <summary>
@@ -222,25 +190,16 @@ namespace GameEngineLibrary
             }
         }
 
-        public override bool Equals(object obj)
+        /// <summary>
+        /// Получение компонентов объекта по названию.
+        /// </summary>
+        /// <param name="key">Название компонента.</param>
+        /// <returns></returns>
+        public IComponent GetComponent(string key)
         {
-            return obj is GameObject go &&
-                   EqualityComparer<Texture2D>.Default.Equals(Texture, go.Texture) &&
-                   RotationPoint.Equals(go.RotationPoint) &&
-                   Position.Equals(go.Position) &&
-                   Scale.Equals(go.Scale) &&
-                   Rotation == go.Rotation;
-        }
-
-        public override int GetHashCode()
-        {
-            var hashCode = 421840917;
-            hashCode = hashCode * -1521134295 + EqualityComparer<Texture2D>.Default.GetHashCode(Texture);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Vector2>.Default.GetHashCode(RotationPoint);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Vector2>.Default.GetHashCode(Position);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Vector2>.Default.GetHashCode(Scale);
-            hashCode = hashCode * -1521134295 + Rotation.GetHashCode();
-            return hashCode;
+            IComponent component;
+            components.TryGetValue(key, out component);
+            return component;
         }
 
         public void Dispose()
@@ -255,7 +214,8 @@ namespace GameEngineLibrary
             {
                 if (disposing)
                 {
-                    Texture.Dispose();
+                    Texture2D texture = GetComponent("texture") as Texture2D;
+                    texture.Dispose();
                 }
 
                 disposed = true;

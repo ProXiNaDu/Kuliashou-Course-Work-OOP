@@ -51,10 +51,16 @@ namespace GameEngineLibrary
         /// <param name="gameObject">Объект для отрисовки.</param>
         private void RenderObject(GameObject gameObject)
         {
-            Texture2D texture = gameObject.Texture;
-            Vector2 rotationPoint = gameObject.RotationPoint;
-            Vector2 position = gameObject.Position;
-            double rotation = gameObject.Rotation;
+            Texture2D texture = gameObject.GetComponent("texture") as Texture2D;
+            Transform transform = gameObject.GetComponent("transform") as Transform;
+            if (texture == null || transform == null)
+            {
+                return;
+            }
+
+            Vector2 rotationPoint = transform.RotationPoint;
+            Vector2 position = transform.Position;
+            double rotation = transform.Rotation;
             Vector2[] vertices = new Vector2[4]
             {
                 new Vector2(0, 0),
@@ -82,7 +88,7 @@ namespace GameEngineLibrary
                             Math.Cos(rotation) * vertices[i].Y));
                 vertices[i].X += rotationPoint.X;
                 vertices[i].Y += rotationPoint.Y;
-                vertices[i] *= gameObject.Scale;
+                vertices[i] *= transform.Scale;
                 vertices[i] += position;
 
                 GL.Vertex2(vertices[i]);
