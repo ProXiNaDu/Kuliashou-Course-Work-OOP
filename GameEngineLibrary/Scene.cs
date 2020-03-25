@@ -8,7 +8,14 @@ namespace GameEngineLibrary
     /// </summary>
     public abstract class Scene : IDisposable
     {
+        /// <summary>
+        /// Ширина окна, в котором отрисовывается сцена.
+        /// </summary>
         protected readonly double windowWidth;
+
+        /// <summary>
+        /// Высота окна, в котором отрисовывается сцена. 
+        /// </summary>
         protected readonly double windowHeight;
 
         /// <summary>
