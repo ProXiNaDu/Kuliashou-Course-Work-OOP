@@ -13,13 +13,13 @@ namespace GameEngineLibrary
         /// <summary>
         /// Сцена для отрисовки.
         /// </summary>
-        private IScene scene;
+        private Scene scene;
 
         /// <summary>
         /// Создание нового объекта для отрисовки объектов на сцене.
         /// </summary>
         /// <param name="scene">Сцена, которую будет рендерить объект.</param>
-        public Renderer(IScene scene)
+        public Renderer(Scene scene)
         {
             this.scene = scene;
         }
@@ -95,7 +95,7 @@ namespace GameEngineLibrary
         /// Устанавливает сцену для отрисовки.
         /// </summary>
         /// <param name="scene">Новая сцена для отрисовки.</param>
-        public void SetSceneToRender(IScene scene)
+        public void SetSceneToRender(Scene scene)
         {
             this.scene = scene;
         }

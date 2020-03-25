@@ -15,7 +15,7 @@ namespace GameUserInterface
         /// <summary>
         /// Сцена, которая будет отрисовываться на экране.
         /// </summary>
-        private IScene scene;
+        private Scene scene;
 
         /// <summary>
         /// Отрисовщик сцены.

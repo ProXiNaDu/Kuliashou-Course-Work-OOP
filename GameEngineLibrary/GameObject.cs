@@ -12,6 +12,11 @@ namespace GameEngineLibrary
         private bool disposed = false;
 
         /// <summary>
+        /// Список добавленных скриптов.
+        /// </summary>
+        private List<Script> scripts;
+
+        /// <summary>
         /// Объект-родитель для данного объекта.
         /// </summary>
         public GameObject Parent { get; protected set; }
@@ -20,11 +25,6 @@ namespace GameEngineLibrary
         /// Список внутренних объектов.
         /// </summary>
         public List<GameObject> InnerObjects { get; private set; }
-
-        /// <summary>
-        /// Список добавленных скриптов.
-        /// </summary>
-        public List<Script> Scripts { get; private set; }
 
         /// <summary>
         /// Текстура объекта.
@@ -79,7 +79,7 @@ namespace GameEngineLibrary
             Scale = Vector2.One;
             Rotation = 0;
             InnerObjects = new List<GameObject>();
-            Scripts = new List<Script>();
+            scripts = new List<Script>();
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace GameEngineLibrary
             Scale = scale;
             Rotation = rotation;
             InnerObjects = new List<GameObject>();
-            Scripts = new List<Script>();
+            scripts = new List<Script>();
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace GameEngineLibrary
         /// <param name="script">Скрипт для добавления.</param>
         public void AddScript(Script script)
         {
-            Scripts.Add(script);
+            scripts.Add(script);
             script.SetControlledObject(this);
         }
 
@@ -153,7 +153,7 @@ namespace GameEngineLibrary
         /// <param name="script">Скрипт для удаления.</param>
         public void RemoveScript(Script script)
         {
-            Scripts.Remove(script);
+            scripts.Remove(script);
             script.SetControlledObject(null);
         }
 
@@ -175,12 +175,51 @@ namespace GameEngineLibrary
             float y = Position.Y;
             float width = Texture.Width * Scale.X;
             float height = Texture.Height * Scale.Y;
-            Collider = new Collider(new Vector2[] {
-                new Vector2(x, y),
-                new Vector2(x, y + height),
-                new Vector2(x + width, y + height),
-                new Vector2(x + width, y),
-            });
+            float rotationX = RotationPoint.X * Scale.X;
+            float rotationY = RotationPoint.Y * Scale.Y;
+            double angle = Rotation * Math.Sign(Scale.X);
+
+            Vector2[] vertices = new Vector2[]
+            {
+                new Vector2(width, 0),
+                new Vector2(width, height),
+                new Vector2(0, height),
+                new Vector2(0, 0),
+            };
+
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                vertices[i].X -= rotationX;
+                vertices[i].Y -= rotationY;
+                vertices[i] = new Vector2(
+                    (float)(Math.Cos(angle) * vertices[i].X -
+                            Math.Sin(angle) * vertices[i].Y),
+                    (float)(Math.Sin(angle) * vertices[i].X +
+                            Math.Cos(angle) * vertices[i].Y));
+                vertices[i].X += rotationX;
+                vertices[i].Y += rotationY;
+
+                vertices[i].X += x;
+                vertices[i].Y += y;
+            }
+
+            Collider = new Collider(vertices);
+        }
+
+        /// <summary>
+        /// Обновить состояние объекта.
+        /// </summary>
+        /// <param name="delta">Время, прошедшее между кадрами.</param>
+        public void Update(TimeSpan delta)
+        {
+            foreach (Script script in scripts)
+            {
+                script.Update(delta);
+            }
+            foreach (GameObject gameObject in InnerObjects)
+            {
+                gameObject.Update(delta);
+            }
         }
 
         public override bool Equals(object obj)

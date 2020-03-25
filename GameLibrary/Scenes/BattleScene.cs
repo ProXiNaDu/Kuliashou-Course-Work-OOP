@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using GameEngineLibrary;
 using GameLibrary.Scripts;
 using OpenTK;
@@ -10,72 +8,34 @@ namespace GameLibrary
     /// <summary>
     /// Сцена танкового сражения в игре.
     /// </summary>
-    public class BattleScene : IScene
+    public class BattleScene : Scene
     {
         private const string TRACK_TEXTURE_PATH = @"../../../GameLibrary/Resources/Track.bmp";
         private const string TURRET_TEXTURE_PATH = @"../../../GameLibrary/Resources/Turret.bmp";
         private const string BACKGROUND_TEXTURE_PATH = @"../../../GameLibrary/Resources/BG.bmp";
         private const string ROCKET_TEXTURE_PATH = @"../../../GameLibrary/Resources/Rocket.bmp";
 
-        private readonly double windowWidth;  
-        private readonly double windowHeight;
-
-        /// <summary>
-        /// Список созданных текстур.
-        /// </summary>
-        private List<Texture2D> textures;
-
-        /// <summary>
-        /// Список объектов на сцене.
-        /// </summary>
-        private List<GameObject> objects;
-
-        /// <summary>
-        /// Временный массив с объектами, который нужен
-        /// для возможности добавления объектов на сцену
-        /// во время выполнения скриптов.
-        /// </summary>
-        private List<GameObject> objectsToAdd;
-
-        /// <summary>
-        /// Временный массив с объектами, который нужен
-        /// для возможности удаления объектов со сцены
-        /// во время выполнения скриптов.
-        /// </summary>
-        private List<GameObject> objectsToRemove;
-
-        /// <summary>
-        /// Список объектов на сцене для отрисовки.
-        /// </summary>
-        private List<GameObject> objectsToRender;
-
         /// <summary>
         /// Создание сцены.
         /// </summary>
         /// <param name="windowWidth">Ширина окна, в котором будет отображаться сцена.</param>
         /// <param name="windowHeight">Высота окна, в котором будет отображаться сцена.</param>
-        public BattleScene(double windowWidth, double windowHeight)
+        public BattleScene(double windowWidth, double windowHeight) 
+            : base (windowWidth, windowHeight)
         {
-            this.windowWidth = windowWidth;
-            this.windowHeight = windowHeight;
-            textures = new List<Texture2D>();
-            objects = new List<GameObject>();
-            objectsToRender = new List<GameObject>();
-            objectsToRemove = new List<GameObject>();
-            objectsToAdd = new List<GameObject>();
         }
 
-        public void Init()
+        public override void Init()
         {
             Texture2D rocketTex = Texture2D.LoadTexture(ROCKET_TEXTURE_PATH);
-            textures.Add(rocketTex);
+            AddTexture(rocketTex);
 
             Texture2D backgroundTex = Texture2D.LoadTexture(BACKGROUND_TEXTURE_PATH);
-            textures.Add(backgroundTex);
+            AddTexture(backgroundTex);
             GameObject background = new GameObject(backgroundTex);
             background.Scale = new Vector2(5, 5);
             background.Position = new Vector2((float)-windowWidth, (float)-windowHeight);
-            objectsToRender.Add(background);
+            AddGameObject(background);
 
             TrackKeyboardControlScript firstPanzerControl = new TrackKeyboardControlScript(300f);
             firstPanzerControl.SetKeyToMoveLeft(OpenTK.Input.Key.A);
@@ -104,8 +64,8 @@ namespace GameLibrary
             secondPanzer.Position = new Vector2((float) windowWidth * 3 / 4,
                 (float)windowHeight - secondPanzer.Texture.Height * 14);
 
-            objectsToRender.Add(firstPanzer);
-            objectsToRender.Add(secondPanzer);
+            AddGameObject(firstPanzer);
+            AddGameObject(secondPanzer);
         }
 
         private GameObject BuildPanzer(Color color, Vector2 scale, Script trackController, Script turretController, Script shootController)
@@ -114,8 +74,9 @@ namespace GameLibrary
             Texture2D turretTex = Texture2D.LoadTexture(TURRET_TEXTURE_PATH);
             trackTex.Color = color;
             turretTex.Color = color;
-            textures.Add(trackTex);
-            textures.Add(turretTex);
+
+            AddTexture(trackTex);
+            AddTexture(turretTex);
 
             GameObject panzer = new GameObject(trackTex);
             GameObject turret = new GameObject(turretTex);
@@ -129,72 +90,7 @@ namespace GameLibrary
             turret.AddScript(turretController);
             turret.AddScript(shootController);
 
-            objects.Add(panzer);
-            objects.Add(turret);
-
             return panzer;
-        }
-
-        public void Update(TimeSpan delta)
-        {
-            foreach (GameObject gameObject in objects)
-            {
-                foreach (Script script in gameObject.Scripts)
-                {
-                    script.Update(delta);
-                }
-            }
-            UpdateObjectsArray();
-        }
-
-        /// <summary>
-        /// Метод, позволяющий обновлять количество объектов для обработки динамически.
-        /// </summary>
-        private void UpdateObjectsArray()
-        {
-            if (objectsToRemove.Count != 0)
-            {
-                foreach (GameObject gameObject in objectsToRemove)
-                {
-                    objects.Remove(gameObject);
-                }
-                objectsToRemove.Clear();
-            }
-            if (objectsToAdd.Count != 0)
-            {
-                objects.AddRange(objectsToAdd);
-                objectsToAdd.Clear();
-            }
-        }
-
-        public List<GameObject> GetGameObjects()
-        {
-            return objectsToRender;
-        }
-
-        public void AddGameObject(GameObject gameObject)
-        {
-            objectsToAdd.Add(gameObject);
-            objectsToRender.Add(gameObject);
-        }
-
-        public void RemoveGameObject(GameObject gameObject)
-        {
-            objectsToRemove.Add(gameObject);
-            objectsToRender.Remove(gameObject);
-        }
-
-        public void Dispose()
-        {
-            foreach (Texture2D texture in textures)
-            {
-                texture.Dispose();
-            }
-
-            foreach (GameObject gameObject in objects)
-            {
-                gameObject.Dispose();
-            }
         }
     }
 }

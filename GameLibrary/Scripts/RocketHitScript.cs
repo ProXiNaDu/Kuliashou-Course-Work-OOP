@@ -9,19 +9,21 @@ namespace GameLibrary.Scripts
     /// </summary>
     public class RocketHitScript : Script
     {
-        private IScene scene;
+        private Scene scene;
 
         /// <summary>
         /// Создание скрипта, отвечающего за обрапотку попаданий ракеты.
         /// </summary>
         /// <param name="scene">Сцена, в которой будет проверяться столкновения.</param>
-        public RocketHitScript(IScene scene)
+        public RocketHitScript(Scene scene)
         {
             this.scene = scene;
         }
 
         public override void Update(TimeSpan delta)
         {
+            controlledObject.UpdateColliderToTexture();
+
             GameObject[] objects = scene.GetGameObjects().ToArray();
             foreach (GameObject gameObject in objects)
             {

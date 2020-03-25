@@ -10,7 +10,7 @@ namespace GameLibrary.Scripts
     /// </summary>
     public class ShootKeyboardControlScript : Script
     {
-        private readonly IScene scene;
+        private readonly Scene scene;
         private readonly Texture2D rocketTex;
         private Key shoot;
         private readonly double cooldown;
@@ -20,7 +20,7 @@ namespace GameLibrary.Scripts
         /// <summary>
         /// Создание контроллера для выстрелов танка.
         /// </summary>
-        public ShootKeyboardControlScript(IScene scene, Texture2D rocketTex, double cooldown)
+        public ShootKeyboardControlScript(Scene scene, Texture2D rocketTex, double cooldown)
         {
             this.cooldown = cooldown;
             this.scene = scene;
