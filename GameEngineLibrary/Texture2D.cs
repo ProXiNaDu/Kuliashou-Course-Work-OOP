@@ -10,12 +10,12 @@ namespace GameEngineLibrary
     /// </summary>
     public class Texture2D : IComponent, IDisposable
     {
-        private bool disposed = false;
+        protected bool disposed = false;
 
         /// <summary>
         /// Идентификатор текстуры.
         /// </summary>
-        public int ID { get; private set; }
+        public virtual int ID { get; private set; }
         /// <summary>
         /// Ширина текстуры.
         /// </summary>
@@ -100,7 +100,7 @@ namespace GameEngineLibrary
             return hashCode;
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             if (disposed)
                 return;
