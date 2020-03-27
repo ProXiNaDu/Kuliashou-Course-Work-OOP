@@ -27,6 +27,12 @@ namespace GameLibrary.Scripts
         public override void Update(TimeSpan delta)
         {
             controlledObject.UpdateColliderToTexture();
+            
+            if (CheckBounds())
+            {
+                scene.RemoveGameObject(controlledObject);
+                return;
+            }
 
             GameObject[] objects = scene.GetGameObjects().ToArray();
             Collider thisCollider = controlledObject.GetComponent("collider") as Collider;
@@ -58,6 +64,19 @@ namespace GameLibrary.Scripts
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Проверка рокины на выход за границы экрана.
+        /// </summary>
+        /// <returns>True, если ракета за границами экрана.</returns>
+        private bool CheckBounds()
+        {
+            Transform transform = controlledObject.GetComponent("transform") as Transform;
+            return transform.Position.X >  scene.GameWindow.Width  ||
+                   transform.Position.X < -scene.GameWindow.Width  ||
+                   transform.Position.Y >  scene.GameWindow.Height ||
+                   transform.Position.Y < -scene.GameWindow.Height;
         }
     }
 }

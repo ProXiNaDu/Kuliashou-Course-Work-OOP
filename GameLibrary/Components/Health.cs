@@ -2,28 +2,49 @@
 
 namespace GameLibrary.Components
 {
+    /// <summary>
+    /// Компонент, который отвечает за здоровье у объекта.
+    /// </summary>
     public class Health : IComponent
     {
-        private int health;
+        /// <summary>
+        /// Количество здоровья у объекта.
+        /// </summary>
+        public int Value { get; private set; }
 
+        /// <summary>
+        /// Создание компонента здоровья.
+        /// </summary>
         public Health()
         {
-            health = 100;
+            Value = 100;
         }
 
-        public void Damage(int damage)
+        /// <summary>
+        /// Нанесение повреждения объекту.
+        /// </summary>
+        /// <param name="damage">Количество повреждений, нанесенных объекту.</param>
+        public virtual void Damage(int damage)
         {
-            health -= damage;
+            Value -= damage;
         }
 
-        public void Heal(int health)
+        /// <summary>
+        /// Увеличение здоровья объекта на заданное число.
+        /// </summary>
+        /// <param name="health">Количество исцеленного здоровья.</param>
+        public virtual void Heal(int health)
         {
-            this.health += health;
+            this.Value += health;
         }
 
-        public bool IsAlive()
+        /// <summary>
+        /// Проверка, жив ли объект.
+        /// </summary>
+        /// <returns>True, если объект ещё жив.</returns>
+        public virtual bool IsAlive()
         {
-            return health > 0;
+            return Value > 0;
         }
     }
 }

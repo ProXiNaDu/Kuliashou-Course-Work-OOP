@@ -3,6 +3,7 @@ using GameEngineLibrary;
 using OpenTK;
 using System;
 using GameLibrary.Components;
+using GameLibrary.Components.RocketDecorators;
 
 namespace GameLibrary.Scripts
 {
@@ -91,7 +92,7 @@ namespace GameLibrary.Scripts
             GameObject rocket = new GameObject(rocketTex, position,
                 new Vector2(rocketTex.Width / 2, rocketTex.Height / 2),
                 transform.Scale, rotation);
-            rocket.AddComponent("rocket", new Rocket());
+            rocket.AddComponent("rocket", new DoubleDamageRocket(new Rocket()));
             rocket.AddScript(new RocketHitScript(scene));
             rocket.AddScript(new PhysicScript(
                 new Vector2((float) (-Math.Sign(transform.Scale.X) * 3000 * Math.Cos(rotation)),

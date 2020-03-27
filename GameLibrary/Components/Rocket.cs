@@ -4,7 +4,7 @@ namespace GameLibrary.Components
 {
     public class Rocket : IComponent
     {
-        public int Damage { get; }
+        public virtual int Damage { get; }
 
         public Rocket()
         {

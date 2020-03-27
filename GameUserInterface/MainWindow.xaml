@@ -12,7 +12,28 @@
         <glWpfControl:GLWpfControl
             x:Name="OpenTKControl"
             Render="OpenTKControl_Render"
-            Ready="OpenTKControl_Ready"
-            />
+            Ready="OpenTKControl_Ready"/>
+        <ProgressBar 
+            x:Name="FirstPanzerHealth"
+            Minimum="0"
+            Maximum="100"
+            Value="100"
+            Foreground="DarkRed"
+            Margin="10" 
+            Width="100" 
+            Height="15"
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top"/>
+        <ProgressBar 
+            x:Name="SecondPanzerHealth"
+            Minimum="0"
+            Maximum="100"
+            Value="100"
+            Foreground="DarkRed"
+            Margin="10" 
+            Width="100" 
+            Height="15"
+            HorizontalAlignment="Right" 
+            VerticalAlignment="Top"/>
     </Grid>
 </Window>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace GameEngineLibrary
 {
@@ -9,14 +10,9 @@ namespace GameEngineLibrary
     public abstract class Scene : IDisposable
     {
         /// <summary>
-        /// Ширина окна, в котором отрисовывается сцена.
+        /// Окно, в котором отрисовывается сцена.
         /// </summary>
-        protected readonly double windowWidth;
-
-        /// <summary>
-        /// Высота окна, в котором отрисовывается сцена. 
-        /// </summary>
-        protected readonly double windowHeight;
+        public Window GameWindow { get; }
 
         /// <summary>
         /// Список созданных текстур.
@@ -45,12 +41,10 @@ namespace GameEngineLibrary
         /// <summary>
         /// Создание сцены.
         /// </summary>
-        /// <param name="windowWidth">Ширина окна, в котором будет отображаться сцена.</param>
-        /// <param name="windowHeight">Высота окна, в котором будет отображаться сцена.</param>
-        public Scene(double windowWidth, double windowHeight)
+        /// <param name="window">Окно, в котором отрисовывается сцена.</param>
+        public Scene(Window window)
         {
-            this.windowWidth = windowWidth;
-            this.windowHeight = windowHeight;
+            GameWindow = window;
 
             textures = new List<Texture2D>();
             objects = new List<GameObject>();

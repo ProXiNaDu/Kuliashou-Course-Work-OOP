@@ -1,6 +1,9 @@
 ﻿using System.Drawing;
+using System.Windows;
+using System.Windows.Controls;
 using GameEngineLibrary;
 using GameLibrary.Components;
+using GameLibrary.Components.HealthDecorators;
 using GameLibrary.Scripts;
 using OpenTK;
 
@@ -20,10 +23,9 @@ namespace GameLibrary
         /// <summary>
         /// Создание сцены.
         /// </summary>
-        /// <param name="windowWidth">Ширина окна, в котором будет отображаться сцена.</param>
-        /// <param name="windowHeight">Высота окна, в котором будет отображаться сцена.</param>
-        public BattleScene(double windowWidth, double windowHeight) 
-            : base (windowWidth, windowHeight)
+        /// <param name="window">Окно, в котором будет отрисовываться сцена.</param>
+        public BattleScene(Window window) 
+            : base (window)
         {
         }
 
@@ -35,7 +37,7 @@ namespace GameLibrary
             Texture2D backgroundTex = Texture2D.LoadTexture(BACKGROUND_TEXTURE_PATH);
             AddTexture(backgroundTex);
             GameObject background = new GameObject(backgroundTex, 
-                new Vector2((float)-windowWidth, (float)-windowHeight),
+                new Vector2((float)-GameWindow.Width, (float)-GameWindow.Height),
                 Vector2.Zero, new Vector2(5, 5), 0);
             AddGameObject(background);
             Texture2D mountainTex = Texture2D.LoadTexture(MOUNTAIN_TEXTURE_PATH);
@@ -68,27 +70,29 @@ namespace GameLibrary
             secondShootControl.SetKey(OpenTK.Input.Key.Enter);
 
             GameObject firstPanzer = BuildPanzer(Color.FromArgb(200, 120, 60),
-                new Vector2(-5, 5), firstPanzerControl, firstTurretControl, firstShootControl);
+                new Vector2(-5, 5), firstPanzerControl, firstTurretControl,
+                firstShootControl, (ProgressBar)GameWindow.FindName("FirstPanzerHealth"));
             GameObject secondPanzer = BuildPanzer(Color.FromArgb(20, 140, 120),
-                new Vector2(5, 5), secondPanzerControl, secondTurretControl, secondShootControl);
+                new Vector2(5, 5), secondPanzerControl, secondTurretControl, 
+                secondShootControl, (ProgressBar)GameWindow.FindName("SecondPanzerHealth"));
 
             Transform transform;
             Texture2D texture;
             transform = firstPanzer.GetComponent("transform") as Transform;
             texture = firstPanzer.GetComponent("texture") as Texture2D;
-            transform.Position = new Vector2((float) -windowWidth * 3 / 4,
-                (float)windowHeight - texture.Height * 14);
+            transform.Position = new Vector2((float) -GameWindow.Width * 3 / 4,
+                (float)GameWindow.Height - texture.Height * 14);
 
             transform = secondPanzer.GetComponent("transform") as Transform;
             texture = secondPanzer.GetComponent("texture") as Texture2D;
-            transform.Position = new Vector2((float) windowWidth * 3 / 4,
-                (float)windowHeight - texture.Height * 14);
+            transform.Position = new Vector2((float)GameWindow.Width * 3 / 4,
+                (float)GameWindow.Height - texture.Height * 14);
 
             AddGameObject(firstPanzer);
             AddGameObject(secondPanzer);
         }
 
-        private GameObject BuildPanzer(Color color, Vector2 scale, Script trackController, Script turretController, Script shootController)
+        private GameObject BuildPanzer(Color color, Vector2 scale, Script trackController, Script turretController, Script shootController, ProgressBar healthBar)
         {
             Texture2D trackTex = Texture2D.LoadTexture(TRACK_TEXTURE_PATH);
             Texture2D turretTex = Texture2D.LoadTexture(TURRET_TEXTURE_PATH);
@@ -101,8 +105,8 @@ namespace GameLibrary
             GameObject panzer = new GameObject(trackTex, Vector2.Zero, Vector2.Zero, scale, 0);
             GameObject turret = new GameObject(turretTex, new Vector2(5 * scale.X, -4 * scale.Y), new Vector2(16, 4), scale, 0);
             panzer.AddInnerObject(turret);
-            panzer.AddComponent("health", new Health());
-
+            panzer.AddComponent("health", 
+                new ProgressBarHealth(new Health(), healthBar));
             panzer.AddScript(trackController);
             turret.AddScript(turretController);
             turret.AddScript(shootController);

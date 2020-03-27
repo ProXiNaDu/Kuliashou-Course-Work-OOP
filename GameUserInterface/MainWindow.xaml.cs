@@ -26,7 +26,7 @@ namespace GameUserInterface
         {
             InitializeComponent();
 
-            scene = new BattleScene(Width, Height);
+            scene = new BattleScene(this);
 
             var settings = new GLWpfControlSettings();
             settings.MajorVersion = 3;
