@@ -68,6 +68,10 @@ namespace GameEngineLibrary
             {
                 gameObject.Update(delta);
             }
+            foreach (Animation2D animation in textures)
+            {
+                animation.Update(delta);
+            }
             UpdateObjectsArray();
         }
 
