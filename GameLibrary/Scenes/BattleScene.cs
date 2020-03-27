@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using GameEngineLibrary;
+using GameLibrary.Components;
 using GameLibrary.Scripts;
 using OpenTK;
 
@@ -14,6 +15,7 @@ namespace GameLibrary
         private const string TURRET_TEXTURE_PATH = @"../../../GameLibrary/Resources/Turret.bmp";
         private const string BACKGROUND_TEXTURE_PATH = @"../../../GameLibrary/Resources/BG.bmp";
         private const string ROCKET_TEXTURE_PATH = @"../../../GameLibrary/Resources/Rocket.bmp";
+        private const string MOUNTAIN_TEXTURE_PATH = @"../../../GameLibrary/Resources/Mountain.bmp";
 
         /// <summary>
         /// Создание сцены.
@@ -36,6 +38,17 @@ namespace GameLibrary
                 new Vector2((float)-windowWidth, (float)-windowHeight),
                 Vector2.Zero, new Vector2(5, 5), 0);
             AddGameObject(background);
+            Texture2D mountainTex = Texture2D.LoadTexture(MOUNTAIN_TEXTURE_PATH);
+            AddTexture(mountainTex);
+            GameObject mountain = new GameObject(mountainTex,
+                new Vector2(-mountainTex.Width * 5 / 2, 80),
+                Vector2.Zero, new Vector2(5, 5), 0);
+            mountain.SetCollider(new Collider(new Vector2[] { 
+                new Vector2(mountainTex.Width * 5 / 2, 80 + mountainTex.Height * 5),
+                new Vector2(-mountainTex.Width * 5 / 2, 80 + mountainTex.Height * 5),
+                new Vector2(-20, 80)
+            }));
+            AddGameObject(mountain);
 
             TrackKeyboardControlScript firstPanzerControl = new TrackKeyboardControlScript(300f);
             firstPanzerControl.SetKeyToMoveLeft(OpenTK.Input.Key.A);
@@ -88,6 +101,7 @@ namespace GameLibrary
             GameObject panzer = new GameObject(trackTex, Vector2.Zero, Vector2.Zero, scale, 0);
             GameObject turret = new GameObject(turretTex, new Vector2(5 * scale.X, -4 * scale.Y), new Vector2(16, 4), scale, 0);
             panzer.AddInnerObject(turret);
+            panzer.AddComponent("health", new Health());
 
             panzer.AddScript(trackController);
             turret.AddScript(turretController);

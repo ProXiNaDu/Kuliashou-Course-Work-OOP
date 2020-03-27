@@ -1,4 +1,5 @@
 ﻿using GameEngineLibrary;
+using GameLibrary.Components;
 using System;
 
 namespace GameLibrary.Scripts
@@ -37,7 +38,24 @@ namespace GameLibrary.Scripts
                     collider.CheckCollision(thisCollider))
                 {
                     scene.RemoveGameObject(controlledObject);
-                    scene.RemoveGameObject(gameObject);
+
+                    if (gameObject.GetComponent("rocket") is Rocket)
+                    {
+                        scene.RemoveGameObject(gameObject);
+                        return;
+                    }
+
+                    Rocket rocket = controlledObject.GetComponent("rocket") as Rocket;
+                    Health health = gameObject.GetComponent("health") as Health;
+                    if (health != null)
+                    {
+                        health.Damage(rocket.Damage);
+                        if (!health.IsAlive())
+                        {
+                            scene.RemoveGameObject(gameObject);
+                        }
+                        return;
+                    }
                 }
             }
         }

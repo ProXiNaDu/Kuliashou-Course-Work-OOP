@@ -202,6 +202,16 @@ namespace GameEngineLibrary
             return component;
         }
 
+        /// <summary>
+        /// Добавление компонента объекту.
+        /// </summary>
+        /// <param name="key">Название компонента.</param>
+        /// <param name="component">Компонент для добавления.</param>
+        public void AddComponent(string key, IComponent component)
+        {
+            components[key] = component;
+        }
+
         public void Dispose()
         {
             Dispose(true);
