@@ -69,9 +69,9 @@ namespace GameLibrary
             TurretKeyboardControlScript secondTurretControl = new TurretKeyboardControlScript(2);
             secondTurretControl.SetKeyToTurnUp(OpenTK.Input.Key.Up);
             secondTurretControl.SetKeyToTurnDown(OpenTK.Input.Key.Down);
-            ShootKeyboardControlScript firstShootControl = new ShootKeyboardControlScript(this, rocketTex, explosionAnim, 500);
+            ShootKeyboardControlScript firstShootControl = new ShootKeyboardControlScript(this, rocketTex, explosionAnim);
             firstShootControl.SetKey(OpenTK.Input.Key.Space);
-            ShootKeyboardControlScript secondShootControl = new ShootKeyboardControlScript(this, rocketTex, explosionAnim, 500);
+            ShootKeyboardControlScript secondShootControl = new ShootKeyboardControlScript(this, rocketTex, explosionAnim);
             secondShootControl.SetKey(OpenTK.Input.Key.Enter);
 
             GameObject firstPanzer = BuildPanzer(Color.FromArgb(200, 120, 60),

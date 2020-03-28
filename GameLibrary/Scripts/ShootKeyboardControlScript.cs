@@ -16,16 +16,16 @@ namespace GameLibrary.Scripts
         private readonly Texture2D rocketTex;
         private readonly Animation2D explosionAnim;
         private Key shoot;
-        private readonly double cooldown;
-        private double lastShoot;
+        private int cooldown;
+        private int lastShoot;
         private bool isCooldown;
 
         /// <summary>
         /// Создание контроллера для выстрелов танка.
         /// </summary>
-        public ShootKeyboardControlScript(Scene scene, Texture2D rocketTex, Animation2D explosionAnim, double cooldown)
+        public ShootKeyboardControlScript(Scene scene, Texture2D rocketTex, Animation2D explosionAnim)
         {
-            this.cooldown = cooldown;
+            cooldown = 0;
             this.scene = scene;
             this.rocketTex = rocketTex;
             this.explosionAnim = explosionAnim;
@@ -37,7 +37,7 @@ namespace GameLibrary.Scripts
 
             if (isCooldown)
             {
-                lastShoot += delta.TotalMilliseconds;
+                lastShoot += delta.Milliseconds;
                 if (lastShoot >= cooldown)
                 {
                     isCooldown = false;
@@ -79,10 +79,14 @@ namespace GameLibrary.Scripts
                 spawnPoint.X -= rocketPoint.X / 2;
                 spawnPoint.Y -= rocketPoint.Y / 2;
 
-                scene.AddGameObject(CreateRocket(
+                GameObject rocket = CreateRocket(
                     transform.Position + spawnPoint,
-                    transform.Rotation));
+                    transform.Rotation);
 
+                scene.AddGameObject(rocket);
+
+                Rocket rocketComponent = rocket.GetComponent("rocket") as Rocket;
+                cooldown = rocketComponent.Cooldown;
                 lastShoot = 0;
                 isCooldown = true;
             }
@@ -94,7 +98,7 @@ namespace GameLibrary.Scripts
             GameObject rocket = new GameObject(rocketTex, position,
                 new Vector2(rocketTex.Width / 2, rocketTex.Height / 2),
                 transform.Scale, rotation);
-            rocket.AddComponent("rocket", new DoubleDamageRocket(new Rocket()));
+            rocket.AddComponent("rocket", new HalfCooldownRocket(new DoubleDamageRocket(new Rocket())));
             rocket.AddScript(new RocketHitScript(scene, explosionAnim));
             rocket.AddScript(new PhysicScript(
                 new Vector2((float) (-Math.Sign(transform.Scale.X) * 3000 * Math.Cos(rotation)),

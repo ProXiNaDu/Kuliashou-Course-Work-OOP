@@ -51,7 +51,10 @@
     <Compile Include="Components\Health.cs" />
     <Compile Include="Components\HealthDecorators\ProgressBarHealth.cs" />
     <Compile Include="Components\Rocket.cs" />
+    <Compile Include="Components\RocketDecorators\DoubleCooldownRocket.cs" />
     <Compile Include="Components\RocketDecorators\DoubleDamageRocket.cs" />
+    <Compile Include="Components\RocketDecorators\HalfCooldownRocket.cs" />
+    <Compile Include="Components\RocketDecorators\HalfDamageRocket.cs" />
     <Compile Include="Scenes\BattleScene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\AutoDestroyScript.cs" />

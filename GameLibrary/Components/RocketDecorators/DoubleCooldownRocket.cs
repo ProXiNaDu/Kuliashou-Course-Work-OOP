@@ -2,33 +2,33 @@
 {
     /// <summary>
     /// Декоратор компонента Rocket,
-    /// который увеличивает урон от ракеты в 2 раза.
+    /// который увеличивает время перезарядки в 2 раза.
     /// </summary>
-    public class DoubleDamageRocket : Rocket
+    public class DoubleCooldownRocket : Rocket
     {
         /// <summary>
         /// Декорируемый экземпляр.
         /// </summary>
         private Rocket rocket;
 
+        public override int Damage => rocket.Damage;
+
         /// <summary>
-        /// Урон, увеличенный в 2 раза.
+        /// Перезарядка, увеличенный в 2 раза.
         /// </summary>
-        public override int Damage
+        public override int Cooldown
         {
             get
             {
-                return rocket.Damage * 2;
+                return rocket.Cooldown * 2;
             }
         }
 
-        public override int Cooldown => rocket.Cooldown;
-
         /// <summary>
-        /// Создание нового декоратора, который увеичивает урон в 2 раза.
+        /// Создание нового декоратора, который увеичивает время перезарядки в 2 раза.
         /// </summary>
         /// <param name="rocket">Декорируемый экземпляр.</param>
-        public DoubleDamageRocket(Rocket rocket)
+        public DoubleCooldownRocket(Rocket rocket)
         {
             this.rocket = rocket;
         }
