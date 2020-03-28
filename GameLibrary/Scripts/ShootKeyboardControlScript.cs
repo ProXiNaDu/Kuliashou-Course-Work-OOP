@@ -14,6 +14,7 @@ namespace GameLibrary.Scripts
     {
         private readonly Scene scene;
         private readonly Texture2D rocketTex;
+        private readonly Animation2D explosionAnim;
         private Key shoot;
         private readonly double cooldown;
         private double lastShoot;
@@ -22,11 +23,12 @@ namespace GameLibrary.Scripts
         /// <summary>
         /// Создание контроллера для выстрелов танка.
         /// </summary>
-        public ShootKeyboardControlScript(Scene scene, Texture2D rocketTex, double cooldown)
+        public ShootKeyboardControlScript(Scene scene, Texture2D rocketTex, Animation2D explosionAnim, double cooldown)
         {
             this.cooldown = cooldown;
             this.scene = scene;
             this.rocketTex = rocketTex;
+            this.explosionAnim = explosionAnim;
         }
 
         public override void Update(TimeSpan delta)
@@ -93,7 +95,7 @@ namespace GameLibrary.Scripts
                 new Vector2(rocketTex.Width / 2, rocketTex.Height / 2),
                 transform.Scale, rotation);
             rocket.AddComponent("rocket", new DoubleDamageRocket(new Rocket()));
-            rocket.AddScript(new RocketHitScript(scene));
+            rocket.AddScript(new RocketHitScript(scene, explosionAnim));
             rocket.AddScript(new PhysicScript(
                 new Vector2((float) (-Math.Sign(transform.Scale.X) * 3000 * Math.Cos(rotation)),
                             (float) (-3000 * Math.Sin(rotation))),

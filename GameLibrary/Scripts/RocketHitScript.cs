@@ -16,19 +16,26 @@ namespace GameLibrary.Scripts
         private Scene scene;
 
         /// <summary>
+        /// Анимация взрыва ракеты.
+        /// </summary>
+        private Animation2D explosionAnim;
+
+        /// <summary>
         /// Создание скрипта, отвечающего за обрапотку попаданий ракеты.
         /// </summary>
         /// <param name="scene">Сцена, в которой будет проверяться столкновения.</param>
-        public RocketHitScript(Scene scene)
+        /// <param name="explosionAnim">Анимация взрыва.</param>
+        public RocketHitScript(Scene scene, Animation2D explosionAnim)
         {
             this.scene = scene;
+            this.explosionAnim = explosionAnim;
         }
 
         public override void Update(TimeSpan delta)
         {
             controlledObject.UpdateColliderToTexture();
-            
-            if (CheckBounds())
+            Transform transform = controlledObject.GetComponent("transform") as Transform;
+            if (CheckBounds(transform))
             {
                 scene.RemoveGameObject(controlledObject);
                 return;
@@ -43,6 +50,16 @@ namespace GameLibrary.Scripts
                     collider != null &&
                     collider.CheckCollision(thisCollider))
                 {
+                    GameObject explosion = new GameObject(new Animation2D(explosionAnim), 
+                        new OpenTK.Vector2(transform.Position.X + transform.RotationPoint.X *
+                                           transform.Scale.X - explosionAnim.Width / 2 * transform.Scale.X,
+                                           transform.Position.Y + transform.RotationPoint.Y *
+                                           transform.Scale.Y - explosionAnim.Height / 2 * transform.Scale.Y), 
+                        new OpenTK.Vector2(explosionAnim.Width / 2, explosionAnim.Height / 2),
+                        transform.Scale, 0);
+
+                    explosion.AddScript(new AutoDestroyScript(scene, explosionAnim.AnimationTime));
+                    scene.AddGameObject(explosion);
                     scene.RemoveGameObject(controlledObject);
 
                     if (gameObject.GetComponent("rocket") is Rocket)
@@ -69,10 +86,10 @@ namespace GameLibrary.Scripts
         /// <summary>
         /// Проверка рокины на выход за границы экрана.
         /// </summary>
+        /// <param name="transform">Проверяемая позиция.</param>
         /// <returns>True, если ракета за границами экрана.</returns>
-        private bool CheckBounds()
+        private bool CheckBounds(Transform transform)
         {
-            Transform transform = controlledObject.GetComponent("transform") as Transform;
             return transform.Position.X >  scene.GameWindow.Width  ||
                    transform.Position.X < -scene.GameWindow.Width  ||
                    transform.Position.Y >  scene.GameWindow.Height ||

@@ -21,11 +21,6 @@ namespace GameEngineLibrary
         private int index;
 
         /// <summary>
-        /// Время анимации.
-        /// </summary>
-        private int animationTime;
-
-        /// <summary>
         /// Время, прошедшее с начала анимации.
         /// </summary>
         private int currentTime;
@@ -39,6 +34,11 @@ namespace GameEngineLibrary
         }
 
         /// <summary>
+        /// Время анимации.
+        /// </summary>
+        public int AnimationTime { get; set; }
+
+        /// <summary>
         /// Создание анимации.
         /// </summary>
         /// <param name="animationId">Массив идентификаторов изображений в анимации.</param>
@@ -48,18 +48,22 @@ namespace GameEngineLibrary
             : base(animationId[0], width, height)
         {
             index = 0;
-            animationTime = 1;
+            AnimationTime = 1;
             currentTime = 0;
             this.animationId = animationId;
         }
 
         /// <summary>
-        /// Установка времени анимации.
+        /// Конструктор копирования анимации.
+        /// Его стоит использовать для передачи анимаций объектам,
+        /// чтобы не захватывать лишние неуправляемые ресурсы.
         /// </summary>
-        /// <param name="milliseconds">Время анимации в миллисекундах.</param>
-        public void SetAnimationTime(int milliseconds)
+        /// <param name="animation"></param>
+        public Animation2D(Animation2D animation) 
+            : this(animation.animationId, animation.Width, animation.Height)
         {
-            animationTime = milliseconds;
+            disposed = true;
+            AnimationTime = animation.AnimationTime;
         }
 
         /// <summary>
@@ -69,12 +73,12 @@ namespace GameEngineLibrary
         public void Update(TimeSpan delta)
         {
             currentTime += delta.Milliseconds;
-            if (currentTime >= animationTime)
+            if (currentTime >= AnimationTime)
             {
                 currentTime = 0;
             }
 
-            double deltaTime = (double)currentTime / animationTime;
+            double deltaTime = (double)currentTime / AnimationTime;
             index = (int)(animationId.Length * deltaTime);
         }
 
@@ -127,10 +131,10 @@ namespace GameEngineLibrary
 
                 GL.TexParameter(TextureTarget.Texture2D,
                     TextureParameterName.TextureMinFilter,
-                    (int)TextureMinFilter.Linear);
+                    (int)TextureMinFilter.Nearest);
                 GL.TexParameter(TextureTarget.Texture2D,
                     TextureParameterName.TextureMagFilter,
-                    (int)TextureMagFilter.Linear);
+                    (int)TextureMagFilter.Nearest);
 
                 sprite.UnlockBits(data);
 

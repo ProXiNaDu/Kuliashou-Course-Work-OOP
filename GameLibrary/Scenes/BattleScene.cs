@@ -19,6 +19,7 @@ namespace GameLibrary
         private const string BACKGROUND_TEXTURE_PATH = @"../../../GameLibrary/Resources/BG.bmp";
         private const string ROCKET_TEXTURE_PATH = @"../../../GameLibrary/Resources/Rocket.bmp";
         private const string MOUNTAIN_TEXTURE_PATH = @"../../../GameLibrary/Resources/Mountain.bmp";
+        private const string EXPLOSION_ANIMATION_PATH = @"../../../GameLibrary/Resources/Explosion.bmp";
 
         /// <summary>
         /// Создание сцены.
@@ -33,6 +34,10 @@ namespace GameLibrary
         {
             Texture2D rocketTex = Texture2D.LoadTexture(ROCKET_TEXTURE_PATH);
             AddTexture(rocketTex);
+
+            Animation2D explosionAnim = Animation2D.LoadAnimation(EXPLOSION_ANIMATION_PATH, 5);
+            explosionAnim.AnimationTime = 120;
+            AddTexture(explosionAnim);
 
             Texture2D backgroundTex = Texture2D.LoadTexture(BACKGROUND_TEXTURE_PATH);
             AddTexture(backgroundTex);
@@ -64,9 +69,9 @@ namespace GameLibrary
             TurretKeyboardControlScript secondTurretControl = new TurretKeyboardControlScript(2);
             secondTurretControl.SetKeyToTurnUp(OpenTK.Input.Key.Up);
             secondTurretControl.SetKeyToTurnDown(OpenTK.Input.Key.Down);
-            ShootKeyboardControlScript firstShootControl = new ShootKeyboardControlScript(this, rocketTex, 500);
+            ShootKeyboardControlScript firstShootControl = new ShootKeyboardControlScript(this, rocketTex, explosionAnim, 500);
             firstShootControl.SetKey(OpenTK.Input.Key.Space);
-            ShootKeyboardControlScript secondShootControl = new ShootKeyboardControlScript(this, rocketTex, 500);
+            ShootKeyboardControlScript secondShootControl = new ShootKeyboardControlScript(this, rocketTex, explosionAnim, 500);
             secondShootControl.SetKey(OpenTK.Input.Key.Enter);
 
             GameObject firstPanzer = BuildPanzer(Color.FromArgb(200, 120, 60),
