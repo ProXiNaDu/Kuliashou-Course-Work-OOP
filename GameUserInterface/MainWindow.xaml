@@ -1,4 +1,4 @@
-﻿<Window x:Class="GameUserInterface.MainWindow"
+﻿<Window Name="PanzerGameWindow" x:Class="GameUserInterface.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,27 +13,386 @@
             x:Name="OpenTKControl"
             Render="OpenTKControl_Render"
             Ready="OpenTKControl_Ready"/>
-        <ProgressBar 
-            x:Name="FirstPanzerHealth"
-            Minimum="0"
-            Maximum="100"
-            Value="100"
-            Foreground="DarkRed"
-            Margin="10" 
-            Width="100" 
-            Height="15"
-            HorizontalAlignment="Left" 
-            VerticalAlignment="Top"/>
-        <ProgressBar 
-            x:Name="SecondPanzerHealth"
-            Minimum="0"
-            Maximum="100"
-            Value="100"
-            Foreground="DarkRed"
-            Margin="10" 
-            Width="100" 
-            Height="15"
-            HorizontalAlignment="Right" 
-            VerticalAlignment="Top"/>
+        <StackPanel x:Name="FirstPanzerInfo"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" 
+            Margin="10">
+            <ProgressBar 
+                x:Name="FirstPanzerHealth"
+                Minimum="0"
+                Maximum="100"
+                Value="100"
+                Foreground="DarkRed"
+                Width="100" 
+                Height="15"/>
+            <ProgressBar 
+                x:Name="FirstPanzerCooldown"
+                Minimum="0"
+                Maximum="100"
+                Value="100"
+                Foreground="DeepSkyBlue"
+                Width="100" 
+                Height="10"/>
+            <StackPanel 
+                Orientation="Horizontal"
+                HorizontalAlignment="Left">
+                <StackPanel>
+                    <Image Source="Resources\PowerfulRocket.bmp"
+                           RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           FlowDirection="RightToLeft"
+                           Margin="1"
+                           Height="15px"/>
+                    <Image Source="Resources\FastRocket.bmp"
+                           RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           FlowDirection="RightToLeft"
+                           Margin="1"
+                           Height="15px"/>
+                    <Image Source="Resources\Rocket.bmp"
+                           RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           FlowDirection="RightToLeft"
+                           Margin="1"
+                           Height="15px"/>
+                </StackPanel>
+                <StackPanel
+                    x:Name="FirstPanzerInventory">
+                    <Label Content="0" Height="15px" Padding="0" Margin="10 1 10 1"/>
+                    <Label Content="0" Height="15px" Padding="0" Margin="10 1 10 1"/>
+                    <Label Content="0" Height="15px" Padding="0" Margin="10 1 10 1"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel x:Name="SecondPanzerInfo"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top" 
+            Margin="10">
+            <ProgressBar 
+                x:Name="SecondPanzerHealth"
+                Minimum="0"
+                Maximum="100"
+                Value="100"
+                Foreground="DarkRed"
+                Width="100" 
+                Height="15"/>
+            <ProgressBar 
+                x:Name="SecondPanzerCooldown"
+                Minimum="0"
+                Maximum="100"
+                Value="100"
+                Foreground="DeepSkyBlue"
+                Width="100" 
+                Height="10"/>
+            <StackPanel 
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
+                <StackPanel
+                    x:Name="SecondPanzerInventory">
+                    <Label Content="0" Height="15px" Padding="0" Margin="10 1 10 1"/>
+                    <Label Content="0" Height="15px" Padding="0" Margin="10 1 10 1"/>
+                    <Label Content="0" Height="15px" Padding="0" Margin="10 1 10 1"/>
+                </StackPanel>
+                <StackPanel>
+                    <Image Source="Resources\PowerfulRocket.bmp"
+                           RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           Margin="1"
+                           Height="15px"/>
+                    <Image Source="Resources\FastRocket.bmp"
+                           RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           Margin="1"
+                           Height="15px"/>
+                    <Image Source="Resources\Rocket.bmp"
+                           RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           Margin="1"
+                           Height="15px"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel x:Name="MainMenu"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="200px">
+            <Button 
+                x:Name="PlayGameBtn" 
+                Content="Play"
+                Margin="5"
+                Click="PlayGameBtn_Click"/>
+            <Button 
+                x:Name="QuitGameBtn" 
+                Content="Quit"
+                Margin="5"
+                Click="QuitGameBtn_Click"/>
+        </StackPanel>
+        <Grid x:Name="RocketShop" 
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="First Player" 
+                   Margin="5"
+                   Grid.Column="0"
+                   Grid.Row="0"/>
+            <Label Content="Second Player" 
+                   Margin="5"
+                   Grid.Column="1"
+                   Grid.Row="0"/>
+
+            <Grid Grid.Column="0"
+                  Grid.Row="1"
+                  Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40px"/>
+                </Grid.RowDefinitions>
+                <Label Content="0" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right"/>
+                <Label Content="Money: " Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0"/>
+
+                <Image Source="Resources\PowerfulRocket.bmp"
+                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                       FlowDirection="RightToLeft" Margin="2"
+                       Height="15px" Grid.Row="2" Grid.Column="0"/>
+                <Image Source="Resources\FastRocket.bmp"
+                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                       FlowDirection="RightToLeft" Margin="2"
+                       Height="15px" Grid.Row="2" Grid.Column="1"/>
+                <Image Source="Resources\Rocket.bmp" 
+                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                       FlowDirection="RightToLeft" Margin="2"
+                       Height="15px" Grid.Row="2" Grid.Column="2"/>
+
+                <Label Content="5" 
+                       HorizontalAlignment="Center"
+                       Grid.Column="0"
+                       Grid.Row="1"/>
+                <Label Content="4" 
+                       HorizontalAlignment="Center"
+                       Grid.Column="1"
+                       Grid.Row="1"/>
+                <Label Content="3" 
+                       HorizontalAlignment="Center"
+                       Grid.Column="2"
+                       Grid.Row="1"/>
+
+                <Grid
+                    Grid.Row="3"
+                    Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="30px"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20px"/>
+                        <RowDefinition Height="20px"/>
+                    </Grid.RowDefinitions>
+                    <Label Name="FirstPanzerPowerfulRockets"
+                        Content="4"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"/>
+                    <Label Content="5" Visibility="Hidden"/>
+                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click"/>
+                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click"/>
+                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click"/>
+                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click"/>
+                </Grid>
+
+                <Grid
+                    Grid.Row="3"
+                    Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="30px"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20px"/>
+                        <RowDefinition Height="20px"/>
+                    </Grid.RowDefinitions>
+                    <Label Name="FirstPanzerFastRockets"
+                        Content="10"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"/>
+                    <Label Content="4" Visibility="Hidden"/>
+                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click"/>
+                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click"/>
+                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click"/>
+                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click"/>
+                </Grid>
+
+                <Grid
+                    Grid.Row="3"
+                    Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="30px"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20px"/>
+                        <RowDefinition Height="20px"/>
+                    </Grid.RowDefinitions>
+                    <Label Name="FirstPanzerRockets"
+                        Content="30"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"/>
+                    <Label Content="3" Visibility="Hidden"/>
+                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click"/>
+                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click"/>
+                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click"/>
+                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click"/>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1"
+                  Grid.Row="1"
+                  Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40px"/>
+                </Grid.RowDefinitions>
+                <Label Content="0" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right"/>
+                <Label Content="Money: " Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0"/>
+
+                <Image Source="Resources\PowerfulRocket.bmp"
+                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                       FlowDirection="RightToLeft" Margin="2"
+                       Height="15px" Grid.Row="2" Grid.Column="0"/>
+                <Image Source="Resources\FastRocket.bmp"
+                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                       FlowDirection="RightToLeft" Margin="2"
+                       Height="15px" Grid.Row="2" Grid.Column="1"/>
+                <Image Source="Resources\Rocket.bmp" 
+                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                       FlowDirection="RightToLeft" Margin="2"
+                       Height="15px" Grid.Row="2" Grid.Column="2"/>
+
+                <Label Content="5" 
+                       HorizontalAlignment="Center"
+                       Grid.Column="0"
+                       Grid.Row="1"/>
+                <Label Content="4" 
+                       HorizontalAlignment="Center"
+                       Grid.Column="1"
+                       Grid.Row="1"/>
+                <Label Content="3" 
+                       HorizontalAlignment="Center"
+                       Grid.Column="2"
+                       Grid.Row="1"/>
+
+                <Grid
+                    Grid.Row="3"
+                    Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="30px"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20px"/>
+                        <RowDefinition Height="20px"/>
+                    </Grid.RowDefinitions>
+                    <Label Name="SecondPanzerPowerfulRockets"
+                        Content="4"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"/>
+                    <Label Content="5" Visibility="Hidden"/>
+                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click"/>
+                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click"/>
+                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click"/>
+                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click"/>
+                </Grid>
+
+                <Grid
+                    Grid.Row="3"
+                    Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="30px"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20px"/>
+                        <RowDefinition Height="20px"/>
+                    </Grid.RowDefinitions>
+                    <Label Name="SecondPanzerFastRockets"
+                        Content="10"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"/>
+                    <Label Content="4" Visibility="Hidden"/>
+                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click"/>
+                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click"/>
+                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click"/>
+                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click"/>
+                </Grid>
+
+                <Grid
+                    Grid.Row="3"
+                    Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="30px"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20px"/>
+                        <RowDefinition Height="20px"/>
+                    </Grid.RowDefinitions>
+                    <Label Name="SecondPanzerRockets"
+                        Content="30"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"/>
+                    <Label Content="3" Visibility="Hidden"/>
+                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click"/>
+                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click"/>
+                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click"/>
+                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click"/>
+                </Grid>
+            </Grid>
+
+            <Button x:Name="StartGameBtn"
+                    Grid.ColumnSpan="2" 
+                    Content="Start" 
+                    Grid.Column="0"
+                    Grid.Row="2"
+                    Margin="5"
+                    Click="StartGameBtn_Click"/>
+        </Grid>
     </Grid>
 </Window>
