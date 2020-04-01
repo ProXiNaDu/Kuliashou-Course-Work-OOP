@@ -62,20 +62,22 @@ namespace GameLibrary
             GameObject mountain = new GameObject(mountainTex,
                 new Vector2(-mountainTex.Width * 5 / 2, 80),
                 Vector2.Zero, new Vector2(5, 5), 0);
-            mountain.SetCollider(new Collider(new Vector2[] { 
+            mountain.SetCollider(new Collider(new Vector2[] {
+                new Vector2(-20, 80),
                 new Vector2(mountainTex.Width * 5 / 2, 80 + mountainTex.Height * 5),
-                new Vector2(-mountainTex.Width * 5 / 2, 80 + mountainTex.Height * 5),
-                new Vector2(-20, 80)
+                new Vector2(-20, 80 + mountainTex.Height * 10),
+                new Vector2(-mountainTex.Width * 5 / 2, 80 + mountainTex.Height * 5)
+                
             }));
             AddGameObject(mountain);
 
-            TrackKeyboardControlScript firstPanzerControl = new TrackKeyboardControlScript(300f);
+            TrackKeyboardControlScript firstPanzerControl = new TrackKeyboardControlScript(this, 300f);
             firstPanzerControl.SetKeyToMoveLeft(OpenTK.Input.Key.A);
             firstPanzerControl.SetKeyToMoveRight(OpenTK.Input.Key.D);
             TurretKeyboardControlScript firstTurretControl = new TurretKeyboardControlScript(2);
             firstTurretControl.SetKeyToTurnUp(OpenTK.Input.Key.W);
             firstTurretControl.SetKeyToTurnDown(OpenTK.Input.Key.S);
-            TrackKeyboardControlScript secondPanzerControl = new TrackKeyboardControlScript(300f);
+            TrackKeyboardControlScript secondPanzerControl = new TrackKeyboardControlScript(this, 300f);
             secondPanzerControl.SetKeyToMoveLeft(OpenTK.Input.Key.Left);
             secondPanzerControl.SetKeyToMoveRight(OpenTK.Input.Key.Right);
             TurretKeyboardControlScript secondTurretControl = new TurretKeyboardControlScript(2);

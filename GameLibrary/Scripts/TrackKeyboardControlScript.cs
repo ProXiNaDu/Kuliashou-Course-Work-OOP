@@ -13,13 +13,16 @@ namespace GameLibrary.Scripts
         private Key left;
         private Key right;
         private Vector2 speed;
+        Scene scene;
 
         /// <summary>
         /// Создание контроллера для танка.
         /// </summary>
+        /// <param name="scene">Сцена, в которой происходит перемещение объекта.</param>
         /// <param name="speed">Скорость движения.</param>
-        public TrackKeyboardControlScript(float speed)
+        public TrackKeyboardControlScript(Scene scene, float speed)
         {
+            this.scene = scene;
             this.speed = new Vector2(speed, 0);
         }
 
@@ -28,16 +31,35 @@ namespace GameLibrary.Scripts
             KeyboardState keyboard = Keyboard.GetState();
             Transform transform = controlledObject.GetComponent("transform") as Transform;
 
+            Vector2 translate = Vector2.Zero;
+
             if (keyboard[left])
             {
-                transform.Position -= speed * (float)delta.TotalSeconds;
+                translate -= speed * (float)delta.TotalSeconds;
             }
             if (keyboard[right])
             {
-                transform.Position += speed * (float)delta.TotalSeconds;
+                translate += speed * (float)delta.TotalSeconds;
             }
 
+            transform.Position += translate;
+
             controlledObject.UpdateColliderToTexture();
+
+            Collider thisCollider = controlledObject.GetComponent("collider") as Collider;
+            foreach (GameObject gameObject in scene.GetGameObjects())
+            {
+                Collider collider = gameObject.GetComponent("collider") as Collider;
+                if (gameObject != controlledObject &&
+                    collider != null &&
+                    collider.CheckCollision(thisCollider))
+                {
+                    transform.Position -= translate;
+                    controlledObject.UpdateColliderToTexture();
+                    break;
+                }
+            }
+
         }
 
         /// <summary>
