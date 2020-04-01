@@ -188,7 +188,7 @@ namespace GameEngineLibrary
             {
                 gameObject.Update(delta);
             }
-            Animation2D animation = components["texture"] as Animation2D;
+            Animation2D animation = GetComponent("texture") as Animation2D;
             if (animation != null)
             {
                 animation.Update(delta);
