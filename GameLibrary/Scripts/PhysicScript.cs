@@ -34,7 +34,7 @@ namespace GameLibrary.Scripts
         public override void Update(TimeSpan delta)
         {
             Transform transform = controlledObject.GetComponent("transform") as Transform;
-            transform.Position += impulse * (float)delta.TotalSeconds;
+            transform.Position += impulse;
             transform.Rotation = Math.Sign(transform.Scale.X) *
                                         Math.Atan(impulse.Y / impulse.X);
 

@@ -98,9 +98,9 @@ namespace GameLibrary.Scripts
                 rocketTransform.Scale = transform.Scale;
 
                 rocket.AddScript(new PhysicScript(
-                    new Vector2((float)(-Math.Sign(transform.Scale.X) * 3000 * Math.Cos(transform.Rotation)),
-                                (float)(-3000 * Math.Sin(transform.Rotation))),
-                    new Vector2(0, 40)));
+                    new Vector2((float)(-Math.Sign(transform.Scale.X) * 15 * Math.Cos(transform.Rotation)),
+                                (float)(-15 * Math.Sin(transform.Rotation))) ,
+                    new Vector2(0, 0.2f)));
 
                 scene.AddGameObject(rocket);
 
