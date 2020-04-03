@@ -135,8 +135,13 @@ namespace GameLibrary
             transform.Position = new Vector2((float)GameWindow.Width * 3 / 4,
                 (float)GameWindow.Height - texture.Height * 14);
 
+            GameObject winChecker = new GameObject();
+            winChecker.AddScript(new WinCheckerScript(firstPanzer, secondPanzer,
+                GameWindow.FindName("WinMenu") as StackPanel));
+
             AddGameObject(firstPanzer);
             AddGameObject(secondPanzer);
+            AddGameObject(winChecker);
         }
 
         private GameObject BuildPanzer(Color color, Vector2 scale, Script trackController,

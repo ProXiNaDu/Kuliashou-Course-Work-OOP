@@ -121,6 +121,21 @@
                 Margin="5"
                 Click="QuitGameBtn_Click"/>
         </StackPanel>
+        <StackPanel x:Name="WinMenu"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="200px">
+            <Button 
+                x:Name="RestartGameBtn" 
+                Content="Restart"
+                Margin="5"
+                Click="RestartGameBtn_Click"/>
+            <Button 
+                x:Name="MainMenuBtn" 
+                Content="Main Menu"
+                Margin="5"
+                Click="MainMenuBtn_Click"/>
+        </StackPanel>
         <Grid x:Name="RocketShop" 
               HorizontalAlignment="Center"
               VerticalAlignment="Center">

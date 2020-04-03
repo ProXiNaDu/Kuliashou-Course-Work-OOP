@@ -14,9 +14,7 @@ namespace GameUserInterface
     /// </summary>
     public partial class MainWindow : Window
     {
-        public const int POWERFUL_ROCKET_COST = 5;
-        public const int FAST_ROCKET_COST = 4;
-        public const int ROCKET_COST = 3;
+        private BattleSceneSettings settings;
 
         /// <summary>
         /// Сцена, которая будет отрисовываться на экране.
@@ -37,6 +35,7 @@ namespace GameUserInterface
             FirstPanzerInfo.Visibility = Visibility.Hidden;
             SecondPanzerInfo.Visibility = Visibility.Hidden;
             RocketShop.Visibility = Visibility.Hidden;
+            WinMenu.Visibility = Visibility.Hidden;
 
             var settings = new GLWpfControlSettings();
             settings.MajorVersion = 3;
@@ -92,7 +91,7 @@ namespace GameUserInterface
 
             scene.Dispose();
 
-            BattleSceneSettings settings = new BattleSceneSettings();
+            settings = new BattleSceneSettings();
             int firstPanzerPowerfulRockets = int.Parse(FirstPanzerPowerfulRockets.Content.ToString());
             int firstPanzerFastRockets = int.Parse(FirstPanzerFastRockets.Content.ToString());
             int firstPanzerRockets = int.Parse(FirstPanzerRockets.Content.ToString());
@@ -126,6 +125,21 @@ namespace GameUserInterface
                 outputLabel.Content = value.ToString();
                 moneyLable.Content = money.ToString();
             }
+        }
+
+        private void RestartGameBtn_Click(object sender, RoutedEventArgs e)
+        {
+            WinMenu.Visibility = Visibility.Hidden;
+            scene.Dispose();
+            scene = new BattleScene(this, settings);
+            scene.Init();
+            renderer = new Renderer(scene);
+        }
+
+        private void MainMenuBtn_Click(object sender, RoutedEventArgs e)
+        {
+            WinMenu.Visibility = Visibility.Hidden;
+            MainMenu.Visibility = Visibility.Visible;
         }
     }
 }

@@ -26,6 +26,7 @@ namespace GameLibrary.Components.HealthDecorators
         {
             this.health = health;
             this.bar = bar;
+            bar.Value = health.Value;
         }
 
         public override void Damage(int damage)

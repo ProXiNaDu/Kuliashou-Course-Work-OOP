@@ -229,8 +229,10 @@ namespace GameEngineLibrary
             {
                 if (disposing)
                 {
-                    Texture2D texture = GetComponent("texture") as Texture2D;
-                    texture.Dispose();
+                    if (GetComponent("texture") is Texture2D texture)
+                    {
+                        texture.Dispose();
+                    }
                 }
 
                 disposed = true;

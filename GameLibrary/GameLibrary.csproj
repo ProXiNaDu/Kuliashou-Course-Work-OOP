@@ -67,6 +67,7 @@
     <Compile Include="Scripts\ShootKeyboardControlScript.cs" />
     <Compile Include="Scripts\TrackKeyboardControlScript.cs" />
     <Compile Include="Scripts\TurretKeyboardControlScript.cs" />
+    <Compile Include="Scripts\WinCheckerScript.cs" />
     <Compile Include="Scripts\WpfShootControlScript.cs" />
   </ItemGroup>
   <ItemGroup>
