@@ -5,6 +5,9 @@ using System;
 
 namespace GameLibrary.Scripts
 {
+    /// <summary>
+    /// Скрипт для управления переключением ракет при помощи клавиатуры.
+    /// </summary>
     public class KeyboardRocketSwitcherScript : Script
     {
         private Key next;
@@ -13,6 +16,10 @@ namespace GameLibrary.Scripts
         private int lastPressTime = 0;
         private const int COOLDOWN = 100;
 
+        /// <summary>
+        /// Обновление состояния скрипта.
+        /// </summary>
+        /// <param name="delta">Время, прошедшее с предыдущего кадра.</param>
         public override void Update(TimeSpan delta)
         {
             if (isCooldown)

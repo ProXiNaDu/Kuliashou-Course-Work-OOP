@@ -25,6 +25,11 @@ namespace GameEngineLibrary
         /// </summary>
         private int currentTime;
 
+        /// <summary>
+        /// Уникальный идентификатор текстуры,
+        /// которая должна отображаться в текущий
+        /// момент анимации.
+        /// </summary>
         public override int ID
         {
             get
@@ -144,6 +149,9 @@ namespace GameEngineLibrary
             return new Animation2D(idArr, spriteWidth, spriteHeight);
         }
 
+        /// <summary>
+        /// Уничтожение анимации.
+        /// </summary>
         public override void Dispose()
         {
             if (disposed)

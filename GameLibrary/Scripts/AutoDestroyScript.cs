@@ -34,6 +34,10 @@ namespace GameLibrary.Scripts
             destroyTime = milliseconds;
         }
 
+        /// <summary>
+        /// Обновление состояния скрипта.
+        /// </summary>
+        /// <param name="delta">Время, прошедшее с предыдущего кадра.</param>
         public override void Update(TimeSpan delta)
         {
             currentTime += delta.Milliseconds;

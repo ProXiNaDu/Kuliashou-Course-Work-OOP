@@ -110,17 +110,5 @@ namespace GameEngineLibrary
 
             return result;
         }
-
-        public void DrawCollider()
-        {
-            for (int i = 0, j = verteces.Length - 1; i < verteces.Length; j = i++)
-            {
-                GL.Begin(PrimitiveType.Lines);
-                GL.Color3(System.Drawing.Color.Red);
-                GL.Vertex2(verteces[i].X, verteces[i].Y);
-                GL.Vertex2(verteces[j].X, verteces[j].Y);
-                GL.End();
-            }
-        }
     }
 }

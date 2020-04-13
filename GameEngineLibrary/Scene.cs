@@ -126,7 +126,10 @@ namespace GameEngineLibrary
         {
             textures.Add(texture);
         }
-
+        
+        /// <summary>
+        /// Уничтожение сцены.
+        /// </summary>
         public void Dispose()
         {
             foreach (Texture2D texture in textures)

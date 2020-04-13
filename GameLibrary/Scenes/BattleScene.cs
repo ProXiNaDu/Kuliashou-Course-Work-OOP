@@ -38,6 +38,9 @@ namespace GameLibrary
             this.settings = settings;
         }
 
+        /// <summary>
+        /// Инициализация сцены.
+        /// </summary>
         public override void Init()
         {
             Texture2D rocketTex = Texture2D.LoadTexture(ROCKET_TEXTURE_PATH);

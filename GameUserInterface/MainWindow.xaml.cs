@@ -26,6 +26,9 @@ namespace GameUserInterface
         /// </summary>
         private Renderer renderer;
 
+        /// <summary>
+        /// Создание окна приложения.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();

@@ -217,12 +217,19 @@ namespace GameEngineLibrary
             components[key] = component;
         }
 
+        /// <summary>
+        /// Уничтожение игрового объекта.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Уничтожение игрового объекта.
+        /// </summary>
+        /// <param name="disposing">Если уже уничтожен.</param>
         public void Dispose(bool disposing)
         {
             if (!disposed)
@@ -239,6 +246,9 @@ namespace GameEngineLibrary
             }
         }
 
+        /// <summary>
+        /// Деструктор игрового объекта.
+        /// </summary>
         ~GameObject()
         {
             Dispose(false);

@@ -25,6 +25,10 @@ namespace GameLibrary.Scripts
             this.speed = speed;
         }
 
+        /// <summary>
+        /// Обновление состояния скрипта.
+        /// </summary>
+        /// <param name="delta">Время, прошедшее с предыдущего кадра.</param>
         public override void Update(TimeSpan delta)
         {
             KeyboardState keyboard = Keyboard.GetState();

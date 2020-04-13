@@ -10,6 +10,9 @@ namespace GameEngineLibrary
     /// </summary>
     public class Texture2D : IComponent, IDisposable
     {
+        /// <summary>
+        /// Переменная, отвечающая за состояние объекта.
+        /// </summary>
         protected bool disposed = false;
 
         /// <summary>
@@ -83,6 +86,11 @@ namespace GameEngineLibrary
             return new Texture2D(id, bitmap.Width, bitmap.Height);
         }
 
+        /// <summary>
+        /// Сравнение двух объектов.
+        /// </summary>
+        /// <param name="obj">Объект для сравнения.</param>
+        /// <returns>True, если объекты равны и false в противном случае.</returns>
         public override bool Equals(object obj)
         {
             return obj is Texture2D texture &&
@@ -91,6 +99,10 @@ namespace GameEngineLibrary
                    Height == texture.Height;
         }
 
+        /// <summary>
+        /// Получение hash-кода объекта.
+        /// </summary>
+        /// <returns>Целое число.</returns>
         public override int GetHashCode()
         {
             var hashCode = 1463928665;
@@ -100,6 +112,9 @@ namespace GameEngineLibrary
             return hashCode;
         }
 
+        /// <summary>
+        /// Уничтожение текстуры.
+        /// </summary>
         public virtual void Dispose()
         {
             if (disposed)

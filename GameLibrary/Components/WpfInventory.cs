@@ -31,6 +31,9 @@ namespace GameLibrary.Components
             selected = new SolidColorBrush(Color.FromRgb(191, 55, 160));
         }
 
+        /// <summary>
+        /// Выбор следующего предмета в инвентаре.
+        /// </summary>
         public override void SelectNext()
         {
             ((Label)inventory.Children[current]).Foreground = unselected;
@@ -38,6 +41,9 @@ namespace GameLibrary.Components
             ((Label)inventory.Children[current]).Foreground = selected;
         }
 
+        /// <summary>
+        /// Выбор предыдущего предмета в инвентаре.
+        /// </summary>
         public override void SelectPrevious()
         {
             ((Label)inventory.Children[current]).Foreground = unselected;
@@ -45,12 +51,18 @@ namespace GameLibrary.Components
             ((Label)inventory.Children[current]).Foreground = selected;
         }
 
+        /// <summary>
+        /// Установка количества предмета в инвентаре.
+        /// </summary>
         public override void SetAmount(int amount)
         {
             base.SetAmount(amount);
             ((Label)inventory.Children[current]).Content = amount;
         }
 
+        /// <summary>
+        /// Получение предмета из инвентаря.
+        /// </summary>
         public override GameObject GetRocket()
         {
             GameObject rocket = base.GetRocket();

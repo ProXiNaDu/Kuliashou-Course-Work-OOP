@@ -22,6 +22,9 @@
             }
         }
 
+        /// <summary>
+        /// Время до следующего выстрела ракетой.
+        /// </summary>
         public override int Cooldown => rocket.Cooldown;
 
         /// <summary>

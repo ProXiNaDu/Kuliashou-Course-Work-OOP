@@ -11,6 +11,9 @@
         /// </summary>
         private Rocket rocket;
 
+        /// <summary>
+        /// Урон ракеты.
+        /// </summary>
         public override int Damage => rocket.Damage;
 
         /// <summary>

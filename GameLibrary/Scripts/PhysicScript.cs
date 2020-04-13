@@ -31,6 +31,10 @@ namespace GameLibrary.Scripts
             this.forces = (Vector2[])forces.Clone();
         }
 
+        /// <summary>
+        /// Обновление состояния скрипта.
+        /// </summary>
+        /// <param name="delta">Время, прошедшее с предыдущего кадра.</param>
         public override void Update(TimeSpan delta)
         {
             Transform transform = controlledObject.GetComponent("transform") as Transform;

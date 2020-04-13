@@ -4,6 +4,9 @@ using GameEngineLibrary;
 
 namespace GameLibrary.Scripts
 {
+    /// <summary>
+    /// Скрипт, отображающий состояние перезарядки.
+    /// </summary>
     public class WpfShootControlScript : ShootKeyboardControlScript
     {
         /// <summary>
@@ -21,6 +24,10 @@ namespace GameLibrary.Scripts
             this.cooldown = cooldown;
         }
 
+        /// <summary>
+        /// Обновление состояния скрипта.
+        /// </summary>
+        /// <param name="delta">Время, прошедшее с предыдущего кадра.</param>
         public override void Update(TimeSpan delta)
         {
             base.Update(delta);
