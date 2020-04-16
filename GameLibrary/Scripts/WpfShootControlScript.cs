@@ -12,16 +12,28 @@ namespace GameLibrary.Scripts
         /// <summary>
         /// Индикатор, отображающий состояние перезарядки.
         /// </summary>
-        ProgressBar cooldown;
+        private ProgressBar cooldown;
+        private ShootKeyboardControlScript shootControlScript;
 
         /// <summary>
         /// Создание нового скрипта, который отображает состояние перезарядки на окно WPF.
         /// </summary>
         /// <param name="scene">Сцена, в которой происходит стрельба.</param>
         /// <param name="cooldown">Индикатор перезарядки.</param>
-        public WpfShootControlScript(Scene scene, ProgressBar cooldown) : base(scene)
+        /// <param name="shootControlScript">Декорируемый экземпдяр.</param>
+        public WpfShootControlScript(Scene scene, ProgressBar cooldown, ShootKeyboardControlScript shootControlScript) : base(scene)
         {
             this.cooldown = cooldown;
+            this.shootControlScript = shootControlScript;
+        }
+
+        /// <summary>
+        /// Инициализация скрипта.
+        /// </summary>
+        public override void Init()
+        {
+            shootControlScript.SetControlledObject(controlledObject);
+            shootControlScript.Init();
         }
 
         /// <summary>
@@ -30,7 +42,7 @@ namespace GameLibrary.Scripts
         /// <param name="delta">Время, прошедшее с предыдущего кадра.</param>
         public override void Update(TimeSpan delta)
         {
-            base.Update(delta);
+            shootControlScript.Update(delta);
             cooldown.Maximum = Cooldown;
             cooldown.Value = LastShoot;
         }

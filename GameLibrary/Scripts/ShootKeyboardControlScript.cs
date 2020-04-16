@@ -13,7 +13,11 @@ namespace GameLibrary.Scripts
     {
         private readonly Scene scene;
         private Key shoot;
-        private bool isCooldown;
+
+        /// <summary>
+        /// Поле, указывающее, находится ли на перезарядке танк.
+        /// </summary>
+        protected bool isCooldown;
 
         /// <summary>
         /// Время перезарядки.
@@ -45,73 +49,11 @@ namespace GameLibrary.Scripts
 
             if (isCooldown)
             {
-                LastShoot += delta.Milliseconds;
-                if (LastShoot >= Cooldown)
-                {
-                    isCooldown = false;
-                }
+                UpdateCooldown(delta);
             }
             else if (keyboard[shoot])
             {
-                Inventory inventory = controlledObject.GetComponent("inventory") as Inventory;
-                GameObject rocket = inventory.GetRocket();
-                if (rocket == null)
-                {
-                    return;
-                }
-
-                Transform transform = controlledObject.GetComponent("transform") as Transform;
-                Texture2D texture = controlledObject.GetComponent("texture") as Texture2D;
-                Texture2D rocketTex = rocket.GetComponent("texture") as Texture2D;
-
-                float x = rocketTex.Width * transform.Scale.X;
-                float y = rocketTex.Height * transform.Scale.Y;
-
-                Vector2 spawnPoint = new Vector2(
-                    -texture.Width * transform.Scale.X,
-                    -texture.Height * transform.Scale.Y);
-
-                spawnPoint = new Vector2(
-                    (float)(Math.Cos(transform.Rotation *
-                            Math.Sign(transform.Scale.X)) * spawnPoint.X -
-                            Math.Sin(transform.Rotation *
-                            Math.Sign(transform.Scale.X)) * spawnPoint.Y),
-                    (float)(Math.Sin(transform.Rotation * 
-                            Math.Sign(transform.Scale.X)) * spawnPoint.X +
-                            Math.Cos(transform.Rotation *
-                            Math.Sign(transform.Scale.X)) * spawnPoint.Y));
-
-                Vector2 rocketPoint = new Vector2(
-                    (float)(Math.Cos(transform.Rotation *
-                            -Math.Sign(transform.Scale.X)) * -x -
-                            Math.Sin(transform.Rotation *
-                            -Math.Sign(transform.Scale.X)) * -y),
-                    (float)(Math.Sin(transform.Rotation *
-                            -Math.Sign(transform.Scale.X)) * -x +
-                            Math.Cos(transform.Rotation *
-                            -Math.Sign(transform.Scale.X)) * -y));
-
-                spawnPoint.Y += texture.Height * transform.Scale.Y / 2;
-                spawnPoint.X -= rocketPoint.X / 2;
-                spawnPoint.Y -= rocketPoint.Y / 2;
-
-                
-                Transform rocketTransform = rocket.GetComponent("transform") as Transform;
-                rocketTransform.Position = transform.Position + spawnPoint;
-                rocketTransform.Rotation = transform.Rotation;
-                rocketTransform.Scale = transform.Scale;
-
-                rocket.AddScript(new PhysicScript(
-                    new Vector2((float)(-Math.Sign(transform.Scale.X) * 15 * Math.Cos(transform.Rotation)),
-                                (float)(-15 * Math.Sin(transform.Rotation))) ,
-                    new Vector2(0, 0.2f)));
-
-                scene.AddGameObject(rocket);
-
-                Rocket rocketComponent = rocket.GetComponent("rocket") as Rocket;
-                Cooldown = rocketComponent.Cooldown;
-                LastShoot = 0;
-                isCooldown = true;
+                Shoot();
             }
         }
 
@@ -122,6 +64,85 @@ namespace GameLibrary.Scripts
         public void SetKey(Key key)
         {
             shoot = key;
+        }
+
+        /// <summary>
+        /// Обновление состояния перезарядки.
+        /// </summary>
+        /// <param name="delta">Время, прошедшее с предыдущего кадра.</param>
+        protected void UpdateCooldown(TimeSpan delta)
+        {
+            LastShoot += delta.Milliseconds;
+            if (LastShoot >= Cooldown)
+            {
+                isCooldown = false;
+            }
+        }
+
+        /// <summary>
+        /// Совершить выстрел ракетой.
+        /// </summary>
+        protected void Shoot()
+        {
+            Inventory inventory = controlledObject.GetComponent("inventory") as Inventory;
+            GameObject rocket = inventory.GetRocket();
+            if (rocket == null)
+            {
+                return;
+            }
+
+            Transform transform = controlledObject.GetComponent("transform") as Transform;
+            Texture2D texture = controlledObject.GetComponent("texture") as Texture2D;
+            Texture2D rocketTex = rocket.GetComponent("texture") as Texture2D;
+
+            float x = rocketTex.Width * transform.Scale.X;
+            float y = rocketTex.Height * transform.Scale.Y;
+
+            Vector2 spawnPoint = new Vector2(
+                -texture.Width * transform.Scale.X,
+                -texture.Height * transform.Scale.Y);
+
+            spawnPoint = new Vector2(
+                (float)(Math.Cos(transform.Rotation *
+                        Math.Sign(transform.Scale.X)) * spawnPoint.X -
+                        Math.Sin(transform.Rotation *
+                        Math.Sign(transform.Scale.X)) * spawnPoint.Y),
+                (float)(Math.Sin(transform.Rotation *
+                        Math.Sign(transform.Scale.X)) * spawnPoint.X +
+                        Math.Cos(transform.Rotation *
+                        Math.Sign(transform.Scale.X)) * spawnPoint.Y));
+
+            Vector2 rocketPoint = new Vector2(
+                (float)(Math.Cos(transform.Rotation *
+                        -Math.Sign(transform.Scale.X)) * -x -
+                        Math.Sin(transform.Rotation *
+                        -Math.Sign(transform.Scale.X)) * -y),
+                (float)(Math.Sin(transform.Rotation *
+                        -Math.Sign(transform.Scale.X)) * -x +
+                        Math.Cos(transform.Rotation *
+                        -Math.Sign(transform.Scale.X)) * -y));
+
+            spawnPoint.Y += texture.Height * transform.Scale.Y / 2;
+            spawnPoint.X -= rocketPoint.X / 2;
+            spawnPoint.Y -= rocketPoint.Y / 2;
+
+
+            Transform rocketTransform = rocket.GetComponent("transform") as Transform;
+            rocketTransform.Position = transform.Position + spawnPoint;
+            rocketTransform.Rotation = transform.Rotation;
+            rocketTransform.Scale = transform.Scale;
+
+            rocket.AddScript(new PhysicScript(
+                new Vector2((float)(-Math.Sign(transform.Scale.X) * 15 * Math.Cos(transform.Rotation)),
+                            (float)(-15 * Math.Sin(transform.Rotation))),
+                new Vector2(0, 0.2f)));
+
+            scene.AddGameObject(rocket);
+
+            Rocket rocketComponent = rocket.GetComponent("rocket") as Rocket;
+            Cooldown = rocketComponent.Cooldown;
+            LastShoot = 0;
+            isCooldown = true;
         }
     }
 }

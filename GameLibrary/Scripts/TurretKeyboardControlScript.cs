@@ -10,7 +10,8 @@ namespace GameLibrary.Scripts
     public class TurretKeyboardControlScript : Script
     {
         private const double MAX_ANGLE = Math.PI * 3 / 8;
-        private const double MIN_ANGLE = 0;
+        private const double MIN_ANGLE = Math.PI / 8;
+        private Transform transform;
 
         private Key up;
         private Key down;
@@ -26,13 +27,20 @@ namespace GameLibrary.Scripts
         }
 
         /// <summary>
+        /// Инициализация скрипта.
+        /// </summary>
+        public override void Init()
+        {
+            transform = controlledObject.GetComponent("transform") as Transform;
+        }
+
+        /// <summary>
         /// Обновление состояния скрипта.
         /// </summary>
         /// <param name="delta">Время, прошедшее с предыдущего кадра.</param>
         public override void Update(TimeSpan delta)
         {
             KeyboardState keyboard = Keyboard.GetState();
-            Transform transform = controlledObject.GetComponent("transform") as Transform;
 
             if (keyboard[up] && transform.Rotation < MAX_ANGLE)
             {
