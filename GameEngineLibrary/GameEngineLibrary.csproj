@@ -51,6 +51,7 @@
     <Compile Include="Collider.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="IComponent.cs" />
+    <Compile Include="RandomManager.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Script.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

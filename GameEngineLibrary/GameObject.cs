@@ -109,6 +109,7 @@ namespace GameEngineLibrary
         {
             scripts.Add(script);
             script.SetControlledObject(this);
+            script.Init();
         }
 
         /// <summary>

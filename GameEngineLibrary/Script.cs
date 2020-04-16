@@ -13,6 +13,13 @@ namespace GameEngineLibrary
         protected GameObject controlledObject;
 
         /// <summary>
+        /// Метод, инициализирующий данные скрипта.
+        /// </summary>
+        public virtual void Init()
+        { 
+        }
+
+        /// <summary>
         /// Метод, который содержит основную логику программы.
         /// Данный метод вызывается в каждом кадре игры.
         /// </summary>
