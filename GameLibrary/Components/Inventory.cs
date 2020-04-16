@@ -16,6 +16,11 @@ namespace GameLibrary.Components
         private RocketBuilder[] rockets;
 
         /// <summary>
+        /// Общее количество ракет в инвентаре.
+        /// </summary>
+        protected int totalAmount;
+
+        /// <summary>
         /// Количества рокет в инвентаре.
         /// </summary>
         protected int[] amounts;
@@ -34,6 +39,7 @@ namespace GameLibrary.Components
             this.rockets = rockets;
             amounts = new int[rockets.Length];
             current = 0;
+            totalAmount = 0;
             for (int i = 0; i < amounts.Length; i++)
             {
                 amounts[i] = 0;
@@ -62,7 +68,9 @@ namespace GameLibrary.Components
         /// <param name="amount">Новое количество выбранных ракет.</param>
         public virtual void SetAmount(int amount)
         {
+            totalAmount -= amounts[current];
             amounts[current] = amount;
+            totalAmount += amounts[current];
         }
 
         /// <summary>
@@ -83,10 +91,19 @@ namespace GameLibrary.Components
             if (amounts[current] > 0)
             {
                 amounts[current]--;
+                totalAmount--;
                 return rockets[current].Build();
             }
             return null;
-            
+        }
+
+        /// <summary>
+        /// Получение общего количества ракет в инвентаре.
+        /// </summary>
+        /// <returns>Общее количество ракет в инвентаре.</returns>
+        public virtual int GetTotalAmount()
+        {
+            return totalAmount;
         }
 
         /// <summary>
