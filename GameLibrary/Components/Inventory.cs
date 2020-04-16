@@ -66,6 +66,15 @@ namespace GameLibrary.Components
         }
 
         /// <summary>
+        /// Получение количества текущих ракет.
+        /// </summary>
+        /// <returns>Количество текущих ракет.</returns>
+        public virtual int GetAmount()
+        {
+            return amounts[current];
+        }
+
+        /// <summary>
         /// Получить выбранную ракету.
         /// </summary>
         /// <returns>Ракета из инвентаря.</returns>
