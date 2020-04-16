@@ -29,18 +29,30 @@ namespace GameLibrary.Components.HealthDecorators
             bar.Value = health.Value;
         }
 
+        /// <summary>
+        /// Нанесение повреждения объекту.
+        /// </summary>
+        /// <param name="damage">Количество повреждений, нанесенных объекту.</param>
         public override void Damage(int damage)
         {
             health.Damage(damage);
             bar.Value = health.Value;
         }
 
+        /// <summary>
+        /// Увеличение здоровья объекта на заданное число.
+        /// </summary>
+        /// <param name="health">Количество исцеленного здоровья.</param>
         public override void Heal(int health)
         {
             this.health.Heal(health);
             bar.Value = this.health.Value;
         }
 
+        /// <summary>
+        /// Проверка, жив ли объект.
+        /// </summary>
+        /// <returns>True, если объект ещё жив.</returns>
         public override bool IsAlive()
         {
             return health.IsAlive();
