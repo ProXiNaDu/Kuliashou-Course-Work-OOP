@@ -21,6 +21,15 @@ namespace GameLibrary.Components
         }
 
         /// <summary>
+        /// Создание компонента здоровья.
+        /// </summary>
+        /// <param name="health">Начальное количество здоровья.</param>
+        public Health(int health)
+        {
+            Value = health;
+        }
+
+        /// <summary>
         /// Нанесение повреждения объекту.
         /// </summary>
         /// <param name="damage">Количество повреждений, нанесенных объекту.</param>
