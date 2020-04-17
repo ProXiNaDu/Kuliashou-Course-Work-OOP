@@ -151,7 +151,7 @@ namespace GameLibrary
             ProgressBar cooldownBar = (ProgressBar)GameWindow.FindName("SecondPanzerCooldown");
             ProgressBar healthBar = (ProgressBar)GameWindow.FindName("SecondPanzerHealth");
 
-            switch (settings.FirstPanzerControlType)
+            switch (settings.SecondPanzerControlType)
             {
                 case BattleSceneSettings.PanzerControlType.AI:
                     trackScripts = CreateTrackAIScripts();
