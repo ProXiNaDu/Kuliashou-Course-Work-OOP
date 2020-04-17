@@ -7,10 +7,37 @@ namespace GameLibrary.Scenes
     /// </summary>
     public class BattleSceneSettings
     {
+        /// <summary>
+        /// Перечисление типов управления танком.
+        /// </summary>
+        public enum PanzerControlType
+        {
+            /// <summary>
+            /// Управление искусственным интеллектом.
+            /// </summary>
+            AI,
+            /// <summary>
+            /// Управление с клавиатуры.
+            /// </summary>
+            Keyboard
+        }
+
         private const int ROCKET_TYPES = 3;
 
         private int[] firstPanzerRocketAmounts;
         private int[] secondPanzerRocketAmounts;
+
+        /// <summary>
+        /// Тип управления первого танка.
+        /// </summary>
+        public PanzerControlType FirstPanzerControlType { get; set; } 
+            = PanzerControlType.AI;
+
+        /// <summary>
+        /// Тип управления второго танка.
+        /// </summary>
+        public PanzerControlType SecondPanzerControlType { get; set; }
+            = PanzerControlType.AI;
 
         /// <summary>
         /// Создание настроек сцены.
