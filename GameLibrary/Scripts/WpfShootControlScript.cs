@@ -43,8 +43,8 @@ namespace GameLibrary.Scripts
         public override void Update(TimeSpan delta)
         {
             shootControlScript.Update(delta);
-            cooldown.Maximum = Cooldown;
-            cooldown.Value = LastShoot;
+            cooldown.Maximum = shootControlScript.Cooldown;
+            cooldown.Value = shootControlScript.LastShoot;
         }
     }
 }
