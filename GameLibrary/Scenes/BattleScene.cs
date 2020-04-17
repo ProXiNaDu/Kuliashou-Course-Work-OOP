@@ -74,7 +74,7 @@ namespace GameLibrary
 
         private void BuildPanzer(GameObject panzer, Texture2D trackTex,
             Texture2D turretTex, Vector2 position, Vector2 scale,
-            ProgressBar healthBar, Inventory inventory,
+            int health, ProgressBar healthBar, Inventory inventory,
             Script[] panzerScripts, Script[] turretScripts)
         {
             Transform transform = panzer.GetComponent("transform") as Transform;
@@ -83,7 +83,7 @@ namespace GameLibrary
 
             panzer.AddComponent("texture", trackTex);
             panzer.AddComponent("health",
-                new ProgressBarHealth(new Health(), healthBar));
+                new ProgressBarHealth(new Health(health), healthBar));
             foreach (Script script in panzerScripts)
                 panzer.AddScript(script);
 
@@ -130,7 +130,8 @@ namespace GameLibrary
 
             BuildPanzer(firstPanzer, trackTexture,
                 turretTexture, position, new Vector2(-5, 5), 
-                healthBar, inventory, trackScripts, turretScripts);
+                settings.FirstPanzerHealth, healthBar, 
+                inventory, trackScripts, turretScripts);
         }
 
         private void BuildSecondPanzer(Inventory inventory)
@@ -166,8 +167,9 @@ namespace GameLibrary
             }
 
             BuildPanzer(secondPanzer, trackTexture,
-                turretTexture, position, new Vector2(5, 5),
-                healthBar, inventory, trackScripts, turretScripts);
+                turretTexture, position, new Vector2(5, 5), 
+                settings.SecondPanzerHealth, healthBar, 
+                inventory, trackScripts, turretScripts);
         }
 
         private Inventory.RocketBuilder[] CreateRockets()

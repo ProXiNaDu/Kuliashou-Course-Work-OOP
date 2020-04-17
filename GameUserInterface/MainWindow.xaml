@@ -149,14 +149,43 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label Content="First Player" 
-                   Margin="5"
-                   Grid.Column="0"
-                   Grid.Row="0"/>
-            <Label Content="Second Player" 
-                   Margin="5"
-                   Grid.Column="1"
-                   Grid.Row="0"/>
+            <Grid Grid.Column="0"
+                  Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <CheckBox Content="AI"
+                          x:Name="IsFirstAI"
+                          Margin="5"
+                          IsChecked="False"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Center"
+                          Grid.Column="1"/>
+                <Label Content="First Player" 
+                       Margin="5"
+                       VerticalAlignment="Center"
+                       Grid.Column="0"/>
+            </Grid>
+
+            <Grid Grid.Column="1"
+                  Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <CheckBox Content="AI"
+                          x:Name="IsSecondAI"
+                          Margin="5"
+                          IsChecked="True"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Center"
+                          Grid.Column="1"/>
+                <Label Content="Second Player" 
+                       Margin="5"
+                       VerticalAlignment="Center"
+                       Grid.Column="0"/>
+            </Grid>
 
             <Grid Grid.Column="0"
                   Grid.Row="1"

@@ -33,17 +33,18 @@ namespace GameUserInterface
         {
             InitializeComponent();
 
-            scene = new BattleScene(this, new BattleSceneSettings());
+            InitStartScreen();
+            scene = new BattleScene(this, settings);
 
             FirstPanzerInfo.Visibility = Visibility.Hidden;
             SecondPanzerInfo.Visibility = Visibility.Hidden;
             RocketShop.Visibility = Visibility.Hidden;
             WinMenu.Visibility = Visibility.Hidden;
 
-            var settings = new GLWpfControlSettings();
-            settings.MajorVersion = 3;
-            settings.MinorVersion = 6;
-            OpenTKControl.Start(settings);
+            var WpfControlSettings = new GLWpfControlSettings();
+            WpfControlSettings.MajorVersion = 3;
+            WpfControlSettings.MinorVersion = 6;
+            OpenTKControl.Start(WpfControlSettings);
         }
 
         private void OpenTKControl_Render(TimeSpan delta)
@@ -103,6 +104,14 @@ namespace GameUserInterface
             int secondPanzerRockets = int.Parse(SecondPanzerRockets.Content.ToString());
             settings.SetFirstPanzerAmounts(firstPanzerPowerfulRockets, firstPanzerFastRockets, firstPanzerRockets);
             settings.SetSecondPanzerAmounts(secondPanzerPowerfulRockets, secondPanzerFastRockets, secondPanzerRockets);
+            settings.FirstPanzerHealth = 100;
+            settings.SecondPanzerHealth = 100;
+            settings.FirstPanzerControlType = (bool)IsFirstAI.IsChecked ?
+                BattleSceneSettings.PanzerControlType.AI :
+                BattleSceneSettings.PanzerControlType.Keyboard;
+            settings.SecondPanzerControlType = (bool)IsSecondAI.IsChecked ?
+                BattleSceneSettings.PanzerControlType.AI :
+                BattleSceneSettings.PanzerControlType.Keyboard;
             scene = new BattleScene(this, settings);
             scene.Init();
             renderer = new Renderer(scene);
@@ -143,6 +152,25 @@ namespace GameUserInterface
         {
             WinMenu.Visibility = Visibility.Hidden;
             MainMenu.Visibility = Visibility.Visible;
+            FirstPanzerInfo.Visibility = Visibility.Hidden;
+            SecondPanzerInfo.Visibility = Visibility.Hidden;
+
+            scene.Dispose();
+            InitStartScreen();
+            scene = new BattleScene(this, settings);
+            scene.Init();
+            renderer = new Renderer(scene);
+        }
+
+        private void InitStartScreen()
+        {
+            settings = new BattleSceneSettings();
+            settings.SetFirstPanzerAmounts(int.MaxValue, int.MaxValue, int.MaxValue);
+            settings.SetSecondPanzerAmounts(int.MaxValue, int.MaxValue, int.MaxValue);
+            settings.FirstPanzerHealth = int.MaxValue;
+            settings.SecondPanzerHealth = int.MaxValue;
+            settings.FirstPanzerControlType = BattleSceneSettings.PanzerControlType.AI;
+            settings.SecondPanzerControlType = BattleSceneSettings.PanzerControlType.AI;
         }
     }
 }

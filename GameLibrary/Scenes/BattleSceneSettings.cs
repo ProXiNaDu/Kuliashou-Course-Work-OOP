@@ -28,6 +28,16 @@ namespace GameLibrary.Scenes
         private int[] secondPanzerRocketAmounts;
 
         /// <summary>
+        /// Здоровье первого танка.
+        /// </summary>
+        public int FirstPanzerHealth { get; set; }
+
+        /// <summary>
+        /// Здоровье второго танка.
+        /// </summary>
+        public int SecondPanzerHealth { get; set; }
+
+        /// <summary>
         /// Тип управления первого танка.
         /// </summary>
         public PanzerControlType FirstPanzerControlType { get; set; } 
