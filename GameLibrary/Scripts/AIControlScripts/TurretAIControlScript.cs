@@ -16,8 +16,7 @@ namespace GameLibrary.Scripts
 
         private Transform transform;
         private Texture2D texture;
-        private Transform targetTransform;
-        private Texture2D targetTexture;
+        private GameObject target;
 
         /// <summary>
         /// Создание контроллера для башни танка.
@@ -54,6 +53,8 @@ namespace GameLibrary.Scripts
             aim *= transform.Scale;
             aim += transform.Position;
 
+            Transform targetTransform = target.GetComponent("transform") as Transform;
+            Texture2D targetTexture = target.GetComponent("texture") as Texture2D;
             Vector2 enemy = new Vector2(
                 targetTransform.Position.X + targetTexture.Width * targetTransform.Scale.X / 2,
                 targetTransform.Position.Y + targetTexture.Height * targetTransform.Scale.Y / 2);
@@ -87,8 +88,7 @@ namespace GameLibrary.Scripts
         /// <param name="target">Цель стрельбы.</param>
         public void SetTarget(GameObject target)
         {
-            targetTransform = target.GetComponent("transform") as Transform;
-            targetTexture = target.GetComponent("texture") as Texture2D;
+            this.target = target;
         }
     }
 }
