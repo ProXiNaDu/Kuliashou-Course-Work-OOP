@@ -86,12 +86,16 @@ namespace GameLibrary
             TurretKeyboardControlScript secondTurretControl = new TurretKeyboardControlScript(2);
             secondTurretControl.SetKeyToTurnUp(OpenTK.Input.Key.Up);
             secondTurretControl.SetKeyToTurnDown(OpenTK.Input.Key.Down);
+            ShootKeyboardControlScript firstKeyboardShootControl = new ShootKeyboardControlScript(this);
+            firstKeyboardShootControl.SetKey(OpenTK.Input.Key.Space);
+            ShootKeyboardControlScript secondKeyboardShootControl = new ShootKeyboardControlScript(this);
+            secondKeyboardShootControl.SetKey(OpenTK.Input.Key.Enter);
             ShootKeyboardControlScript firstShootControl = new WpfShootControlScript(this,
-                (ProgressBar) GameWindow.FindName("FirstPanzerCooldown"));
-            firstShootControl.SetKey(OpenTK.Input.Key.Space);
+                (ProgressBar) GameWindow.FindName("FirstPanzerCooldown"),
+                firstKeyboardShootControl);
             ShootKeyboardControlScript secondShootControl = new WpfShootControlScript(this,
-                (ProgressBar)GameWindow.FindName("SecondPanzerCooldown"));
-            secondShootControl.SetKey(OpenTK.Input.Key.Enter);
+                (ProgressBar)GameWindow.FindName("SecondPanzerCooldown"),
+                secondKeyboardShootControl);
             KeyboardRocketSwitcherScript firstPanzerRocketSwitcher = new KeyboardRocketSwitcherScript();
             firstPanzerRocketSwitcher.SetKeyToSelectNext(OpenTK.Input.Key.E);
             firstPanzerRocketSwitcher.SetKeyToSelectPrevious(OpenTK.Input.Key.Q);
