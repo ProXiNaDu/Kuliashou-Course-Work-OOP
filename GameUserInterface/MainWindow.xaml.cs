@@ -36,6 +36,7 @@ namespace GameUserInterface
             InitStartScreen();
             scene = new BattleScene(this, settings);
 
+            MainMenu.Visibility = Visibility.Visible;
             FirstPanzerInfo.Visibility = Visibility.Hidden;
             SecondPanzerInfo.Visibility = Visibility.Hidden;
             RocketShop.Visibility = Visibility.Hidden;

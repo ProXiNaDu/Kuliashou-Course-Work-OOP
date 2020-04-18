@@ -8,15 +8,124 @@
         mc:Ignorable="d"
         Closing="Window_Closing"
         Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="ButtonStyle">
+            <Style.Setters>
+                <Setter Property="Control.Foreground" Value="#fff7eb"/>
+                <Setter Property="Control.Background" Value="#876c42"/>
+                <Setter Property="Control.BorderBrush" Value="#594931"/>
+                <Setter Property="Control.BorderThickness" Value="3 2 3 4"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Control.Foreground" Value="#f2ebe1"/>
+                    <Setter Property="Control.Background" Value="#755e39"/>
+                    <Setter Property="Control.BorderBrush" Value="#4a3d29"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Button" x:Key="StartButtonStyle">
+            <Style.Setters>
+                <Setter Property="Control.Foreground" Value="#fff7eb"/>
+                <Setter Property="Control.Background" Value="#b59535"/>
+                <Setter Property="Control.BorderBrush" Value="#70602e"/>
+                <Setter Property="Control.BorderThickness" Value="3 2 3 4"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Control.Foreground" Value="#f2ebe1"/>
+                    <Setter Property="Control.Background" Value="#9c802d"/>
+                    <Setter Property="Control.BorderBrush" Value="#66572a"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Button" x:Key="BuyButtonStyle">
+            <Style.Setters>
+                <Setter Property="Control.Foreground" Value="#fff7eb"/>
+                <Setter Property="Control.Background" Value="#1d7a32"/>
+                <Setter Property="Control.BorderBrush" Value="#1a4a25"/>
+                <Setter Property="Control.BorderThickness" Value="3 2 3 4"/>
+                <Setter Property="Control.Margin" Value="1"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Control.Foreground" Value="#f2ebe1"/>
+                    <Setter Property="Control.Background" Value="#1b6b2d"/>
+                    <Setter Property="Control.BorderBrush" Value="#163b1e"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Button" x:Key="SellButtonStyle">
+            <Style.Setters>
+                <Setter Property="Control.Foreground" Value="#fff7eb"/>
+                <Setter Property="Control.Background" Value="#a61f46"/>
+                <Setter Property="Control.BorderBrush" Value="#5c1f31"/>
+                <Setter Property="Control.BorderThickness" Value="3 2 3 4"/>
+                <Setter Property="Control.Margin" Value="1"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Control.Foreground" Value="#f2ebe1"/>
+                    <Setter Property="Control.Background" Value="#821736"/>
+                    <Setter Property="Control.BorderBrush" Value="#4a1928"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
         <glWpfControl:GLWpfControl
             x:Name="OpenTKControl"
             Render="OpenTKControl_Render"
             Ready="OpenTKControl_Ready"/>
         <StackPanel x:Name="FirstPanzerInfo"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top" 
-            Margin="10">
+                    Visibility="Hidden"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top" 
+                    Margin="10">
             <ProgressBar 
                 x:Name="FirstPanzerHealth"
                 Minimum="0"
@@ -62,9 +171,10 @@
             </StackPanel>
         </StackPanel>
         <StackPanel x:Name="SecondPanzerInfo"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Top" 
-            Margin="10">
+                    Visibility="Hidden"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top" 
+                    Margin="10">
             <ProgressBar 
                 x:Name="SecondPanzerHealth"
                 Minimum="0"
@@ -107,6 +217,7 @@
             </StackPanel>
         </StackPanel>
         <StackPanel x:Name="MainMenu"
+                    Visibility="Visible"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Width="200px">
@@ -114,14 +225,17 @@
                 x:Name="PlayGameBtn" 
                 Content="Play"
                 Margin="5"
-                Click="PlayGameBtn_Click"/>
+                Click="PlayGameBtn_Click"
+                Style="{StaticResource ButtonStyle}"/>
             <Button 
                 x:Name="QuitGameBtn" 
                 Content="Quit"
                 Margin="5"
-                Click="QuitGameBtn_Click"/>
+                Click="QuitGameBtn_Click"
+                Style="{StaticResource ButtonStyle}"/>
         </StackPanel>
         <StackPanel x:Name="WinMenu"
+                    Visibility="Hidden"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Width="200px">
@@ -129,16 +243,20 @@
                 x:Name="RestartGameBtn" 
                 Content="Restart"
                 Margin="5"
-                Click="RestartGameBtn_Click"/>
+                Click="RestartGameBtn_Click"
+                Style="{StaticResource ButtonStyle}"/>
             <Button 
                 x:Name="MainMenuBtn" 
                 Content="Main Menu"
                 Margin="5"
-                Click="MainMenuBtn_Click"/>
+                Click="MainMenuBtn_Click"
+                Style="{StaticResource ButtonStyle}"/>
         </StackPanel>
         <Grid x:Name="RocketShop" 
+              Visibility="Hidden"
               HorizontalAlignment="Center"
-              VerticalAlignment="Center">
+              VerticalAlignment="Center"
+              Width="600">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -199,7 +317,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="40px"/>
+                    <RowDefinition Height="48px"/>
                 </Grid.RowDefinitions>
                 <Label Content="0" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right"/>
                 <Label Content="Money: " Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0"/>
@@ -239,8 +357,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="20px"/>
-                        <RowDefinition Height="20px"/>
+                        <RowDefinition Height="24px"/>
+                        <RowDefinition Height="24px"/>
                     </Grid.RowDefinitions>
                     <Label Name="FirstPanzerPowerfulRockets"
                         Content="4"
@@ -250,10 +368,10 @@
                         Grid.Row="0"
                         Grid.RowSpan="2"/>
                     <Label Content="5" Visibility="Hidden"/>
-                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click"/>
-                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click"/>
-                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click"/>
-                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click"/>
+                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
+                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
                 </Grid>
 
                 <Grid
@@ -265,8 +383,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="20px"/>
-                        <RowDefinition Height="20px"/>
+                        <RowDefinition Height="24px"/>
+                        <RowDefinition Height="24px"/>
                     </Grid.RowDefinitions>
                     <Label Name="FirstPanzerFastRockets"
                         Content="10"
@@ -276,10 +394,10 @@
                         Grid.Row="0"
                         Grid.RowSpan="2"/>
                     <Label Content="4" Visibility="Hidden"/>
-                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click"/>
-                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click"/>
-                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click"/>
-                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click"/>
+                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
+                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
                 </Grid>
 
                 <Grid
@@ -291,8 +409,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="20px"/>
-                        <RowDefinition Height="20px"/>
+                        <RowDefinition Height="24px"/>
+                        <RowDefinition Height="24px"/>
                     </Grid.RowDefinitions>
                     <Label Name="FirstPanzerRockets"
                         Content="30"
@@ -302,10 +420,10 @@
                         Grid.Row="0"
                         Grid.RowSpan="2"/>
                     <Label Content="3" Visibility="Hidden"/>
-                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click"/>
-                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click"/>
-                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click"/>
-                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click"/>
+                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
+                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
                 </Grid>
             </Grid>
             <Grid Grid.Column="1"
@@ -320,7 +438,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="40px"/>
+                    <RowDefinition Height="48px"/>
                 </Grid.RowDefinitions>
                 <Label Content="0" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right"/>
                 <Label Content="Money: " Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0"/>
@@ -360,8 +478,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="20px"/>
-                        <RowDefinition Height="20px"/>
+                        <RowDefinition Height="24px"/>
+                        <RowDefinition Height="24px"/>
                     </Grid.RowDefinitions>
                     <Label Name="SecondPanzerPowerfulRockets"
                         Content="4"
@@ -371,10 +489,10 @@
                         Grid.Row="0"
                         Grid.RowSpan="2"/>
                     <Label Content="5" Visibility="Hidden"/>
-                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click"/>
-                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click"/>
-                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click"/>
-                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click"/>
+                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
+                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
                 </Grid>
 
                 <Grid
@@ -386,8 +504,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="20px"/>
-                        <RowDefinition Height="20px"/>
+                        <RowDefinition Height="24px"/>
+                        <RowDefinition Height="24px"/>
                     </Grid.RowDefinitions>
                     <Label Name="SecondPanzerFastRockets"
                         Content="10"
@@ -397,10 +515,10 @@
                         Grid.Row="0"
                         Grid.RowSpan="2"/>
                     <Label Content="4" Visibility="Hidden"/>
-                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click"/>
-                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click"/>
-                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click"/>
-                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click"/>
+                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
+                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
                 </Grid>
 
                 <Grid
@@ -412,8 +530,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="20px"/>
-                        <RowDefinition Height="20px"/>
+                        <RowDefinition Height="24px"/>
+                        <RowDefinition Height="24px"/>
                     </Grid.RowDefinitions>
                     <Label Name="SecondPanzerRockets"
                         Content="30"
@@ -423,10 +541,10 @@
                         Grid.Row="0"
                         Grid.RowSpan="2"/>
                     <Label Content="3" Visibility="Hidden"/>
-                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click"/>
-                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click"/>
-                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click"/>
-                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click"/>
+                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
+                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
                 </Grid>
             </Grid>
 
@@ -436,7 +554,9 @@
                     Grid.Column="0"
                     Grid.Row="2"
                     Margin="5"
-                    Click="StartGameBtn_Click"/>
+                    Width="200"
+                    Click="StartGameBtn_Click"
+                    Style="{StaticResource StartButtonStyle}"/>
         </Grid>
     </Grid>
 </Window>
