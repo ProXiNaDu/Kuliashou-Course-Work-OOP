@@ -52,6 +52,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollisionTests.cs" />
     <Compile Include="HealthTests.cs" />
     <Compile Include="InventoryTests.cs" />
     <Compile Include="PhysicTests.cs" />
