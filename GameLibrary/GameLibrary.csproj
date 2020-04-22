@@ -49,9 +49,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\BaseRocket.cs" />
     <Compile Include="Components\Health.cs" />
     <Compile Include="Components\HealthDecorators\ProgressBarHealth.cs" />
     <Compile Include="Components\Inventory.cs" />
+    <Compile Include="Components\RocketDecorator.cs" />
     <Compile Include="Components\WpfInventory.cs" />
     <Compile Include="Components\Rocket.cs" />
     <Compile Include="Components\RocketDecorators\DoubleCooldownRocket.cs" />

@@ -4,13 +4,8 @@
     /// Декоратор компонента Rocket,
     /// который уменьшает урон от ракеты в 2 раза.
     /// </summary>
-    public class HalfDamageRocket : Rocket
+    public class HalfDamageRocket : RocketDecorator
     {
-        /// <summary>
-        /// Декорируемый экземпляр.
-        /// </summary>
-        private Rocket rocket;
-
         /// <summary>
         /// Урон, уменьшенный в 2 раза.
         /// </summary>
@@ -22,18 +17,13 @@
             }
         }
 
-        /// <summary>
-        /// Время до следующего выстрела ракетой.
-        /// </summary>
-        public override int Cooldown => rocket.Cooldown;
 
         /// <summary>
         /// Создание нового декоратора, который уменьшает урон в 2 раза.
         /// </summary>
         /// <param name="rocket">Декорируемый экземпляр.</param>
-        public HalfDamageRocket(Rocket rocket)
+        public HalfDamageRocket(Rocket rocket) : base(rocket)
         {
-            this.rocket = rocket;
         }
     }
 }

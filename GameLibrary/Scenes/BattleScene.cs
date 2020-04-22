@@ -188,11 +188,11 @@ namespace GameLibrary
             return new Inventory.RocketBuilder[]
             {
                 new Inventory.RocketBuilder(this, powerfulRocketTex, explosionAnim,
-                new DoubleDamageRocket(new DoubleCooldownRocket(new Rocket()))),
+                new DoubleDamageRocket(new DoubleCooldownRocket(new BaseRocket()))),
                 new Inventory.RocketBuilder(this, fastRocketTex, explosionAnim,
-                new HalfDamageRocket(new HalfCooldownRocket(new Rocket()))),
+                new HalfDamageRocket(new HalfCooldownRocket(new BaseRocket()))),
                 new Inventory.RocketBuilder(this, rocketTex, explosionAnim,
-                new Rocket())
+                new BaseRocket())
             };
         }
 
