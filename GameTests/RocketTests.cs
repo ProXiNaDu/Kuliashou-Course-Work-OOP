@@ -10,7 +10,7 @@ namespace GameTests
         [TestMethod]
         public void DoubleDamageRocketTest()
         {
-            Rocket rocket = new Rocket();
+            Rocket rocket = new BaseRocket();
             for (int i = 0; i < 10; i++)
             {
                 int expected = rocket.Damage * 2;
@@ -24,7 +24,7 @@ namespace GameTests
         [TestMethod]
         public void HalfDamageRocketTest()
         {
-            Rocket rocket = new Rocket();
+            Rocket rocket = new BaseRocket();
             for (int i = 0; i < 10; i++)
             {
                 int expected = rocket.Damage / 2;
@@ -38,7 +38,7 @@ namespace GameTests
         [TestMethod]
         public void DoubleCooldownRocketTest()
         {
-            Rocket rocket = new Rocket();
+            Rocket rocket = new BaseRocket();
             for (int i = 0; i < 10; i++)
             {
                 int expected = rocket.Cooldown * 2;
@@ -52,7 +52,7 @@ namespace GameTests
         [TestMethod]
         public void HalfCooldownRocketTest()
         {
-            Rocket rocket = new Rocket();
+            Rocket rocket = new BaseRocket();
             for (int i = 0; i < 10; i++)
             {
                 int expected = rocket.Cooldown / 2;
@@ -66,7 +66,7 @@ namespace GameTests
         [TestMethod]
         public void DoubleDamageAndCooldownRocketTest()
         {
-            Rocket rocket = new Rocket();
+            Rocket rocket = new BaseRocket();
             for (int i = 0; i < 10; i++)
             {
                 int expectedDamage = rocket.Damage * 2;
@@ -86,7 +86,7 @@ namespace GameTests
         [TestMethod]
         public void HalfDamageAndCooldownRocketTest()
         {
-            Rocket rocket = new Rocket();
+            Rocket rocket = new BaseRocket();
             for (int i = 0; i < 10; i++)
             {
                 int expectedDamage = rocket.Damage / 2;
@@ -106,7 +106,7 @@ namespace GameTests
         [TestMethod]
         public void DoubleDamageAndHalfCooldownRocketTest()
         {
-            Rocket rocket = new Rocket();
+            Rocket rocket = new BaseRocket();
             for (int i = 0; i < 10; i++)
             {
                 int expectedDamage = rocket.Damage * 2;
@@ -126,7 +126,7 @@ namespace GameTests
         [TestMethod]
         public void HalfDamageAndDoubleCooldownRocketTest()
         {
-            Rocket rocket = new Rocket();
+            Rocket rocket = new BaseRocket();
             for (int i = 0; i < 10; i++)
             {
                 int expectedDamage = rocket.Damage / 2;
