@@ -239,6 +239,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Width="200px">
+            <TextBlock x:Name="WinnerName" TextAlignment="Center" Foreground="#594931" Margin="0 0 0 10"/>
             <Button 
                 x:Name="RestartGameBtn" 
                 Content="Restart"

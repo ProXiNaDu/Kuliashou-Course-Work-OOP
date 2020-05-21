@@ -12,6 +12,9 @@ namespace GameLibrary.Scripts
     {
         private Health firstHealth;
         private Health secondHealth;
+        private Inventory firstInventory;
+        private Inventory secondInventory;
+        private TextBlock winText;
         private StackPanel winMenu;
         private bool isWin = false;
 
@@ -25,7 +28,13 @@ namespace GameLibrary.Scripts
         {
             firstHealth = first.GetComponent("health") as Health;
             secondHealth = second.GetComponent("health") as Health;
+            firstInventory = first.InnerObjects[0]
+                .GetComponent("inventory") as Inventory;
+            secondInventory = second.InnerObjects[0]
+                .GetComponent("inventory") as Inventory;
+
             this.winMenu = winMenu;
+            winText = winMenu.FindName("WinnerName") as TextBlock;
         }
 
         /// <summary>
@@ -34,8 +43,16 @@ namespace GameLibrary.Scripts
         /// <param name="delta">Время, прошедшее с предыдущего кадра.</param>
         public override void Update(TimeSpan delta)
         {
-            if (!isWin && (!firstHealth.IsAlive() || !secondHealth.IsAlive()))
+            bool isDraw = firstInventory.GetTotalAmount() == 0 
+                && secondInventory.GetTotalAmount() == 0;
+            if (!isWin && (!firstHealth.IsAlive() || !secondHealth.IsAlive() || isDraw))
             {
+                if (winText != null)
+                    if (isDraw)
+                        winText.Text = "Draw";
+                    else
+                        winText.Text = "Winner: " + (firstHealth.IsAlive() ? "First Player" : "Second Player");
+
                 winMenu.Visibility = System.Windows.Visibility.Visible;
                 isWin = true;
             }
