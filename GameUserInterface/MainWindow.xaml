@@ -9,6 +9,14 @@
         Closing="Window_Closing"
         Title="Artillery" Height="450" Width="800" ResizeMode="NoResize">
     <Window.Resources>
+        <Style TargetType="TextBox" x:Key="TextBoxStyle">
+            <Style.Setters>
+                <Setter Property="Control.Foreground" Value="#fff7eb"/>
+                <Setter Property="Control.Background" Value="#3275a8"/>
+                <Setter Property="Control.BorderBrush" Value="#214561"/>
+                <Setter Property="Control.BorderThickness" Value="3 2 3 4"/>
+            </Style.Setters>
+        </Style>
         <Style TargetType="Button" x:Key="ButtonStyle">
             <Style.Setters>
                 <Setter Property="Control.Foreground" Value="#fff7eb"/>
@@ -59,6 +67,12 @@
                     <Setter Property="Control.Background" Value="#9c802d"/>
                     <Setter Property="Control.BorderBrush" Value="#66572a"/>
                 </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Control.Foreground" Value="#f2ebe1"/>
+                    <Setter Property="Control.Background" Value="#806926"/>
+                    <Setter Property="Control.BorderBrush" Value="#4d3f18"/>
+                </Trigger>
+
             </Style.Triggers>
         </Style>
         <Style TargetType="Button" x:Key="BuyButtonStyle">
@@ -228,10 +242,47 @@
                 Click="PlayGameBtn_Click"
                 Style="{StaticResource ButtonStyle}"/>
             <Button 
+                x:Name="MultiplayerBtn" 
+                Content="Multiplayer"
+                Margin="5"
+                Click="MultiplayerBtn_Click"
+                Style="{StaticResource ButtonStyle}"/>
+            <Button 
                 x:Name="QuitGameBtn" 
                 Content="Quit"
                 Margin="5"
                 Click="QuitGameBtn_Click"
+                Style="{StaticResource ButtonStyle}"/>
+        </StackPanel>
+        <StackPanel x:Name="ChooseMultiplayerTypeMenu"
+                    Visibility="Hidden"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="200px">
+            <Button 
+                x:Name="HostGameBtn" 
+                Content="Host"
+                Margin="5"
+                Click="HostGameBtn_Click"
+                Style="{StaticResource ButtonStyle}"/>
+            <Button 
+                x:Name="ConnectBtn" 
+                Content="Connect"
+                Margin="5"
+                Click="ConnectBtn_Click"
+                Style="{StaticResource ButtonStyle}"/>
+        </StackPanel>
+        <StackPanel x:Name="ConnectMenu"
+                    Visibility="Hidden"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="200px">
+            <TextBox x:Name="ServerAddressInput" Text="localhost:4748" Style="{StaticResource TextBoxStyle}" Width="190px"/>
+            <Button 
+                x:Name="ConnectToServerBtn" 
+                Content="Connect"
+                Margin="5"
+                Click="ConnectToServerBtn_Click"
                 Style="{StaticResource ButtonStyle}"/>
         </StackPanel>
         <StackPanel x:Name="WinMenu"
@@ -557,6 +608,173 @@
                     Margin="5"
                     Width="200"
                     Click="StartGameBtn_Click"
+                    Style="{StaticResource StartButtonStyle}"/>
+        </Grid>
+        <Grid x:Name="MultiplayerRocketShop" 
+              Visibility="Hidden"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Width="600">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Column="0"
+                  Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="First Player (CONNECTED)" 
+                       x:Name="IsFirstPlayerReadyLabel"
+                       Margin="5"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Grid.Row="0"/>
+                <Label Content="Second Player (NOT CONNECTED)" 
+                       x:Name="IsSecondPlayerReadyLabel"
+                       Margin="5"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Grid.Row="1"/>
+            </Grid>
+
+            <Grid Grid.Column="0"
+                  Grid.Row="1"
+                  Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="48px"/>
+                </Grid.RowDefinitions>
+                <Label Content="0" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right"/>
+                <Label Content="Money: " Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0"/>
+
+                <Image Source="Resources\PowerfulRocket.bmp"
+                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                       FlowDirection="RightToLeft" Margin="2"
+                       Height="15px" Grid.Row="2" Grid.Column="0"/>
+                <Image Source="Resources\FastRocket.bmp"
+                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                       FlowDirection="RightToLeft" Margin="2"
+                       Height="15px" Grid.Row="2" Grid.Column="1"/>
+                <Image Source="Resources\Rocket.bmp" 
+                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                       FlowDirection="RightToLeft" Margin="2"
+                       Height="15px" Grid.Row="2" Grid.Column="2"/>
+
+                <Label Content="5" 
+                       HorizontalAlignment="Center"
+                       Grid.Column="0"
+                       Grid.Row="1"/>
+                <Label Content="4" 
+                       HorizontalAlignment="Center"
+                       Grid.Column="1"
+                       Grid.Row="1"/>
+                <Label Content="3" 
+                       HorizontalAlignment="Center"
+                       Grid.Column="2"
+                       Grid.Row="1"/>
+
+                <Grid
+                    Grid.Row="3"
+                    Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="30px"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24px"/>
+                        <RowDefinition Height="24px"/>
+                    </Grid.RowDefinitions>
+                    <Label Name="MultiplayerPanzerPowerfulRockets"
+                        Content="4"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"/>
+                    <Label Content="5" Visibility="Hidden"/>
+                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
+                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
+                </Grid>
+
+                <Grid
+                    Grid.Row="3"
+                    Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="30px"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24px"/>
+                        <RowDefinition Height="24px"/>
+                    </Grid.RowDefinitions>
+                    <Label Name="MultiplayerPanzerFastRockets"
+                        Content="10"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"/>
+                    <Label Content="4" Visibility="Hidden"/>
+                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
+                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
+                </Grid>
+
+                <Grid
+                    Grid.Row="3"
+                    Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="30px"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24px"/>
+                        <RowDefinition Height="24px"/>
+                    </Grid.RowDefinitions>
+                    <Label Name="MultiplayerPanzerRockets"
+                        Content="30"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"/>
+                    <Label Content="3" Visibility="Hidden"/>
+                    <Button Content="-10" Grid.Column="0" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="-1" Grid.Column="0" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource SellButtonStyle}"/>
+                    <Button Content="+1" Grid.Column="2" Grid.Row="0" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
+                    <Button Content="+10" Grid.Column="2" Grid.Row="1" Click="BuyBtn_Click" Style="{StaticResource BuyButtonStyle}"/>
+                </Grid>
+            </Grid>
+
+            <Button x:Name="StartMultiplayerGameBtn"
+                    Grid.ColumnSpan="2" 
+                    Content="Start" 
+                    Grid.Column="0"
+                    Grid.Row="2"
+                    Margin="5"
+                    Width="200"
+                    Click="StartMultiplayerGameBtn_Click"
                     Style="{StaticResource StartButtonStyle}"/>
         </Grid>
     </Grid>

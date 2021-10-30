@@ -19,7 +19,11 @@ namespace GameLibrary.Scenes
             /// <summary>
             /// Управление с клавиатуры.
             /// </summary>
-            Keyboard
+            Keyboard,
+            /// <summary>
+            /// Управление по сети
+            /// </summary>
+            Remote
         }
 
         private const int ROCKET_TYPES = 3;

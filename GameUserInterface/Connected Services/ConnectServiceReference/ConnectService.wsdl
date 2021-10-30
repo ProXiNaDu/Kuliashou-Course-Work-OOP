@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ConnectService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IConnectService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:4746/connect?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:4746/connect?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:4746/connect?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IConnectService_ConnectToServer_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConnectToServer" />
+  </wsdl:message>
+  <wsdl:message name="IConnectService_ConnectToServer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConnectToServerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConnectService_DisconnectFromServer_InputMessage">
+    <wsdl:part name="parameters" element="tns:DisconnectFromServer" />
+  </wsdl:message>
+  <wsdl:message name="IConnectService_DisconnectFromServer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DisconnectFromServerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConnectService_GetConnectedUsersCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetConnectedUsersCount" />
+  </wsdl:message>
+  <wsdl:message name="IConnectService_GetConnectedUsersCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetConnectedUsersCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConnectService_SetFirstPanzerAmounts_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetFirstPanzerAmounts" />
+  </wsdl:message>
+  <wsdl:message name="IConnectService_SetFirstPanzerAmounts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetFirstPanzerAmountsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConnectService_SetSecondPanzerAmounts_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetSecondPanzerAmounts" />
+  </wsdl:message>
+  <wsdl:message name="IConnectService_SetSecondPanzerAmounts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetSecondPanzerAmountsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConnectService_IsSecondReady_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsSecondReady" />
+  </wsdl:message>
+  <wsdl:message name="IConnectService_IsSecondReady_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsSecondReadyResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IConnectService">
+    <wsdl:operation name="ConnectToServer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConnectService/ConnectToServer" message="tns:IConnectService_ConnectToServer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConnectService/ConnectToServerResponse" message="tns:IConnectService_ConnectToServer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DisconnectFromServer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConnectService/DisconnectFromServer" message="tns:IConnectService_DisconnectFromServer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConnectService/DisconnectFromServerResponse" message="tns:IConnectService_DisconnectFromServer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetConnectedUsersCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConnectService/GetConnectedUsersCount" message="tns:IConnectService_GetConnectedUsersCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConnectService/GetConnectedUsersCountResponse" message="tns:IConnectService_GetConnectedUsersCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetFirstPanzerAmounts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConnectService/SetFirstPanzerAmounts" message="tns:IConnectService_SetFirstPanzerAmounts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConnectService/SetFirstPanzerAmountsResponse" message="tns:IConnectService_SetFirstPanzerAmounts_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetSecondPanzerAmounts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConnectService/SetSecondPanzerAmounts" message="tns:IConnectService_SetSecondPanzerAmounts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConnectService/SetSecondPanzerAmountsResponse" message="tns:IConnectService_SetSecondPanzerAmounts_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsSecondReady">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConnectService/IsSecondReady" message="tns:IConnectService_IsSecondReady_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConnectService/IsSecondReadyResponse" message="tns:IConnectService_IsSecondReady_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IConnectService" type="tns:IConnectService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IConnectService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="ConnectToServer">
+      <soap12:operation soapAction="http://tempuri.org/IConnectService/ConnectToServer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DisconnectFromServer">
+      <soap12:operation soapAction="http://tempuri.org/IConnectService/DisconnectFromServer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConnectedUsersCount">
+      <soap12:operation soapAction="http://tempuri.org/IConnectService/GetConnectedUsersCount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetFirstPanzerAmounts">
+      <soap12:operation soapAction="http://tempuri.org/IConnectService/SetFirstPanzerAmounts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetSecondPanzerAmounts">
+      <soap12:operation soapAction="http://tempuri.org/IConnectService/SetSecondPanzerAmounts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsSecondReady">
+      <soap12:operation soapAction="http://tempuri.org/IConnectService/IsSecondReady" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BasicHttpBinding_IConnectService" type="tns:IConnectService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ConnectToServer">
+      <soap:operation soapAction="http://tempuri.org/IConnectService/ConnectToServer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DisconnectFromServer">
+      <soap:operation soapAction="http://tempuri.org/IConnectService/DisconnectFromServer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConnectedUsersCount">
+      <soap:operation soapAction="http://tempuri.org/IConnectService/GetConnectedUsersCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetFirstPanzerAmounts">
+      <soap:operation soapAction="http://tempuri.org/IConnectService/SetFirstPanzerAmounts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetSecondPanzerAmounts">
+      <soap:operation soapAction="http://tempuri.org/IConnectService/SetSecondPanzerAmounts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsSecondReady">
+      <soap:operation soapAction="http://tempuri.org/IConnectService/IsSecondReady" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ConnectService">
+    <wsdl:port name="NetTcpBinding_IConnectService" binding="tns:NetTcpBinding_IConnectService">
+      <soap12:address location="net.tcp://localhost:4748/connect" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:4748/connect</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>DESKTOP-371D8C3\User</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="BasicHttpBinding_IConnectService" binding="tns:BasicHttpBinding_IConnectService">
+      <soap:address location="http://localhost:4746/connect" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
