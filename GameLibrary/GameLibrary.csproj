@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\BaseRocket.cs" />
+    <Compile Include="Components\DataContractAttribute.cs" />
     <Compile Include="Components\Health.cs" />
     <Compile Include="Components\HealthDecorators\ProgressBarHealth.cs" />
     <Compile Include="Components\Inventory.cs" />

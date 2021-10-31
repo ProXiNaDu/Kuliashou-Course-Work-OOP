@@ -52,9 +52,10 @@ namespace WcfServiceLibrary
         bool IsSecondReady();
 
         /// <summary>
-        /// Получение текущего списка объектов на сцене с их состоянием
+        /// Получение текущих игровых объектов на сцене
         /// </summary>
-        /// <returns>Текущий список объектов на сцене с их состоянием</returns>
-        List<GameObject> GetCurrentGameObjects();
+        /// <returns>Текущие игровые объекты на сцене в виде JSON массива</returns>
+        [OperationContract]
+        string GetCurrentGameObjects();
     }
 }

@@ -7,6 +7,10 @@ using GameLibrary;
 using GameLibrary.Scenes;
 using System.Windows.Controls;
 using System.Threading;
+using Newtonsoft.Json;
+using WcfServiceLibrary.Serialization;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace GameUserInterface
 {
@@ -307,6 +311,10 @@ namespace GameUserInterface
             {
                 client.SetFirstPanzerAmounts(powerfulRockets, fastRockets, rockets);
             }
+
+            Thread.Sleep(1000);
+
+            var currentScene = client.GetCurrentGameObjects();
         }
     }
 }

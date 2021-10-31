@@ -1,10 +1,12 @@
 ﻿using GameEngineLibrary;
 using GameLibrary;
 using GameLibrary.Scenes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using WcfServiceLibrary.Serialization;
 
 namespace WcfServiceLibrary
 {
@@ -34,7 +36,7 @@ namespace WcfServiceLibrary
         /// </summary>
         public void DisconnectFromServer()
         {
-            connectedUsersCount--;
+            connectedUsersCount = 0;
         }
 
         /// <summary>
@@ -90,19 +92,21 @@ namespace WcfServiceLibrary
         }
 
         /// <summary>
-        /// Получение текущего списка объектов на сцене с их состоянием
+        /// Получение текущих игровых объектов на сцене
         /// </summary>
-        /// <returns>Текущий список объектов на сцене с их состоянием</returns>
-        public List<GameObject> GetCurrentGameObjects()
+        /// <returns>Текущие игровые объекты на сцене в виде JSON массива</returns>
+        public string GetCurrentGameObjects()
         {
-            return scene.GetGameObjects();
+            if (scene == null) return "[]";
+            return JsonConvert.SerializeObject(scene.GetGameObjects(),
+                Formatting.None, new Vector2Converter());
         }
 
         private void UpdateScene()
         {
             TimeSpan delta = new TimeSpan(0);
             var sw = new Stopwatch();
-            while (connectedUsersCount > 0)
+            while (!scene.IsDiposed && connectedUsersCount > 0)
             {
                 scene.Update(delta);
                 sw.Restart();

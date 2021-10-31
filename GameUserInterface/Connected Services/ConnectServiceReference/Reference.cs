@@ -50,6 +50,12 @@ namespace GameUserInterface.ConnectServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConnectService/IsSecondReady", ReplyAction="http://tempuri.org/IConnectService/IsSecondReadyResponse")]
         System.Threading.Tasks.Task<bool> IsSecondReadyAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConnectService/GetCurrentGameObjects", ReplyAction="http://tempuri.org/IConnectService/GetCurrentGameObjectsResponse")]
+        string GetCurrentGameObjects();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConnectService/GetCurrentGameObjects", ReplyAction="http://tempuri.org/IConnectService/GetCurrentGameObjectsResponse")]
+        System.Threading.Tasks.Task<string> GetCurrentGameObjectsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -125,6 +131,14 @@ namespace GameUserInterface.ConnectServiceReference {
         
         public System.Threading.Tasks.Task<bool> IsSecondReadyAsync() {
             return base.Channel.IsSecondReadyAsync();
+        }
+        
+        public string GetCurrentGameObjects() {
+            return base.Channel.GetCurrentGameObjects();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetCurrentGameObjectsAsync() {
+            return base.Channel.GetCurrentGameObjectsAsync();
         }
     }
 }

@@ -31,6 +31,21 @@ namespace GameLibrary.Components
         protected int current;
 
         /// <summary>
+        /// Общее количество ракет в инвентаре.
+        /// </summary>
+        public int TotalAmount { get => totalAmount; set => totalAmount = value; }
+
+        /// <summary>
+        /// Количества рокет в инвентаре.
+        /// </summary>
+        public int[] Amounts { get => amounts; set => amounts = value; }
+
+        /// <summary>
+        /// Текущий индекс ракеты для создания.
+        /// </summary>
+        public int Current { get => current; set => current = value; }
+
+        /// <summary>
         /// Создание нового инвентаря.
         /// </summary>
         /// <param name="rockets">Сборщики ракет.</param>

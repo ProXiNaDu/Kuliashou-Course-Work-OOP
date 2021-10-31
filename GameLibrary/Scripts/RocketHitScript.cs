@@ -100,10 +100,10 @@ namespace GameLibrary.Scripts
         /// <returns>True, если ракета за границами экрана.</returns>
         private bool CheckBounds(Transform transform)
         {
-            return transform.Position.X > windowHeight ||
-                   transform.Position.X < -windowHeight ||
-                   transform.Position.Y > windowWidth ||
-                   transform.Position.Y < -windowWidth;
+            return transform.Position.X > windowWidth ||
+                   transform.Position.X < -windowWidth ||
+                   transform.Position.Y > windowHeight ||
+                   transform.Position.Y < -windowHeight;
         }
     }
 }

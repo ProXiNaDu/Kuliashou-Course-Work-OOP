@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using Newtonsoft.Json;
+using OpenTK;
 
 namespace GameEngineLibrary
 {
@@ -10,6 +11,7 @@ namespace GameEngineLibrary
         /// <summary>
         /// Объект-родитель для объекта, которому принадлежит данный экземпляр Transform.
         /// </summary>
+        [JsonIgnore]
         public GameObject Parent { get; set; }
 
         /// <summary>
@@ -23,8 +25,21 @@ namespace GameEngineLibrary
         private Vector2 localPosition;
 
         /// <summary>
+        /// Локальные координаты объекта относительно родительского объекта.
+        /// </summary>
+        public Vector2 LocalPosition 
+        { 
+            get => localPosition;
+            set 
+            {
+                localPosition = value;
+            }
+        }
+
+        /// <summary>
         /// Позиция объекта.
         /// </summary>
+        [JsonIgnore]
         public Vector2 Position
         {
             get

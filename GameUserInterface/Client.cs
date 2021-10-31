@@ -1,5 +1,9 @@
-﻿using GameUserInterface.ConnectServiceReference;
+﻿using GameEngineLibrary;
+using GameUserInterface.ConnectServiceReference;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using WcfServiceLibrary.Serialization;
 
 namespace GameUserInterface
 {
@@ -150,6 +154,27 @@ namespace GameUserInterface
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Получение текущих игровых объектов на сцене
+        /// </summary>
+        /// <returns>Текущин игровые объекты на сцене</returns>
+        public List<GameObject> GetCurrentGameObjects()
+        {
+            if (closed) return null;
+
+            try
+            {
+                return JsonConvert.DeserializeObject<List<GameObject>>(
+                    connectServiceClient.GetCurrentGameObjects(),
+                    new Vector2Converter(), new ComponentConverter());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
             }
         }
 

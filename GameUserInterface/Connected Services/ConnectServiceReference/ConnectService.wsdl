@@ -72,6 +72,12 @@
   <wsdl:message name="IConnectService_IsSecondReady_OutputMessage">
     <wsdl:part name="parameters" element="tns:IsSecondReadyResponse" />
   </wsdl:message>
+  <wsdl:message name="IConnectService_GetCurrentGameObjects_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentGameObjects" />
+  </wsdl:message>
+  <wsdl:message name="IConnectService_GetCurrentGameObjects_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentGameObjectsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IConnectService">
     <wsdl:operation name="ConnectToServer">
       <wsdl:input wsaw:Action="http://tempuri.org/IConnectService/ConnectToServer" message="tns:IConnectService_ConnectToServer_InputMessage" />
@@ -96,6 +102,10 @@
     <wsdl:operation name="IsSecondReady">
       <wsdl:input wsaw:Action="http://tempuri.org/IConnectService/IsSecondReady" message="tns:IConnectService_IsSecondReady_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConnectService/IsSecondReadyResponse" message="tns:IConnectService_IsSecondReady_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentGameObjects">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConnectService/GetCurrentGameObjects" message="tns:IConnectService_GetCurrentGameObjects_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConnectService/GetCurrentGameObjectsResponse" message="tns:IConnectService_GetCurrentGameObjects_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IConnectService" type="tns:IConnectService">
@@ -155,6 +165,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetCurrentGameObjects">
+      <soap12:operation soapAction="http://tempuri.org/IConnectService/GetCurrentGameObjects" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="BasicHttpBinding_IConnectService" type="tns:IConnectService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -205,6 +224,15 @@
     </wsdl:operation>
     <wsdl:operation name="IsSecondReady">
       <soap:operation soapAction="http://tempuri.org/IConnectService/IsSecondReady" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentGameObjects">
+      <soap:operation soapAction="http://tempuri.org/IConnectService/GetCurrentGameObjects" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

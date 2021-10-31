@@ -10,6 +10,11 @@ namespace GameEngineLibrary
     public abstract class Scene : IDisposable
     {
         /// <summary>
+        /// Флаг, говорящий о том, удалена ли сцена
+        /// </summary>
+        public bool IsDiposed { get; private set; }
+
+        /// <summary>
         /// Окно, в котором отрисовывается сцена.
         /// </summary>
         public Window GameWindow { get; }
@@ -132,6 +137,8 @@ namespace GameEngineLibrary
         /// </summary>
         public void Dispose()
         {
+            if (IsDiposed) return;
+
             foreach (Texture2D texture in textures)
             {
                 texture.Dispose();
@@ -141,6 +148,8 @@ namespace GameEngineLibrary
             {
                 gameObject.Dispose();
             }
+
+            IsDiposed = true;
         }
     }
 }
