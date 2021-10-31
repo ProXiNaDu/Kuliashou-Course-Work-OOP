@@ -20,6 +20,9 @@ namespace GameLibrary.Scripts
         /// </summary>
         private Animation2D explosionAnim;
 
+        private double windowHeight;
+        private double windowWidth;
+
         /// <summary>
         /// Создание скрипта, отвечающего за обрапотку попаданий ракеты.
         /// </summary>
@@ -29,6 +32,9 @@ namespace GameLibrary.Scripts
         {
             this.scene = scene;
             this.explosionAnim = explosionAnim;
+
+            windowWidth = (scene.GameWindow != null) ? scene.GameWindow.Width : 800;
+            windowHeight = (scene.GameWindow != null) ? scene.GameWindow.Height : 450;
         }
 
         /// <summary>
@@ -94,10 +100,10 @@ namespace GameLibrary.Scripts
         /// <returns>True, если ракета за границами экрана.</returns>
         private bool CheckBounds(Transform transform)
         {
-            return transform.Position.X >  scene.GameWindow.Width  ||
-                   transform.Position.X < -scene.GameWindow.Width  ||
-                   transform.Position.Y >  scene.GameWindow.Height ||
-                   transform.Position.Y < -scene.GameWindow.Height;
+            return transform.Position.X > windowHeight ||
+                   transform.Position.X < -windowHeight ||
+                   transform.Position.Y > windowWidth ||
+                   transform.Position.Y < -windowWidth;
         }
     }
 }

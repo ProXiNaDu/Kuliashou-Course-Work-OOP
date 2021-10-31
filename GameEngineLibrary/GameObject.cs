@@ -1,17 +1,21 @@
 ﻿using System;
 using OpenTK;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace GameEngineLibrary
 {
     /// <summary>
     /// Класс, который описывает объект на сцене.
     /// </summary>
+    [DataContract]
     public class GameObject : IDisposable
     {
         private bool disposed = false;
 
         private Dictionary<string, IComponent> components;
+
+        private List<GameObject> innerObjects;
 
         /// <summary>
         /// Список добавленных скриптов.
@@ -21,7 +25,28 @@ namespace GameEngineLibrary
         /// <summary>
         /// Список внутренних объектов.
         /// </summary>
-        public List<GameObject> InnerObjects { get; private set; }
+        [DataMember]
+        public List<GameObject> InnerObjects 
+        { 
+            get => innerObjects; 
+            set 
+            { 
+                innerObjects = value;
+            } 
+        }
+
+        /// <summary>
+        /// Список компонентов объекта
+        /// </summary>
+        [DataMember]
+        public Dictionary<string, IComponent> Components 
+        { 
+            get => components; 
+            set 
+            { 
+                components = value; 
+            } 
+        }
 
         /// <summary>
         /// Создание нового игрового объекта.

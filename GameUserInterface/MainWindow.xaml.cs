@@ -307,8 +307,6 @@ namespace GameUserInterface
             {
                 client.SetFirstPanzerAmounts(powerfulRockets, fastRockets, rockets);
             }
-
-            MessageBox.Show("Игра началась");
         }
     }
 }

@@ -2,6 +2,7 @@
 using GameLibrary;
 using GameLibrary.Scenes;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 
@@ -56,6 +57,7 @@ namespace WcfServiceLibrary
             scene = new BattleScene(null, sceneSettings);
             scene.Init();
             sceneUpdateThread = new Thread(new ThreadStart(UpdateScene));
+            sceneUpdateThread.Start();
         }
 
         /// <summary>
@@ -66,8 +68,8 @@ namespace WcfServiceLibrary
         {
             sceneSettings = new BattleSceneSettings()
             {
-                FirstPanzerControlType = BattleSceneSettings.PanzerControlType.Remote,
-                SecondPanzerControlType = BattleSceneSettings.PanzerControlType.Remote,
+                FirstPanzerControlType = BattleSceneSettings.PanzerControlType.AI,
+                SecondPanzerControlType = BattleSceneSettings.PanzerControlType.AI,
 
                 FirstPanzerHealth = 100,
                 SecondPanzerHealth = 100,
@@ -85,6 +87,15 @@ namespace WcfServiceLibrary
         public bool IsSecondReady()
         {
             return isSecondReady;
+        }
+
+        /// <summary>
+        /// Получение текущего списка объектов на сцене с их состоянием
+        /// </summary>
+        /// <returns>Текущий список объектов на сцене с их состоянием</returns>
+        public List<GameObject> GetCurrentGameObjects()
+        {
+            return scene.GetGameObjects();
         }
 
         private void UpdateScene()

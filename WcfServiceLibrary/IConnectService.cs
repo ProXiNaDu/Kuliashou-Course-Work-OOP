@@ -1,4 +1,6 @@
-﻿using System.ServiceModel;
+﻿using GameEngineLibrary;
+using System.Collections.Generic;
+using System.ServiceModel;
 
 namespace WcfServiceLibrary
 {
@@ -48,5 +50,11 @@ namespace WcfServiceLibrary
         /// <returns>true - если второй игрок готов; в противном случае - false</returns>
         [OperationContract]
         bool IsSecondReady();
+
+        /// <summary>
+        /// Получение текущего списка объектов на сцене с их состоянием
+        /// </summary>
+        /// <returns>Текущий список объектов на сцене с их состоянием</returns>
+        List<GameObject> GetCurrentGameObjects();
     }
 }

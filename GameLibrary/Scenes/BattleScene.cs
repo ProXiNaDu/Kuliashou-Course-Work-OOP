@@ -52,10 +52,21 @@ namespace GameLibrary
             AddGameObject(CreateMountain());
 
             Inventory.RocketBuilder[] rockets = CreateRockets();
-            Inventory firstPanzerInventory = new WpfInventory(
-                (StackPanel) GameWindow.FindName("FirstPanzerInventory"), rockets);
-            Inventory secondPanzerInventory = new WpfInventory(
-                (StackPanel)GameWindow.FindName("SecondPanzerInventory"), rockets);
+            Inventory firstPanzerInventory;
+            Inventory secondPanzerInventory;
+
+            if (GameWindow == null)
+            {
+                firstPanzerInventory = new Inventory(rockets);
+                secondPanzerInventory = new Inventory(rockets);
+            }
+            else
+            {
+                firstPanzerInventory = new WpfInventory(
+                    (StackPanel)GameWindow.FindName("FirstPanzerInventory"), rockets);
+                secondPanzerInventory = new WpfInventory(
+                    (StackPanel)GameWindow.FindName("SecondPanzerInventory"), rockets);
+            }
 
             settings.FillFirtsPanzerInventory(firstPanzerInventory);
             settings.FillSecondPanzerInventory(secondPanzerInventory);
@@ -63,13 +74,22 @@ namespace GameLibrary
             BuildFirstPanzer(firstPanzerInventory);
             BuildSecondPanzer(secondPanzerInventory);
 
-            GameObject winChecker = new GameObject();
-            winChecker.AddScript(new WinCheckerScript(firstPanzer, secondPanzer,
-                GameWindow.FindName("WinMenu") as StackPanel));
+            GameObject winChecker = null;
+            if (GameWindow != null)
+            {
+                winChecker = new GameObject();
+                winChecker.AddScript(new WinCheckerScript(firstPanzer, secondPanzer,
+                    GameWindow.FindName("WinMenu") as StackPanel));
+
+            }
 
             AddGameObject(firstPanzer);
             AddGameObject(secondPanzer);
-            AddGameObject(winChecker);
+
+            if (winChecker != null)
+            {
+                AddGameObject(winChecker);
+            }
         }
 
         private void BuildPanzer(GameObject panzer, Texture2D trackTex,
@@ -82,8 +102,12 @@ namespace GameLibrary
             transform.Scale = scale;
 
             panzer.AddComponent("texture", trackTex);
-            panzer.AddComponent("health",
-                new ProgressBarHealth(new Health(health), healthBar));
+            var healthComponent = new Health(health);
+            if (healthBar != null)
+            {
+                healthComponent = new ProgressBarHealth(healthComponent, healthBar);
+            }
+            panzer.AddComponent("health", healthComponent);
             foreach (Script script in panzerScripts)
                 panzer.AddScript(script);
 
@@ -105,14 +129,15 @@ namespace GameLibrary
             AddTexture(trackTexture);
             AddTexture(turretTexture);
 
-            Vector2 position = new Vector2((float)-GameWindow.Width * 3 / 4,
-                (float)GameWindow.Height - trackTexture.Height * 14);
+            Vector2 position = new Vector2(
+                ((GameWindow != null) ? (float)-GameWindow.Width : -800f) * 3 / 4,
+                ((GameWindow != null) ? (float)GameWindow.Height : 450f) - trackTexture.Height * 14);
 
             Script[] trackScripts = null;
             Script[] turretScripts = null;
 
-            ProgressBar cooldownBar = (ProgressBar)GameWindow.FindName("FirstPanzerCooldown");
-            ProgressBar healthBar = (ProgressBar)GameWindow.FindName("FirstPanzerHealth");
+            ProgressBar cooldownBar = (ProgressBar)GameWindow?.FindName("FirstPanzerCooldown");
+            ProgressBar healthBar = (ProgressBar)GameWindow?.FindName("FirstPanzerHealth");
 
             switch (settings.FirstPanzerControlType)
             {
@@ -143,14 +168,15 @@ namespace GameLibrary
             AddTexture(trackTexture);
             AddTexture(turretTexture);
 
-            Vector2 position = new Vector2((float)GameWindow.Width * 3 / 4,
-                (float)GameWindow.Height - trackTexture.Height * 14);
+            Vector2 position = new Vector2(
+                ((GameWindow != null) ? (float)GameWindow.Width : 800) * 3 / 4,
+                ((GameWindow != null) ? (float)GameWindow.Height : 450) - trackTexture.Height * 14);
 
             Script[] trackScripts = null;
             Script[] turretScripts = null;
 
-            ProgressBar cooldownBar = (ProgressBar)GameWindow.FindName("SecondPanzerCooldown");
-            ProgressBar healthBar = (ProgressBar)GameWindow.FindName("SecondPanzerHealth");
+            ProgressBar cooldownBar = (ProgressBar)GameWindow?.FindName("SecondPanzerCooldown");
+            ProgressBar healthBar = (ProgressBar)GameWindow?.FindName("SecondPanzerHealth");
 
             switch (settings.SecondPanzerControlType)
             {
@@ -218,7 +244,9 @@ namespace GameLibrary
             Texture2D backgroundTex = Texture2D.LoadTexture(BACKGROUND_TEXTURE_PATH);
             AddTexture(backgroundTex);
             return new GameObject(backgroundTex,
-                new Vector2((float)-GameWindow.Width, (float)-GameWindow.Height),
+                new Vector2(
+                    (GameWindow != null) ? (float)-GameWindow.Width : -800f,
+                    (GameWindow != null) ? (float)-GameWindow.Height : -450f),
                 Vector2.Zero, new Vector2(5, 5), 0);
         }
 
@@ -248,6 +276,11 @@ namespace GameLibrary
             rocketSwitcher.SetKeyToSelectNext(next);
             rocketSwitcher.SetKeyToSelectPrevious(previous);
 
+            if (cooldownBar == null)
+            {
+                return new Script[] { turretControl, rocketSwitcher, shootControl };
+            }
+
             WpfShootControlScript wpfShootControl = new WpfShootControlScript(this, cooldownBar, shootControl);
             return new Script[] { turretControl, rocketSwitcher, wpfShootControl };
         }
@@ -258,6 +291,11 @@ namespace GameLibrary
             ShootAIControlScript shootControl = new ShootAIControlScript(this, 500);
             AIRocketSwitcherScript rocketSwitcher = new AIRocketSwitcherScript(100, 1000);
             turretControl.SetTarget(target);
+
+            if (cooldownBar == null)
+            {
+                return new Script[] { turretControl, rocketSwitcher, shootControl };
+            }
 
             WpfShootControlScript wpfShootControl = new WpfShootControlScript(this, cooldownBar, shootControl);
             return new Script[] { turretControl, rocketSwitcher, wpfShootControl };
