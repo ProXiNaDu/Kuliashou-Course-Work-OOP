@@ -44,6 +44,11 @@ namespace GameEngineLibrary
         private List<GameObject> objectsToRemove;
 
         /// <summary>
+        /// Список объектов на сцене.
+        /// </summary>
+        public List<GameObject> GameObjects { get => objects; set => objects = value; }
+
+        /// <summary>
         /// Создание сцены.
         /// </summary>
         /// <param name="window">Окно, в котором отрисовывается сцена.</param>
@@ -81,19 +86,22 @@ namespace GameEngineLibrary
         /// </summary>
         private void UpdateObjectsArray()
         {
+            var temp = new List<GameObject>(objects.Count + objectsToAdd.Count);
+            temp.AddRange(objects);
             if (objectsToRemove.Count != 0)
             {
                 foreach (GameObject gameObject in objectsToRemove)
                 {
-                    objects.Remove(gameObject);
+                    temp.Remove(gameObject);
                 }
                 objectsToRemove.Clear();
             }
             if (objectsToAdd.Count != 0)
             {
-                objects.AddRange(objectsToAdd);
+                temp.AddRange(objectsToAdd);
                 objectsToAdd.Clear();
             }
+            objects = temp;
         }
 
         /// <summary>

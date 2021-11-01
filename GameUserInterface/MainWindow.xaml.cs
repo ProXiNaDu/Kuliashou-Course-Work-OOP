@@ -73,7 +73,10 @@ namespace GameUserInterface
             GL.LoadIdentity();
             GL.Ortho(-Width, Width, Height, -Height, 0d, 1d);
 
-            scene.Update(delta);
+            if (client == null)
+            {
+                scene.Update(delta);
+            }
             renderer.Render();
         }
 
@@ -312,9 +315,19 @@ namespace GameUserInterface
                 client.SetFirstPanzerAmounts(powerfulRockets, fastRockets, rockets);
             }
 
-            Thread.Sleep(1000);
+            MultiplayerRocketShop.Visibility = Visibility.Hidden;
 
-            var currentScene = client.GetCurrentGameObjects();
+            var serverListenerThread = new Thread(new ThreadStart(ListenServerUpdates));
+            serverListenerThread.Start();
+        }
+
+        private void ListenServerUpdates()
+        {
+            while(client != null)
+            {
+                var gameObjects = client.GetCurrentGameObjects();
+                scene.GameObjects = gameObjects;
+            }
         }
     }
 }

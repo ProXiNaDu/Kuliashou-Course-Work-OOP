@@ -132,7 +132,10 @@ namespace GameEngineLibrary
         /// <param name="script">Скрипт для добавления.</param>
         public void AddScript(Script script)
         {
-            scripts.Add(script);
+            var temp = new List<Script>(scripts.Count + 1);
+            temp.AddRange(scripts);
+            temp.Add(script);
+            scripts = temp;
             script.SetControlledObject(this);
             script.Init();
         }
@@ -154,7 +157,7 @@ namespace GameEngineLibrary
         /// <param name="collider">Новый коллайдер.</param>
         public void SetCollider(Collider collider)
         {
-            components["collider"] = collider;
+            AddComponent("collider", collider);
         }
 
         /// <summary>
@@ -240,7 +243,9 @@ namespace GameEngineLibrary
         /// <param name="component">Компонент для добавления.</param>
         public void AddComponent(string key, IComponent component)
         {
-            components[key] = component;
+            var temp = new Dictionary<string, IComponent>(components);
+            temp[key] = component;
+            components = temp;
         }
 
         /// <summary>
