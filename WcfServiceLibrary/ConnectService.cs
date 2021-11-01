@@ -3,7 +3,6 @@ using GameLibrary;
 using GameLibrary.Scenes;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using WcfServiceLibrary.Serialization;
@@ -110,7 +109,7 @@ namespace WcfServiceLibrary
             {
                 scene.Update(delta);
                 sw.Restart();
-                Thread.Sleep(100);
+                Thread.Sleep(10);
                 sw.Stop();
                 delta = new TimeSpan(sw.ElapsedTicks);
             }

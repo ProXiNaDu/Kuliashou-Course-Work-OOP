@@ -20,6 +20,10 @@ namespace GameEngineLibrary
         /// </summary>
         public virtual int ID { get; private set; }
         /// <summary>
+        /// Название текстуры.
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
         /// Ширина текстуры.
         /// </summary>
         public int Width { get; private set; }
@@ -83,7 +87,7 @@ namespace GameEngineLibrary
                 TextureParameterName.TextureMagFilter,
                 (int)TextureMagFilter.Nearest);
 
-            return new Texture2D(id, bitmap.Width, bitmap.Height);
+            return new Texture2D(id, bitmap.Width, bitmap.Height) { Name = path };
         }
 
         /// <summary>

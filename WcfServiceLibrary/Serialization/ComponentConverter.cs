@@ -84,6 +84,8 @@ namespace WcfServiceLibrary.Serialization
             int width = 0;
             int height = 0;
             int animationTime = -1;
+            int index = 0;
+            string textureName = "";
             Color color = default;
 
             reader.Read();
@@ -106,7 +108,14 @@ namespace WcfServiceLibrary.Serialization
                     case "Color":
                         color = serializer.Deserialize<Color>(reader);
                         break;
+                    case "Name":
+                        textureName = serializer.Deserialize<string>(reader);
+                        break;
+                    case "Index":
+                        index = serializer.Deserialize<int>(reader);
+                        break;
                     case "AnimationTime":
+                        animationTime = serializer.Deserialize<int>(reader);
                         break;
                     default:
                         throw new JsonException("Unexpected token name: " + name);
@@ -120,14 +129,17 @@ namespace WcfServiceLibrary.Serialization
                 return new Animation2D(new[] { id }, width, height)
                 {
                     AnimationTime = animationTime,
-                    Color = color
+                    Color = color,
+                    Name = textureName,
+                    Index = index
                 };
             }
             else
             {
                 return new Texture2D(id, width, height)
                 { 
-                    Color = color 
+                    Color = color,
+                    Name = textureName
                 };
             }
         }

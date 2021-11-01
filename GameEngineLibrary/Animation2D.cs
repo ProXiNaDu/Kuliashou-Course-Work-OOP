@@ -34,9 +34,15 @@ namespace GameEngineLibrary
         {
             get
             {
+                if (animationId.Length <= index) return animationId[0];
                 return animationId[index];
             }
         }
+
+        /// <summary>
+        /// Индекс текущей текстуры.
+        /// </summary>
+        public int Index { get => index; set => index = value; }
 
         /// <summary>
         /// Время анимации.
@@ -69,6 +75,7 @@ namespace GameEngineLibrary
         {
             disposed = true;
             AnimationTime = animation.AnimationTime;
+            Name = animation.Name;
         }
 
         /// <summary>
@@ -146,7 +153,7 @@ namespace GameEngineLibrary
                 idArr[i] = id;
             }
 
-            return new Animation2D(idArr, spriteWidth, spriteHeight);
+            return new Animation2D(idArr, spriteWidth, spriteHeight) { Name = path };
         }
 
         /// <summary>

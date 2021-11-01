@@ -167,14 +167,39 @@ namespace GameUserInterface
 
             try
             {
-                return JsonConvert.DeserializeObject<List<GameObject>>(
+                List<GameObject> gameObjects = JsonConvert.DeserializeObject<List<GameObject>>(
                     connectServiceClient.GetCurrentGameObjects(),
                     new Vector2Converter(), new ComponentConverter());
+                UpdateInnerObjects(gameObjects);
+                return gameObjects;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 return null;
+            }
+        }
+
+        private void UpdateInnerObjects(List<GameObject> gameObjects)
+        {
+            foreach (GameObject gameObject in gameObjects)
+            {
+                if (gameObject.InnerObjects.Count == 0) continue;
+
+                UpdateInnerObjects(gameObject.InnerObjects, gameObject);
+            }
+        }
+
+        private void UpdateInnerObjects(List<GameObject> gameObjects, GameObject parent)
+        {
+            foreach (GameObject gameObject in gameObjects)
+            {
+                var transform = (Transform) gameObject.GetComponent("transform");
+                transform.Parent = parent;
+
+                if (gameObject.InnerObjects.Count == 0) continue;
+
+                UpdateInnerObjects(gameObject.InnerObjects, gameObject);
             }
         }
 

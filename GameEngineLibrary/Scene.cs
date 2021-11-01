@@ -25,6 +25,11 @@ namespace GameEngineLibrary
         private List<Texture2D> textures;
 
         /// <summary>
+        /// Словарь созданных текстур.
+        /// </summary>
+        private Dictionary<string, Texture2D> namedTextures;
+
+        /// <summary>
         /// Список объектов на сцене.
         /// </summary>
         private List<GameObject> objects;
@@ -57,6 +62,7 @@ namespace GameEngineLibrary
             GameWindow = window;
 
             textures = new List<Texture2D>();
+            namedTextures = new Dictionary<string, Texture2D>();
             objects = new List<GameObject>();
             objectsToRemove = new List<GameObject>();
             objectsToAdd = new List<GameObject>();
@@ -86,8 +92,7 @@ namespace GameEngineLibrary
         /// </summary>
         private void UpdateObjectsArray()
         {
-            var temp = new List<GameObject>(objects.Count + objectsToAdd.Count);
-            temp.AddRange(objects);
+            var temp = new List<GameObject>(objects);
             if (objectsToRemove.Count != 0)
             {
                 foreach (GameObject gameObject in objectsToRemove)
@@ -138,6 +143,17 @@ namespace GameEngineLibrary
         public void AddTexture(Texture2D texture)
         {
             textures.Add(texture);
+            namedTextures[texture.Name] = texture;
+        }
+
+        /// <summary>
+        /// Получение текстуры по имени
+        /// </summary>
+        /// <param name="name">Имя текстуры</param>
+        /// <returns>Текстура</returns>
+        public Texture2D GetTexture(string name)
+        {
+            return namedTextures[name];
         }
         
         /// <summary>

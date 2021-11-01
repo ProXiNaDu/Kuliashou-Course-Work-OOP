@@ -69,7 +69,23 @@ namespace GameEngineLibrary
                 new Vector2(0, 1)
             };
 
-            GL.BindTexture(TextureTarget.Texture2D, texture.ID);
+            int id = texture.ID;
+            if (id == 0)
+            {
+                var sourceAnimation = texture as Animation2D;
+                if (sourceAnimation != null)
+                {
+                    var savedAnimation = scene.GetTexture(texture.Name) as Animation2D;
+                    savedAnimation.Index = sourceAnimation.Index;
+                    id = savedAnimation.ID;
+                }
+                else
+                {
+                    id = scene.GetTexture(texture.Name).ID;
+                }
+            }
+
+            GL.BindTexture(TextureTarget.Texture2D, id);
             GL.Begin(PrimitiveType.Quads);
             GL.Color3(texture.Color);
 
