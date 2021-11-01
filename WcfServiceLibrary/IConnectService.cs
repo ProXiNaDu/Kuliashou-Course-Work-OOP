@@ -1,5 +1,4 @@
-﻿using GameEngineLibrary;
-using System.Collections.Generic;
+﻿using GameLibrary.Scripts.RemoteKeyboardControlScripts;
 using System.ServiceModel;
 
 namespace WcfServiceLibrary
@@ -57,5 +56,19 @@ namespace WcfServiceLibrary
         /// <returns>Текущие игровые объекты на сцене в виде JSON массива</returns>
         [OperationContract]
         string GetCurrentGameObjects();
+
+        /// <summary>
+        /// Установка состояния клавиатуры для первого игрока
+        /// </summary>
+        /// <param name="keyboard">Состояние клавиатуры</param>
+        [OperationContract]
+        void SetFirstPlayerKeyboardState(RemoteKeyboardState keyboard);
+
+        /// <summary>
+        /// Установка состояния клавиатуры для второго игрока
+        /// </summary>
+        /// <param name="keyboard">Состояние клавиатуры</param>
+        [OperationContract]
+        void SetSecondPlayerKeyboardState(RemoteKeyboardState keyboard);
     }
 }

@@ -56,6 +56,18 @@ namespace GameUserInterface.ConnectServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConnectService/GetCurrentGameObjects", ReplyAction="http://tempuri.org/IConnectService/GetCurrentGameObjectsResponse")]
         System.Threading.Tasks.Task<string> GetCurrentGameObjectsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConnectService/SetFirstPlayerKeyboardState", ReplyAction="http://tempuri.org/IConnectService/SetFirstPlayerKeyboardStateResponse")]
+        void SetFirstPlayerKeyboardState(GameLibrary.Scripts.RemoteKeyboardControlScripts.RemoteKeyboardState keyboard);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConnectService/SetFirstPlayerKeyboardState", ReplyAction="http://tempuri.org/IConnectService/SetFirstPlayerKeyboardStateResponse")]
+        System.Threading.Tasks.Task SetFirstPlayerKeyboardStateAsync(GameLibrary.Scripts.RemoteKeyboardControlScripts.RemoteKeyboardState keyboard);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConnectService/SetSecondPlayerKeyboardState", ReplyAction="http://tempuri.org/IConnectService/SetSecondPlayerKeyboardStateResponse")]
+        void SetSecondPlayerKeyboardState(GameLibrary.Scripts.RemoteKeyboardControlScripts.RemoteKeyboardState keyboard);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConnectService/SetSecondPlayerKeyboardState", ReplyAction="http://tempuri.org/IConnectService/SetSecondPlayerKeyboardStateResponse")]
+        System.Threading.Tasks.Task SetSecondPlayerKeyboardStateAsync(GameLibrary.Scripts.RemoteKeyboardControlScripts.RemoteKeyboardState keyboard);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -139,6 +151,22 @@ namespace GameUserInterface.ConnectServiceReference {
         
         public System.Threading.Tasks.Task<string> GetCurrentGameObjectsAsync() {
             return base.Channel.GetCurrentGameObjectsAsync();
+        }
+        
+        public void SetFirstPlayerKeyboardState(GameLibrary.Scripts.RemoteKeyboardControlScripts.RemoteKeyboardState keyboard) {
+            base.Channel.SetFirstPlayerKeyboardState(keyboard);
+        }
+        
+        public System.Threading.Tasks.Task SetFirstPlayerKeyboardStateAsync(GameLibrary.Scripts.RemoteKeyboardControlScripts.RemoteKeyboardState keyboard) {
+            return base.Channel.SetFirstPlayerKeyboardStateAsync(keyboard);
+        }
+        
+        public void SetSecondPlayerKeyboardState(GameLibrary.Scripts.RemoteKeyboardControlScripts.RemoteKeyboardState keyboard) {
+            base.Channel.SetSecondPlayerKeyboardState(keyboard);
+        }
+        
+        public System.Threading.Tasks.Task SetSecondPlayerKeyboardStateAsync(GameLibrary.Scripts.RemoteKeyboardControlScripts.RemoteKeyboardState keyboard) {
+            return base.Channel.SetSecondPlayerKeyboardStateAsync(keyboard);
         }
     }
 }

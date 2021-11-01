@@ -7,6 +7,7 @@ using GameLibrary.Components.HealthDecorators;
 using GameLibrary.Components.RocketDecorators;
 using GameLibrary.Scenes;
 using GameLibrary.Scripts;
+using GameLibrary.Scripts.RemoteKeyboardControlScripts;
 using OpenTK;
 
 namespace GameLibrary
@@ -151,6 +152,10 @@ namespace GameLibrary
                         OpenTK.Input.Key.W, OpenTK.Input.Key.S, OpenTK.Input.Key.Space, 
                         OpenTK.Input.Key.E, OpenTK.Input.Key.Q);
                     break;
+                case BattleSceneSettings.PanzerControlType.Remote:
+                    trackScripts = CreateTrackRemoteKeyboardScripts(settings.FirstPanzerRemoteState);
+                    turretScripts = CreateTurretRemoteKeyboardScripts(settings.FirstPanzerRemoteState);
+                    break;
             }
 
             BuildPanzer(firstPanzer, trackTexture,
@@ -189,6 +194,10 @@ namespace GameLibrary
                     turretScripts = CreateTurretKeyboardScripts(cooldownBar,
                         OpenTK.Input.Key.Up, OpenTK.Input.Key.Down, OpenTK.Input.Key.Enter,
                         OpenTK.Input.Key.Plus, OpenTK.Input.Key.Minus);
+                    break;
+                case BattleSceneSettings.PanzerControlType.Remote:
+                    trackScripts = CreateTrackRemoteKeyboardScripts(settings.SecondPanzerRemoteState);
+                    turretScripts = CreateTurretRemoteKeyboardScripts(settings.SecondPanzerRemoteState);
                     break;
             }
 
@@ -258,6 +267,13 @@ namespace GameLibrary
             return new Script[] { panzerControl };
         }
 
+        private Script[] CreateTrackRemoteKeyboardScripts(RemoteState remoteState)
+        {
+            RemoteTrackKeyboardControlScript panzerControl = new RemoteTrackKeyboardControlScript(this, 300f);
+            panzerControl.SetRemoteState(remoteState);
+            return new Script[] { panzerControl };
+        }
+
         private Script[] CreateTrackAIScripts()
         {
             return new Script[] { new TrackAIControlScript(300f, 200) };
@@ -283,6 +299,18 @@ namespace GameLibrary
 
             WpfShootControlScript wpfShootControl = new WpfShootControlScript(this, cooldownBar, shootControl);
             return new Script[] { turretControl, rocketSwitcher, wpfShootControl };
+        }
+
+        private Script[] CreateTurretRemoteKeyboardScripts(RemoteState remoteState)
+        {
+            RemoteTurretKeyboardControlScript turretControl = new RemoteTurretKeyboardControlScript(2);
+            turretControl.SetRemoteState(remoteState);
+            RemoteShootKeyboardControlScript shootControl = new RemoteShootKeyboardControlScript(this);
+            shootControl.SetRemoteState(remoteState);
+            RemoteKeyboardRocketSwitcherScript rocketSwitcher = new RemoteKeyboardRocketSwitcherScript();
+            rocketSwitcher.SetRemoteState(remoteState);
+
+            return new Script[] { turretControl, rocketSwitcher, shootControl };
         }
 
         private Script[] CreateTurretAIScripts(ProgressBar cooldownBar, GameObject target)

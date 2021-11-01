@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8fd5d6eb-b8da-412a-bd34-af96add8799b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2c320a79-541d-4ec9-8864-73c20ef744be" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,10 +22,11 @@
     <MetadataSource Address="http://localhost:4746/connect?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ConnectService.wsdl" MetadataType="Wsdl" ID="de6cc313-b897-4aa7-adff-61d57b5de566" SourceId="1" SourceUrl="http://localhost:4746/connect?wsdl" />
-    <MetadataFile FileName="connect.xsd" MetadataType="Schema" ID="92a69f98-2ef5-4531-ab49-4991936e10a0" SourceId="1" SourceUrl="http://localhost:4746/connect?xsd=xsd0" />
-    <MetadataFile FileName="connect1.xsd" MetadataType="Schema" ID="f2267118-e993-4a88-b299-e574b0d2219b" SourceId="1" SourceUrl="http://localhost:4746/connect?xsd=xsd1" />
-    <MetadataFile FileName="connect2.xsd" MetadataType="Schema" ID="4a21535a-0743-4a14-9ec2-d137d6b7f1fc" SourceId="1" SourceUrl="http://localhost:4746/connect?xsd=xsd2" />
+    <MetadataFile FileName="connect.xsd" MetadataType="Schema" ID="cc4c7cb6-b8e4-4177-ab4e-99f8f52dc39c" SourceId="1" SourceUrl="http://localhost:4746/connect?xsd=xsd0" />
+    <MetadataFile FileName="connect1.xsd" MetadataType="Schema" ID="23f917ec-095e-4f01-903d-a8ce95ff7423" SourceId="1" SourceUrl="http://localhost:4746/connect?xsd=xsd1" />
+    <MetadataFile FileName="connect2.xsd" MetadataType="Schema" ID="74c77842-0c90-439f-a2d0-15e8f38bca51" SourceId="1" SourceUrl="http://localhost:4746/connect?xsd=xsd2" />
+    <MetadataFile FileName="connect3.xsd" MetadataType="Schema" ID="35091bb1-4f91-4541-af84-a320ed4c30e9" SourceId="1" SourceUrl="http://localhost:4746/connect?xsd=xsd3" />
+    <MetadataFile FileName="ConnectService.wsdl" MetadataType="Wsdl" ID="ba3a73a3-1b2e-4584-a127-553060dc5ef9" SourceId="1" SourceUrl="http://localhost:4746/connect?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -40,6 +40,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,7 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\BaseRocket.cs" />
-    <Compile Include="Components\DataContractAttribute.cs" />
     <Compile Include="Components\Health.cs" />
     <Compile Include="Components\HealthDecorators\ProgressBarHealth.cs" />
     <Compile Include="Components\Inventory.cs" />
@@ -66,6 +66,12 @@
     <Compile Include="Scenes\BattleSceneSettings.cs" />
     <Compile Include="Scripts\AIControlScripts\AIRocketSwitcherScript.cs" />
     <Compile Include="Scripts\AutoDestroyScript.cs" />
+    <Compile Include="Scripts\RemoteKeyboardControlScripts\RemoteKeyboardRocketSwitcherScript.cs" />
+    <Compile Include="Scripts\RemoteKeyboardControlScripts\RemoteShootKeyboardControlScript.cs" />
+    <Compile Include="Scripts\RemoteKeyboardControlScripts\RemoteKeyboardState.cs" />
+    <Compile Include="Scripts\RemoteKeyboardControlScripts\RemoteState.cs" />
+    <Compile Include="Scripts\RemoteKeyboardControlScripts\RemoteTrackKeyboardControlScript.cs" />
+    <Compile Include="Scripts\RemoteKeyboardControlScripts\RemoteTurretKeyboardControlScript.cs" />
     <Compile Include="Scripts\PhysicScript.cs" />
     <Compile Include="Scripts\RocketHitScript.cs" />
     <Compile Include="Scripts\KeyboardControlScripts\KeyboardRocketSwitcherScript.cs" />

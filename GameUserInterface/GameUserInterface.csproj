@@ -119,6 +119,9 @@
     <None Include="Connected Services\ConnectServiceReference\connect2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\ConnectServiceReference\connect3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ConnectServiceReference\ConnectService.wsdl" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />

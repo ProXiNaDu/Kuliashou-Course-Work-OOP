@@ -1,4 +1,5 @@
 ﻿using GameEngineLibrary;
+using GameLibrary.Scripts.RemoteKeyboardControlScripts;
 using GameUserInterface.ConnectServiceReference;
 using Newtonsoft.Json;
 using System;
@@ -154,6 +155,40 @@ namespace GameUserInterface
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Установка состояния клавиатуры для первого игрока
+        /// </summary>
+        /// <param name="keyboard">Состояние клавиатуры</param>
+        public void SetFirstPlayerKeyboardState(RemoteKeyboardState keyboard)
+        {
+            if (closed) return;
+
+            try
+            {
+                connectServiceClient.SetFirstPlayerKeyboardState(keyboard);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        /// <summary>
+        /// Установка состояния клавиатуры для второго игрока
+        /// </summary>
+        /// <param name="keyboard">Состояние клавиатуры</param>
+        public void SetSecondPlayerKeyboardState(RemoteKeyboardState keyboard)
+        {
+            if (closed) return;
+
+            try
+            {
+                connectServiceClient.SetSecondPlayerKeyboardState(keyboard);
+            }
+            catch (Exception)
+            {
             }
         }
 

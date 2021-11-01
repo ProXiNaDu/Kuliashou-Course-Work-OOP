@@ -1,4 +1,5 @@
 ﻿using GameLibrary.Components;
+using GameLibrary.Scripts.RemoteKeyboardControlScripts;
 
 namespace GameLibrary.Scenes
 {
@@ -40,6 +41,16 @@ namespace GameLibrary.Scenes
         /// Здоровье второго танка.
         /// </summary>
         public int SecondPanzerHealth { get; set; }
+
+        /// <summary>
+        /// Состояние удаленной машины первого игрока.
+        /// </summary>
+        public RemoteState FirstPanzerRemoteState { get; } = new RemoteState();
+
+        /// <summary>
+        /// Состояние удаленной машины второго игрока.
+        /// </summary>
+        public RemoteState SecondPanzerRemoteState { get; } = new RemoteState();
 
         /// <summary>
         /// Тип управления первого танка.

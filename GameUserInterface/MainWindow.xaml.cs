@@ -7,6 +7,8 @@ using GameLibrary;
 using GameLibrary.Scenes;
 using System.Windows.Controls;
 using System.Threading;
+using WcfServiceLibrary.Serialization;
+using GameLibrary.Scripts.RemoteKeyboardControlScripts;
 
 namespace GameUserInterface
 {
@@ -39,6 +41,11 @@ namespace GameUserInterface
         /// Отрисовщик сцены.
         /// </summary>
         private Renderer renderer;
+
+        /// <summary>
+        /// Объект для передачи состояния клавиатуры по сети
+        /// </summary>
+        private RemoteKeyboardState remoteKeyboardState = new RemoteKeyboardState();
 
         /// <summary>
         /// Создание окна приложения.
@@ -175,11 +182,23 @@ namespace GameUserInterface
 
         private void MainMenuBtn_Click(object sender, RoutedEventArgs e)
         {
+            KeyDown -= MainWindow_KeyDown;
+            KeyUp -= MainWindow_KeyUp;
+
             WinMenu.Visibility = Visibility.Hidden;
             MainMenu.Visibility = Visibility.Visible;
             FirstPanzerInfo.Visibility = Visibility.Hidden;
             SecondPanzerInfo.Visibility = Visibility.Hidden;
 
+            if (client != null)
+            {
+                client.DisconnectFromServer();
+            }
+
+            client?.Close();
+            client = null;
+            server?.Close();
+            server = null;
             scene.Dispose();
             InitStartScreen();
             scene = new BattleScene(this, settings);
@@ -315,6 +334,9 @@ namespace GameUserInterface
 
             var serverListenerThread = new Thread(new ThreadStart(ListenServerUpdates));
             serverListenerThread.Start();
+
+            KeyDown += MainWindow_KeyDown;
+            KeyUp += MainWindow_KeyUp;
         }
 
         private void ListenServerUpdates()
@@ -323,6 +345,53 @@ namespace GameUserInterface
             {
                 var gameObjects = client.GetCurrentGameObjects();
                 scene.GameObjects = gameObjects;
+            }
+        }
+
+        private void MainWindow_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            UpdateKey(e.Key, false);
+        }
+
+        private void MainWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            UpdateKey(e.Key, true);
+        }
+
+        private void UpdateKey(System.Windows.Input.Key key, bool value)
+        {
+            switch (key)
+            {
+                case System.Windows.Input.Key.Q:
+                    remoteKeyboardState.KeyQ = value;
+                    break;
+                case System.Windows.Input.Key.W:
+                    remoteKeyboardState.KeyW = value;
+                    break;
+                case System.Windows.Input.Key.E:
+                    remoteKeyboardState.KeyE = value;
+                    break;
+                case System.Windows.Input.Key.A:
+                    remoteKeyboardState.KeyA = value;
+                    break;
+                case System.Windows.Input.Key.S:
+                    remoteKeyboardState.KeyS = value;
+                    break;
+                case System.Windows.Input.Key.D:
+                    remoteKeyboardState.KeyD = value;
+                    break;
+                case System.Windows.Input.Key.Space:
+                    remoteKeyboardState.KeySpace = value;
+                    break;
+            }
+
+            if (server == null)
+            {
+                client.SetSecondPlayerKeyboardState(remoteKeyboardState);
+            }
+            else
+            {
+                client.SetFirstPlayerKeyboardState(remoteKeyboardState);
             }
         }
     }

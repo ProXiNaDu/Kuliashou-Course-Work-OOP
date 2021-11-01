@@ -1,6 +1,7 @@
 ﻿using GameEngineLibrary;
 using GameLibrary;
 using GameLibrary.Scenes;
+using GameLibrary.Scripts.RemoteKeyboardControlScripts;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
@@ -19,6 +20,9 @@ namespace WcfServiceLibrary
         private static BattleSceneSettings sceneSettings;
         private static Scene scene;
         private static Thread sceneUpdateThread;
+        private static RemoteState firstPanzerRemoteState;
+        private static RemoteState secondPanzerRemoteState;
+
 
         /// <summary>
         /// Попытка подключиться к игровому серверу
@@ -69,12 +73,15 @@ namespace WcfServiceLibrary
         {
             sceneSettings = new BattleSceneSettings()
             {
-                FirstPanzerControlType = BattleSceneSettings.PanzerControlType.AI,
-                SecondPanzerControlType = BattleSceneSettings.PanzerControlType.AI,
+                FirstPanzerControlType = BattleSceneSettings.PanzerControlType.Remote,
+                SecondPanzerControlType = BattleSceneSettings.PanzerControlType.Remote,
 
                 FirstPanzerHealth = 100,
                 SecondPanzerHealth = 100,
             };
+
+            firstPanzerRemoteState = sceneSettings.FirstPanzerRemoteState;
+            secondPanzerRemoteState = sceneSettings.SecondPanzerRemoteState;
 
             sceneSettings.SetSecondPanzerAmounts(amounts);
 
@@ -99,6 +106,24 @@ namespace WcfServiceLibrary
             if (scene == null) return "[]";
             return JsonConvert.SerializeObject(scene.GetGameObjects(),
                 Formatting.None, new Vector2Converter());
+        }
+
+        /// <summary>
+        /// Установка состояния клавиатуры для первого игрока
+        /// </summary>
+        /// <param name="keyboard">Состояние клавиатуры</param>
+        public void SetFirstPlayerKeyboardState(RemoteKeyboardState keyboard)
+        {
+            firstPanzerRemoteState.RemoteKeyboardState = keyboard;
+        }
+
+        /// <summary>
+        /// Установка состояния клавиатуры для второго игрока
+        /// </summary>
+        /// <param name="keyboard">Состояние клавиатуры</param>
+        public void SetSecondPlayerKeyboardState(RemoteKeyboardState keyboard)
+        {
+            secondPanzerRemoteState.RemoteKeyboardState = keyboard;
         }
 
         private void UpdateScene()

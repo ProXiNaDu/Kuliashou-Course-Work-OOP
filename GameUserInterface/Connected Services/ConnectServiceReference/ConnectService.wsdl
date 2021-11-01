@@ -34,6 +34,7 @@
       <xsd:import schemaLocation="http://localhost:4746/connect?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:4746/connect?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:4746/connect?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:4746/connect?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GameLibrary.Scripts.RemoteKeyboardControlScripts" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IConnectService_ConnectToServer_InputMessage">
@@ -78,6 +79,18 @@
   <wsdl:message name="IConnectService_GetCurrentGameObjects_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetCurrentGameObjectsResponse" />
   </wsdl:message>
+  <wsdl:message name="IConnectService_SetFirstPlayerKeyboardState_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetFirstPlayerKeyboardState" />
+  </wsdl:message>
+  <wsdl:message name="IConnectService_SetFirstPlayerKeyboardState_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetFirstPlayerKeyboardStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConnectService_SetSecondPlayerKeyboardState_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetSecondPlayerKeyboardState" />
+  </wsdl:message>
+  <wsdl:message name="IConnectService_SetSecondPlayerKeyboardState_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetSecondPlayerKeyboardStateResponse" />
+  </wsdl:message>
   <wsdl:portType name="IConnectService">
     <wsdl:operation name="ConnectToServer">
       <wsdl:input wsaw:Action="http://tempuri.org/IConnectService/ConnectToServer" message="tns:IConnectService_ConnectToServer_InputMessage" />
@@ -106,6 +119,14 @@
     <wsdl:operation name="GetCurrentGameObjects">
       <wsdl:input wsaw:Action="http://tempuri.org/IConnectService/GetCurrentGameObjects" message="tns:IConnectService_GetCurrentGameObjects_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConnectService/GetCurrentGameObjectsResponse" message="tns:IConnectService_GetCurrentGameObjects_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetFirstPlayerKeyboardState">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConnectService/SetFirstPlayerKeyboardState" message="tns:IConnectService_SetFirstPlayerKeyboardState_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConnectService/SetFirstPlayerKeyboardStateResponse" message="tns:IConnectService_SetFirstPlayerKeyboardState_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetSecondPlayerKeyboardState">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConnectService/SetSecondPlayerKeyboardState" message="tns:IConnectService_SetSecondPlayerKeyboardState_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConnectService/SetSecondPlayerKeyboardStateResponse" message="tns:IConnectService_SetSecondPlayerKeyboardState_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IConnectService" type="tns:IConnectService">
@@ -174,6 +195,24 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SetFirstPlayerKeyboardState">
+      <soap12:operation soapAction="http://tempuri.org/IConnectService/SetFirstPlayerKeyboardState" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetSecondPlayerKeyboardState">
+      <soap12:operation soapAction="http://tempuri.org/IConnectService/SetSecondPlayerKeyboardState" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="BasicHttpBinding_IConnectService" type="tns:IConnectService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -233,6 +272,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetCurrentGameObjects">
       <soap:operation soapAction="http://tempuri.org/IConnectService/GetCurrentGameObjects" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetFirstPlayerKeyboardState">
+      <soap:operation soapAction="http://tempuri.org/IConnectService/SetFirstPlayerKeyboardState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetSecondPlayerKeyboardState">
+      <soap:operation soapAction="http://tempuri.org/IConnectService/SetSecondPlayerKeyboardState" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
