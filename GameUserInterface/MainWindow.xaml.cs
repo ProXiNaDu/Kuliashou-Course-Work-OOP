@@ -7,8 +7,10 @@ using GameLibrary;
 using GameLibrary.Scenes;
 using System.Windows.Controls;
 using System.Threading;
-using WcfServiceLibrary.Serialization;
 using GameLibrary.Scripts.RemoteKeyboardControlScripts;
+using System.Collections.Generic;
+using GameLibrary.Components;
+using System.Windows.Media;
 
 namespace GameUserInterface
 {
@@ -42,10 +44,15 @@ namespace GameUserInterface
         /// </summary>
         private Renderer renderer;
 
+        private bool isOnlineGameEnded;
+
         /// <summary>
         /// Объект для передачи состояния клавиатуры по сети
         /// </summary>
         private RemoteKeyboardState remoteKeyboardState = new RemoteKeyboardState();
+
+        private Brush unselected = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+        private Brush selected = new SolidColorBrush(Color.FromRgb(191, 55, 160));
 
         /// <summary>
         /// Создание окна приложения.
@@ -185,8 +192,15 @@ namespace GameUserInterface
             KeyDown -= MainWindow_KeyDown;
             KeyUp -= MainWindow_KeyUp;
 
+            isOnlineGameEnded = false;
+            StartMultiplayerGameBtn.Content = "Start";
+            StartMultiplayerGameBtn.IsEnabled = true;
+            IsSecondPlayerReadyLabel.Content = "Second Player (NOT CONNECTED)";
+            RestartGameBtn.Visibility = Visibility.Visible;
             WinMenu.Visibility = Visibility.Hidden;
             MainMenu.Visibility = Visibility.Visible;
+            FirstPanzerCooldown.Visibility = Visibility.Visible;
+            SecondPanzerCooldown.Visibility = Visibility.Visible;
             FirstPanzerInfo.Visibility = Visibility.Hidden;
             SecondPanzerInfo.Visibility = Visibility.Hidden;
 
@@ -335,8 +349,16 @@ namespace GameUserInterface
             var serverListenerThread = new Thread(new ThreadStart(ListenServerUpdates));
             serverListenerThread.Start();
 
+            var scheduledUIUpdateThread = new Thread(new ThreadStart(ScheduledUIUpdate));
+            scheduledUIUpdateThread.Start();
+
             KeyDown += MainWindow_KeyDown;
             KeyUp += MainWindow_KeyUp;
+
+            FirstPanzerInfo.Visibility = Visibility.Visible;
+            FirstPanzerCooldown.Visibility = Visibility.Hidden;
+            SecondPanzerInfo.Visibility = Visibility.Visible;
+            SecondPanzerCooldown.Visibility = Visibility.Hidden;
         }
 
         private void ListenServerUpdates()
@@ -344,8 +366,73 @@ namespace GameUserInterface
             while(client != null)
             {
                 var gameObjects = client.GetCurrentGameObjects();
+                if (gameObjects == null || gameObjects.Count == 0) continue;
                 scene.GameObjects = gameObjects;
             }
+        }
+
+        private void ScheduledUIUpdate()
+        {
+            while (client != null && !isOnlineGameEnded)
+            {
+                UpdatePlayersInfo(scene.GameObjects);
+                Thread.Sleep(100);
+            }
+        }
+
+        private void UpdatePlayersInfo(List<GameObject> gameObjects)
+        {
+            Dispatcher.Invoke(() => 
+            {
+                var first = gameObjects[2];
+                var firstHealth = first.GetComponent("health") as Health;
+
+                var second = gameObjects[3];
+                var secondHealth = second.GetComponent("health") as Health;
+
+                if (firstHealth == null || secondHealth == null)
+                {
+                    WinMenu.Visibility = Visibility.Visible;
+                    RestartGameBtn.Visibility = Visibility.Hidden;
+                    var transform = first.GetComponent("transform") as GameEngineLibrary.Transform;
+                    WinnerName.Text = "Winner: " + (transform.Position.X < 0 ? "First Player" : "Second Player");
+                    isOnlineGameEnded = true;
+                    return;
+                }
+
+                var firstInventory = first.InnerObjects[0].GetComponent("inventory") as Inventory;
+
+                var isAllEmpty = true;
+                FirstPanzerHealth.Value = firstHealth.Value;
+                for (int i = 0; i < firstInventory.Amounts.Length; i++)
+                {
+                    var label = (Label)FirstPanzerInventory.Children[i];
+                    label.Content = firstInventory.Amounts[i];
+                    label.Foreground = i == firstInventory.Current ? selected : unselected;
+                    if (firstInventory.Amounts[i] > 0)
+                    {
+                        isAllEmpty = false;
+                    }
+                }
+
+                var secondInventory = second.InnerObjects[0].GetComponent("inventory") as Inventory;
+
+                SecondPanzerHealth.Value = secondHealth.Value;
+                for (int i = 0; i < secondInventory.Amounts.Length; i++)
+                {
+                    var label = (Label)SecondPanzerInventory.Children[i];
+                    label.Content = secondInventory.Amounts[i];
+                    label.Foreground = i == secondInventory.Current ? selected : unselected;
+                }
+
+                if (isAllEmpty)
+                {
+                    WinMenu.Visibility = Visibility.Visible;
+                    RestartGameBtn.Visibility = Visibility.Hidden;
+                    WinnerName.Text = "Draw";
+                    isOnlineGameEnded = true;
+                }
+            });
         }
 
         private void MainWindow_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)

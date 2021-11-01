@@ -17,6 +17,7 @@ namespace WcfServiceLibrary
     {
         private static int connectedUsersCount;
         private static bool isSecondReady;
+        private static bool isInited;
         private static BattleSceneSettings sceneSettings;
         private static Scene scene;
         private static Thread sceneUpdateThread;
@@ -63,6 +64,7 @@ namespace WcfServiceLibrary
             scene.Init();
             sceneUpdateThread = new Thread(new ThreadStart(UpdateScene));
             sceneUpdateThread.Start();
+            isInited = true;
         }
 
         /// <summary>
@@ -103,7 +105,7 @@ namespace WcfServiceLibrary
         /// <returns>Текущие игровые объекты на сцене в виде JSON массива</returns>
         public string GetCurrentGameObjects()
         {
-            if (scene == null) return "[]";
+            if (scene == null || !isInited) return "[]";
             return JsonConvert.SerializeObject(scene.GetGameObjects(),
                 Formatting.None, new Vector2Converter());
         }
