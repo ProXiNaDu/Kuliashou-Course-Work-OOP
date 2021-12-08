@@ -382,6 +382,7 @@ namespace GameUserInterface
 
         private void UpdatePlayersInfo(List<GameObject> gameObjects)
         {
+            if (gameObjects.Count < 4) return;
             Dispatcher.Invoke(() => 
             {
                 var first = gameObjects[2];
