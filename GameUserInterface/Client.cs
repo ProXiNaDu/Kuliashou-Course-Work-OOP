@@ -46,8 +46,9 @@ namespace GameUserInterface
             {
                 return connectServiceClient.ConnectToServer();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return false;
             }
         }
